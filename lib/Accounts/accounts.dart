@@ -1,16 +1,16 @@
-import 'package:excelapp/Auth/auth_config.dart';
+import 'package:excelapp/Accounts/account_config.dart';
 import 'package:flutter_auth0/flutter_auth0.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 
-class AuthService {
+class AccountService {
 
   static Future<String> login() async {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    AuthConfig config = AuthConfig();
+    AccountConfig config = AccountConfig();
     Auth0 auth0 = Auth0(
       baseUrl: config.baseUrl,
       clientId:config.clientId,
@@ -61,7 +61,7 @@ class AuthService {
 
   static Future<String> fetchUserDetails() async {
 
-    AuthConfig config = AuthConfig();
+    AccountConfig config = AccountConfig();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
 

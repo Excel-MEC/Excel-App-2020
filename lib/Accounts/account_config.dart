@@ -1,5 +1,5 @@
 
-class AuthConfig {
+class AccountConfig {
 
   //Auth0
   String baseUrl  = 'https://ajeshkumar.eu.auth0.com/';
