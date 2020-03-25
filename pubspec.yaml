@@ -8,7 +8,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^0.1.2
+  # cupertino_icons: ^0.1.2
+  # Add packages below -- App size is a concern
+  flutter_auth0: ^0.5.0
+  shared_preferences: ^0.5.6+3
 
 dev_dependencies:
   flutter_test:
