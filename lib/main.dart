@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import './UI/Home/home.dart';
 
 
 void main() => runApp(MyApp());
+
+
+// Import Pages to Navigation/pageNavigator.dart and assign them to tabs
 
 class MyApp extends StatelessWidget {
   @override
@@ -11,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: HomePage(),
+      home: Home(),
       routes: {
         // '/': (BuildContext context) => MyHomePage(),
       },

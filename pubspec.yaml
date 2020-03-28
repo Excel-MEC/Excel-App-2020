@@ -12,6 +12,10 @@ dependencies:
   # Add packages below -- App size is a concern
   flutter_auth0: ^0.5.0
   shared_preferences: ^0.5.6+3
+  cached_network_image: ^2.0.0
+  url_launcher: ^5.4.2
+  carousel_slider: ^1.4.1
+  sticky_headers: ^0.1.8+1
 
 dev_dependencies:
   flutter_test:
@@ -22,19 +26,27 @@ flutter:
 
   uses-material-design: true
 
-  assets:
-   - assets/kryptos.jpg
-   - assets/lost.jpg
+  # assets:
+  #  - assets/kryptos.jpg
+  #  - assets/lost.jpg
 
 
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+  fonts:
+      - family: poppins
+        fonts:
+          - asset: assets/fonts/Poppins-Regular.ttf
+          - asset: assets/fonts/Poppins-SemiBold.ttf
+            weight: 600
+          - asset: assets/fonts/Poppins-Bold.ttf
+            weight: 700
+          - asset: assets/fonts/Poppins-ExtraBold.ttf
+            weight: 800
+      - family: quicksand
+        fonts:
+          - asset: assets/fonts/Quicksand-Regular.ttf
+          - asset: assets/fonts/Quicksand-SemiBold.ttf
+            weight: 600
+          - asset: assets/fonts/Quicksand-Bold.ttf
+            weight: 700
+          - asset: assets/fonts/Quicksand-Light.ttf
+            weight: 300
