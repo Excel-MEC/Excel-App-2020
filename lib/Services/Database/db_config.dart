@@ -1,67 +1,39 @@
-import 'dart:async';
-import 'package:excelapp/Models/event_card.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+// Config file for tables
 
-// Singleton class
-class DBProvider {
-  // only instance to DBProvider object
-  static final DBProvider _instance = DBProvider.internal();
-  DBProvider.internal();
-  factory DBProvider() => _instance;
+class DBConfig {
+  // Competitions Table
+  static final String competitions = "CREATE TABLE Competitions ("
+      "id INTEGER PRIMARY KEY,"
+      "name TEXT,"
+      "icon TEXT,"
+      "category TEXT,"
+      "date_time TEXT"
+      ")";
 
-  // Database object
-  Database _db;
-  Future<Database> get database async {
-    if (_db != null) return _db;
+  // Events table
+  static final String events = "CREATE TABLE Events ("
+      "id INTEGER PRIMARY KEY,"
+      "name TEXT,"
+      "icon TEXT,"
+      "category TEXT,"
+      "date_time TEXT"
+      ")";
 
-    _db = await initDB();
-    return _db;
-  }
+  // Talks table
+  static final String talks = "CREATE TABLE Talks ("
+      "id INTEGER PRIMARY KEY,"
+      "name TEXT,"
+      "icon TEXT,"
+      "category TEXT,"
+      "date_time TEXT"
+      ")";
 
-  initDB() async {
-    String databasePath = await getDatabasesPath();
-    String path = join(databasePath, 'TestDB.db');
-    var ourDB = await openDatabase(path, version: 1, onCreate: _onCreate);
-    return ourDB;
-  }
-
-  // Create tables in database
-  void _onCreate(Database db, int version) async {
-    // Multiple tables can be added here
-    await db.execute("CREATE TABLE Competitions ("
-        "id INTEGER PRIMARY KEY,"
-        "name TEXT,"
-        "icon TEXT,"
-        "category TEXT"
-        ")");
-  }
-
-
-  // Add multiple records(events) to table
-  addEvents(List<Event> events,String table) async {
-    final db = await database;
-    Batch batch = db.batch();
-    for (var event in events) {
-      batch.insert(
-        // 'EventList',
-        table,
-        event.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
-    }
-    await batch.commit(noResult: true);
-  }
-
-  // Retrieve all events from table
-  Future<List<Event>> getEvents(String table) async {
-    final db = await database;
-    final List<Map<String,dynamic>> res = await db.query(table);
-    return res.map<Event>((row) => Event.fromJson(row)).toList();
-  }
-
-  // TODO: Add one record using id
-
-  // TODO: Retrieve one record using id
-  
+  //Workshops table
+  static final String workshops = "CREATE TABLE Workshops ("
+      "id INTEGER PRIMARY KEY,"
+      "name TEXT,"
+      "icon TEXT,"
+      "category TEXT,"
+      "date_time TEXT"
+      ")";
 }

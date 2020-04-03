@@ -5,8 +5,10 @@ class Event {
   String name;
   String icon;
   String category;
+  String dateTime;
 
-  Event({this.id, this.name, this.icon, this.category});
+
+  Event({this.id, this.name, this.icon, this.category, this.dateTime});
 
 
   factory Event.fromJson(Map<String, dynamic> json) {
@@ -14,7 +16,8 @@ class Event {
       id: json['id'],
       name: json['name'],
       icon: json['icon'],
-      category: json['category'],
+      category : json['category'],
+      dateTime: convertTimeStamp(json['date_time']),
     );
   }
 
@@ -24,6 +27,12 @@ class Event {
       'name': name,
       'icon': icon,
       'category': category,
+      'date_time': dateTime,
     });
+  }
+
+  // TODO: convert unix time stamp to required format
+  static String convertTimeStamp(String date) {
+
   }
 }
