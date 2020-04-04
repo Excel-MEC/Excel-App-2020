@@ -31,7 +31,6 @@ class EventsAPI {
     }
     Map<String,dynamic> responseData = json.decode(response.body);
     EventDetails event = EventDetails.fromJson(responseData);
-    print(event.name);
     return event;
   }
 
