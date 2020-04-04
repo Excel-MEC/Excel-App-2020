@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:excelapp/Models/event_card.dart';
+import 'package:excelapp/Services/Database/Tables/db_competitions.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 // Singleton class
 class DBProvider {
-  // only instance to DBProvider object
   static final DBProvider _instance = DBProvider.internal();
   DBProvider.internal();
   factory DBProvider() => _instance;
@@ -28,13 +28,7 @@ class DBProvider {
 
   // Create tables in database
   void _onCreate(Database db, int version) async {
-    // Multiple tables can be added here
-    await db.execute("CREATE TABLE Competitions ("
-        "id INTEGER PRIMARY KEY,"
-        "name TEXT,"
-        "icon TEXT,"
-        "category TEXT"
-        ")");
+    await db.execute(DBCompetitions.competitions);
   }
 
 
