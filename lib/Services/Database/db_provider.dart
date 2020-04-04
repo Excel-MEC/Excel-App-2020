@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:excelapp/Models/event_card.dart';
-import 'package:excelapp/Services/Database/Tables/db_competitions.dart';
+import 'package:excelapp/Services/Database/Tables/events_table.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -28,7 +28,8 @@ class DBProvider {
 
   // Create tables in database
   void _onCreate(Database db, int version) async {
-    await db.execute(DBCompetitions.competitions);
+    // TODO: execute all table creation as batch
+    await db.execute(DBEventsTable.createEventTable('Competitions'));
   }
 
 
