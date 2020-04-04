@@ -41,6 +41,7 @@ class EventDetails {
         contacts: json['conatcts']);
   }
 
+  // Checking
   Map<String, dynamic> toJson() {
     return ({
       'id': id,
@@ -55,4 +56,6 @@ class EventDetails {
       // no contacts added
     });
   }
+
+  // TODO: function to convert unix time stamp to String
 }
