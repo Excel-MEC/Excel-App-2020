@@ -17,7 +17,20 @@ class DBEventsTable {
       return table;
   }
 
-    // TODO: details table
-  static final String competitionDetails = "";
+  // Table for storing event details
+  static String createEventDetailsTable(String tableName) {
+    String table = "CREATE TABLE $tableName ("
+      "id INTEGER PRIMARY KEY,"
+      "name TEXT,"
+      "category TEXT,"
+      "venue TEXT,"
+      "prize_money TEXT,"
+      "date_time TEXT,"
+      "about TEXT,"
+      "format TEXT,"
+      "rules TEXT"
+      ")";
+      return table;
+  }
   
 }
