@@ -19,9 +19,9 @@ class _HomePageState extends State<HomePage> {
            
           //  Stories widget goes here
 
-          // Highlights carousel widget goes here
+          // Highlights carousel widget goes here -- Highlights()
 
-          // List of cards goes here -- Competitions,Events,Talks,Workshops
+          // Categories widget here -- Categories()
 
           ],
         ),
