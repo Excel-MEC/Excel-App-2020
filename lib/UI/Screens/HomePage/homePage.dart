@@ -1,6 +1,8 @@
-// Entry file to home page
-// only add widgets here !!!
 import 'package:flutter/material.dart';
+import 'package:excelapp/Models/event_card.dart';
+import 'package:excelapp/Services/API/events_api.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/Categories/categories.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/Highlights/highlights.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,6 +10,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Future<List<Event>> fetchHighlights() async {
+    // TODO: network connectivity
+    List<Event> highlights = await EventsAPI.fetchEvents('events');
+    return highlights;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,13 +24,20 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         child: Column(
           children: <Widget>[
-           
-          //  Stories widget goes here
 
-          // Highlights carousel widget goes here -- Highlights()
+            //  Highlights
+            FutureBuilder(
+              future: fetchHighlights(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData)
+                  return Highlights(snapshot.data);
+                else
+                  return CircularProgressIndicator();
+              },
+            ),
 
-          // Categories widget here -- Categories()
-
+            // Categories -- do not add any code here, Categories() widget should display all categories
+            Categories()
           ],
         ),
       ),
