@@ -10,6 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
   Future<List<Event>> fetchHighlights() async {
     // TODO: network connectivity
     List<Event> highlights = await EventsAPI.fetchEvents('events');
