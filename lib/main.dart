@@ -1,5 +1,4 @@
-// import files as packages -- shown below
-import 'package:excelapp/UI/Screens/HomePage/homePage.dart';
+import 'package:excelapp/UI/Screens/LandingPage/homePage.dart';
 import 'package:flutter/material.dart';
 
 
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: Home(),
       routes: {
         // '/': (BuildContext context) => MyHomePage(),
       },
