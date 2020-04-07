@@ -13,7 +13,6 @@ class HighLights extends StatefulWidget {
 }
 
 class HighLightsState extends State<HighLights> {
-  
   List<Event> highLightEvents;
   int autoplayseconds = 5;
   double carousalHeight = 240;
@@ -29,22 +28,19 @@ class HighLightsState extends State<HighLights> {
       fontSize: 16,
       fontWeight: FontWeight.w400);
 
+  List<Event> highLightsMap;
+
   @override
   void initState() {
-List<Event> highLightsMap = widget.highLightsMap;
+    highLightsMap = widget.highLightsMap;
     super.initState();
-    highLightEvents = List<Event>();
-    for (int i = 0; i < highLightsMap.length; i++) {
-      highLightEvents.add(highLightsMap[i]);
-    }
-    print("HighLights: ${highLightEvents.length}");
     isLiked = [false, false, false];
   }
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
-        itemCount: highLightEvents.length,
+        itemCount: highLightsMap.length,
         height: carousalHeight,
         viewportFraction: 0.9,
         enlargeCenterPage: true,
@@ -56,13 +52,13 @@ List<Event> highLightsMap = widget.highLightsMap;
                 margin: EdgeInsets.all(4),
                 child: Stack(
                   children: <Widget>[
-                    cardImage(highLightEvents[index].icon),
-                    highLightCardContent(highLightEvents[index], index)
+                    cardImage(highLightsMap[index].icon),
+                    highLightCardContent(highLightsMap[index], index)
                   ],
                 )),
             onTap: () {
               //Insert Function
-              // print("U tapped ${highLightEvents[index].eventName}");
+              // print("U tapped ${highLightsMap[index].eventName}");
             },
           );
         });
