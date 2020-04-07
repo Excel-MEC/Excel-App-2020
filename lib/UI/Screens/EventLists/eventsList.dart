@@ -2,6 +2,7 @@ import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Services/API/events_api.dart';
 import './Widgets/listView.dart';
 import 'package:flutter/material.dart';
+import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 
 class EventsList extends StatefulWidget {
   @override
@@ -18,10 +19,7 @@ class _EventsListState extends State<EventsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("List"),
-        backgroundColor: Colors.black,
-      ),
+      appBar: customappbar('Events'),
       body: FutureBuilder(
         future: fetchEvents('events'),
         builder: (context, snapshot) {
