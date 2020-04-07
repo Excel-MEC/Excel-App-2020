@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:excelapp/UI/Screens/HomePage/mainPage.dart';
+import 'package:excelapp/UI/Screens/HomePage/homePage.dart';
 // import '../UI/Timeline/timeline.dart';
 // import '../UI/Home/profile.dart';
 // import '../../Screens/FavouritesPage/favouritesPage.dart';
@@ -11,9 +11,9 @@ class NavigatingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (pageNumber) {
-      // case 0:
-      //   return HomePage();
-      //   break;
+      case 0:
+        return HomePage();
+        break;
       // case 1:
       //   return Timeline();
       //   break;
