@@ -31,14 +31,14 @@ class _HomePageState extends State<HomePage> {
               future: fetchHighlights(),
               builder: (context, snapshot) {
                 if (snapshot.hasData)
-                  return Highlights(snapshot.data);
+                  return HighLights(highLightsMap: snapshot.data);
                 else
                   return CircularProgressIndicator();
               },
             ),
 
             // Categories -- do not add any code here, Categories() widget should display all categories
-            Categories()
+            // Categories()
           ],
         ),
       ),
