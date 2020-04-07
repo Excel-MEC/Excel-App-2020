@@ -10,7 +10,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
   Future<List<Event>> fetchHighlights() async {
     // TODO: network connectivity
     List<Event> highlights = await EventsAPI.fetchEvents('events');
@@ -24,9 +23,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(),
       body: Container(
         child: SingleChildScrollView(
-                  child: Column(
+          child: Column(
             children: <Widget>[
-
               //  Highlights
               FutureBuilder(
                 future: fetchHighlights(),
@@ -37,7 +35,6 @@ class _HomePageState extends State<HomePage> {
                     return CircularProgressIndicator();
                 },
               ),
-
               // Categories -- do not add any code here, Categories() widget should display all categories
               Categories()
             ],
