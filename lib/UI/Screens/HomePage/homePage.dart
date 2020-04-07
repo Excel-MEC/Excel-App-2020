@@ -23,23 +23,25 @@ class _HomePageState extends State<HomePage> {
       // custom appBar widget here
       appBar: AppBar(),
       body: Container(
-        child: Column(
-          children: <Widget>[
+        child: SingleChildScrollView(
+                  child: Column(
+            children: <Widget>[
 
-            //  Highlights
-            FutureBuilder(
-              future: fetchHighlights(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData)
-                  return Highlights(snapshot.data);
-                else
-                  return CircularProgressIndicator();
-              },
-            ),
+              //  Highlights
+              FutureBuilder(
+                future: fetchHighlights(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData)
+                    return HighLights(highLightsMap: snapshot.data);
+                  else
+                    return CircularProgressIndicator();
+                },
+              ),
 
-            // Categories -- do not add any code here, Categories() widget should display all categories
-            Categories()
-          ],
+              // Categories -- do not add any code here, Categories() widget should display all categories
+              Categories()
+            ],
+          ),
         ),
       ),
     );
