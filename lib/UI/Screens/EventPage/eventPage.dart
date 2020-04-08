@@ -1,4 +1,5 @@
 import 'package:excelapp/Models/event_card.dart';
+import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/events_api.dart';
 import 'package:excelapp/UI/Screens/EventLists/Widgets/listView.dart';
 import 'package:flutter/material.dart';
@@ -11,20 +12,20 @@ class EventsList extends StatefulWidget {
 
 class _EventsListState extends State<EventsList> {
   // TODO: Network connectivity
-  Future<List<Event>> fetchEvents(String endpoint) async {
-    List<Event> result = await EventsAPI.fetchEvents(endpoint);
+  Future<EventDetails> fetchEventDetails(String endpoint,int id) async {
+    EventDetails result = await EventsAPI.fetchEventDetails(endpoint, id);
     return result;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customappbar('Events'),
+      // appBar: customappbar('Events'),
       body: FutureBuilder(
-        future: fetchEvents('events'),
+        future: fetchEventDetails('events',1),
         builder: (context, snapshot) {
           if (snapshot.hasData)
-            return getListView(snapshot.data);
+          {}  // return getEventDetails(snapshot.data);
           else
             return CircularProgressIndicator();
         },

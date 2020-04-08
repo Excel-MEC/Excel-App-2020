@@ -15,7 +15,8 @@ Widget getListView(List<Event> listItems) {
                 child: Card(
                   elevation: 0,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
                   margin:
                       EdgeInsets.only(top: 8, bottom: 8, right: 20, left: 20),
                   child: Stack(
@@ -37,7 +38,8 @@ Widget getListView(List<Event> listItems) {
                                     child: InkWell(
                                       onTap: () {
                                         print(
-                                            "Pressed " + listItems[index].name);
+                                          "Pressed " + listItems[index].name,
+                                        );
                                         // Goto Page here
                                       },
                                       child: Container(
@@ -51,9 +53,10 @@ Widget getListView(List<Event> listItems) {
                                             Text(
                                               listItems[index].name,
                                               style: TextStyle(
-                                                  fontSize: 22,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w700),
+                                                fontSize: 22,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w700,
+                                              ),
                                             ),
                                             SizedBox(height: 5),
                                             Text(
@@ -62,9 +65,10 @@ Widget getListView(List<Event> listItems) {
                                                   : listItems[index].dateTime ==
                                                       null,
                                               style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w300),
+                                                fontSize: 15,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w300,
+                                              ),
                                             )
                                           ],
                                         ),
@@ -85,4 +89,3 @@ Widget getListView(List<Event> listItems) {
       });
   return listview;
 }
-
