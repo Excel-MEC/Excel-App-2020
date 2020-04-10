@@ -1,3 +1,4 @@
+import 'package:excelapp/UI/Screens/EventLists/eventsList.dart';
 import 'package:flutter/material.dart';
 import './data.dart';
 import 'package:excelapp/UI/constants.dart';
@@ -69,7 +70,7 @@ categoryCard(int index, BuildContext context) {
               ])),
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => fakePage()));
+                context, MaterialPageRoute(builder: (context) => EventsList()));
           },
         )),
   );
