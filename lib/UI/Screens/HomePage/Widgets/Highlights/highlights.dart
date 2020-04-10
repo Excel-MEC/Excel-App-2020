@@ -18,7 +18,7 @@ class HighLightsState extends State<HighLights> {
   double carousalHeight = 240;
   var isLiked;
 
-  // TODO: Themes should be made global
+  // TODO: Move to Constants
   var titleStyle = TextStyle(
       color: Colors.white,
       fontFamily: pfontFamily,

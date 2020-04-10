@@ -1,5 +1,6 @@
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Services/API/events_api.dart';
+import 'package:excelapp/UI/Components/EventCard/event_card.dart';
 import 'package:excelapp/UI/Screens/EventLists/Widgets/listView.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
@@ -23,8 +24,15 @@ class _EventsListState extends State<EventsList> {
       body: FutureBuilder(
         future: fetchEvents('events'),
         builder: (context, snapshot) {
-          if (snapshot.hasData)
-            return getListView(snapshot.data);
+          List<Event> list = snapshot.data;
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (BuildContext context,int index) {
+                return EventCard(list[index]);
+              },
+            );
+          }
           else
             return CircularProgressIndicator();
         },

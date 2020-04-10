@@ -7,13 +7,14 @@ Widget getListView(List<Event> listItems) {
   Widget listview = ListView.builder(
       itemCount: listItems.length,
       itemBuilder: (context, index) {
-        return Row(
+        return Row( 
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Expanded(
                 child: Card(
                   elevation: 0,
+                  color: Colors.green,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -22,7 +23,7 @@ Widget getListView(List<Event> listItems) {
                   child: Stack(
                     alignment: AlignmentDirectional.center,
                     children: <Widget>[
-                      Container(),
+                      Container(), 
                       cardImage(listItems[index].icon),
                       Column(
                           mainAxisAlignment: MainAxisAlignment.center,
