@@ -13,7 +13,7 @@ class DBProvider {
 
   // Database object
   Database _db;
-  Future<Database> get database async {
+  Future<Database> get database async { 
     if (_db != null) return _db;
 
     _db = await initDB();
@@ -43,7 +43,6 @@ class DBProvider {
     Batch batch = db.batch();
     for (var event in events) {
       batch.insert(
-        // 'EventList',
         table,
         event.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace,
@@ -65,7 +64,7 @@ class DBProvider {
     await db.insert(table, eventDetails.toJson(),conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  // Retrieve one event details using id
+  // Retrieve a single event details using id
     Future<EventDetails> getEventDetails(String table,int id) async {
     final db = await database;
     List<Map<String,dynamic>> res = await db.query(table,where: 'id = ?',whereArgs: [id]);

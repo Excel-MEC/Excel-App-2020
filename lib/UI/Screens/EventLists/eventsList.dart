@@ -1,3 +1,5 @@
+import 'package:connectivity/connectivity.dart';
+import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Services/API/events_api.dart';
@@ -11,9 +13,25 @@ class EventsList extends StatefulWidget {
 }
 
 class _EventsListState extends State<EventsList> {
-  // TODO: Network connectivity
+  DBProvider db;
+
+  @override
+  void initState() { 
+    super.initState();
+    db = DBProvider();
+  }
+
   Future<List<Event>> fetchEvents(String endpoint) async {
-    List<Event> result = await EventsAPI.fetchEvents(endpoint);
+    List<Event> result;
+    var connectivityResult = await (Connectivity().checkConnectivity());
+  
+    if(connectivityResult == ConnectivityResult.wifi || connectivityResult == ConnectivityResult.mobile) {
+      result = await EventsAPI.fetchEvents(endpoint);
+      await db.addEvents(result,'Competitions');
+    }
+    else {
+      result = await db.getEvents('Competitions');
+    }
     return result;
   }
 
@@ -26,6 +44,9 @@ class _EventsListState extends State<EventsList> {
         builder: (context, snapshot) {
           List<Event> list = snapshot.data;
           if (snapshot.hasData) {
+            if(snapshot.data.isEmpty)
+              // TODO: Proper error UI
+              return Text('Something went wrong');
             return ListView.builder(
               itemCount: list.length,
               itemBuilder: (BuildContext context,int index) {

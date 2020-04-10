@@ -1,5 +1,4 @@
 import 'package:excelapp/Models/event_card.dart';
-import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +16,7 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      height: MediaQuery.of(context).size.height / 6,
+      height: MediaQuery.of(context).size.height / 5.5,
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.circular(20),
@@ -85,12 +84,7 @@ class EventCard extends StatelessWidget {
               onTap: () {},
             ),
           ),
-          // Favourites
-          Positioned(
-            right: 25,
-            bottom: 25,
-            child: LikeButton(false),
-          )
+          // Favourites - Add below if required (Use Positioned)
         ],
       ),
     );
