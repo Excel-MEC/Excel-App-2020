@@ -3,6 +3,11 @@ import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
+// This card UI can be used for
+// 1. Events List
+// 2. Favourites
+// 3. Registered events
+
 class EventCard extends StatelessWidget {
   final Event event;
 

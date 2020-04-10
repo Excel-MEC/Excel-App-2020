@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Services/API/events_api.dart';
-import 'package:excelapp/UI/Components/EventCard/event_card.dart';
-import 'package:excelapp/UI/Screens/EventLists/Widgets/listView.dart';
-import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
+import 'package:excelapp/UI/Components/EventCard/event_card.dart';
+
 
 class EventsList extends StatefulWidget {
   @override
