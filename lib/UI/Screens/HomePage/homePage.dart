@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
               Container(
                 height: MediaQuery.of(context).size.height / 3,
                 child: FutureBuilder(
+                  // TODO: provide highlights API when ready
                   future: EventsAPI.fetchEvents('events'),
                   builder: (context, snapshot) {
                     if (snapshot.hasData)
