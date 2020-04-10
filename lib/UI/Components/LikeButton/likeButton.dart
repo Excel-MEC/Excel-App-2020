@@ -20,27 +20,26 @@ class _LikeButton extends State<LikeButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: AlignmentDirectional.topCenter,
-      height: 50,
-      width: 50,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: IconButton(
-          iconSize: 25,
+        color: Colors.transparent,
+        border: Border.all(
           color: Colors.white,
-          icon: !likeState
-              ? Icon(Icons.favorite_border)
-              : Icon(Icons.favorite, color: Colors.red),
+          width: 2,
+        ),
+        borderRadius: BorderRadius.circular(50),
+      ),
+      child: Center(
+        child: IconButton(
+          color: Colors.white,
+          icon: !likeState ? Icon(Icons.favorite_border) : Icon(Icons.favorite),
           onPressed: () {
-            //Insert function that enables this event as favourite
-            /*
-                        Over Here
-                    */
+            // TODO: Add to favourites
             setState(() {
               likeState = !likeState;
             });
-          }),
+          },
+        ),
+      ),
     );
   }
 }
