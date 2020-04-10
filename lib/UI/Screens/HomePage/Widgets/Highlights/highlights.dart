@@ -17,6 +17,8 @@ class HighLightsState extends State<HighLights> {
   int autoplayseconds = 5;
   double carousalHeight = 240;
   var isLiked;
+
+  // TODO: Themes should be made global
   var titleStyle = TextStyle(
       color: Colors.white,
       fontFamily: pfontFamily,
@@ -49,17 +51,16 @@ class HighLightsState extends State<HighLights> {
         itemBuilder: (BuildContext build, index) {
           return GestureDetector(
             child: Card(
-                margin: EdgeInsets.all(4),
-                child: Stack(
-                  children: <Widget>[
-                    cardImage(highLightsMap[index].icon),
-                    highLightCardContent(highLightsMap[index], index)
-                  ],
-                )),
-            onTap: () {
-              //Insert Function
-              // print("U tapped ${highLightsMap[index].eventName}");
-            },
+              margin: EdgeInsets.all(4),
+              child: Stack(
+                children: <Widget>[
+                  cardImage(highLightsMap[index].icon),
+                  highLightCardContent(highLightsMap[index], index)
+                ],
+              ),
+            ),
+            // TODO: Navigate to details page
+            onTap: () {},
           );
         });
   }
