@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +27,9 @@ class EventCard extends StatelessWidget {
         children: <Widget>[
           // Image
           Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(event.icon),
-              ),
+            child: CachedNetworkImage(
+              imageUrl: event.icon,
+              fit: BoxFit.cover,
             ),
           ),
           // Gradient
