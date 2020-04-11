@@ -24,7 +24,7 @@ class LandingPageState extends State<LandingPage> {
           PageView(
             controller: _pageController,
             children: <Widget>[
-              GestureDetector(
+              GestureDetector( 
                 child: WelcomeCard(),
                 onTap: () {
                   _pageController.animateToPage(1,

@@ -11,4 +11,12 @@ var screenSize;
 var gradientcolor1 = Color(0xf224234A);
 var gradientcolor2 = Color(0xb324234A);
 
-var timelineCardColor= Color(0xdd282849);
+var timelineCardColor = Color(0xdd282849);
+
+// HomePage
+final headingStyle = TextStyle(
+  fontWeight: FontWeight.w700,
+  fontSize: 24,
+  fontFamily: pfontFamily,
+  color: Colors.black87,
+);
