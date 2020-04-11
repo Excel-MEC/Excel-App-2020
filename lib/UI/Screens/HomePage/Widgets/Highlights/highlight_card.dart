@@ -60,6 +60,7 @@ class HighlightsCard extends StatelessWidget {
                 SizedBox(height: 5),
                 // Date and Time
                 Text(
+                  // TODO: Fix date and Time
                   event.dateTime != null ? event.dateTime : 'No date | No time',
                   style: TextStyle(
                     color: Colors.white,
@@ -77,7 +78,6 @@ class HighlightsCard extends StatelessWidget {
               onTap: () {},
             ),
           ),
-          // Favourites - Add below if required (Use Positioned)
         ],
       ),
     );
