@@ -8,6 +8,7 @@ class Categories extends StatelessWidget {
     fontWeight: FontWeight.w700,
     fontSize: 24,
     fontFamily: pfontFamily,
+    color: Colors.black87,
   );
 
   @override
@@ -16,14 +17,17 @@ class Categories extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
+        // Heading
         Container(
           alignment: Alignment.centerLeft,
-          padding: EdgeInsets.fromLTRB(28, 28, 28, 15),
+          padding: EdgeInsets.symmetric(horizontal: 15,vertical: 20),
           child: Text(
             "Categories",
             style: headingStyle,
           ),
         ),
+
+        // Categories
         CategoryCard(categoriesMap[0]),
         CategoryCard(categoriesMap[1]),
         CategoryCard(categoriesMap[2]),
