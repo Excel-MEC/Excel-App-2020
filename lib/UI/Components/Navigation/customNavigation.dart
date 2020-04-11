@@ -52,6 +52,7 @@ class CustomNavigatorState extends State<CustomNavigator> {
         return isFirstRouteInCurrentTab;
       },
       child: Scaffold(
+        extendBody: true,
         body: Stack(children: <Widget>[
           _buildOffstageNavigator(TabItem.page1),
           _buildOffstageNavigator(TabItem.page2),
