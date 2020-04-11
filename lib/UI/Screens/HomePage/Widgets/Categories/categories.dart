@@ -4,13 +4,6 @@ import 'package:excelapp/UI/constants.dart';
 import './categoryCard.dart';
 
 class Categories extends StatelessWidget {
-  final headingStyle = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 24,
-    fontFamily: pfontFamily,
-    color: Colors.black87,
-  );
-
   @override
   Widget build(BuildContext context) {
     return Column(

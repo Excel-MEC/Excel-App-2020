@@ -12,9 +12,12 @@ class WelcomeCard extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topLeft: cardRoundness, topRight: cardRoundness)),
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: cardRoundness,
+            topRight: cardRoundness,
+          ),
+        ),
         width: screenSize.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -24,8 +27,15 @@ class WelcomeCard extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: Padding(
-                padding: EdgeInsets.fromLTRB(24, 8, 24, 0),
-                child: pill(),
+                padding: EdgeInsets.symmetric(horizontal: 20,vertical: 12),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  width: MediaQuery.of(context).size.width/5,
+                  height: 6,
+                ),
               ),
             ),
             Padding(
@@ -42,17 +52,6 @@ class WelcomeCard extends StatelessWidget {
     );
   }
 
-  pill() {
-    return Container(
-      // Pill Shaped Button
-      // decoration: BoxDecoration(
-      //     color: primaryColor, borderRadius: BorderRadius.circular(16)),
-      // 
-      // Arrow Shaped Button
-      width: 48,
-      child: Icon(Icons.keyboard_arrow_up, size: 48, color: primaryColor),
-    );
-  }
 
   title() {
     double subtitleSize = 22;
