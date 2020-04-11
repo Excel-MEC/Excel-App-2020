@@ -1,40 +1,30 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/event_card.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/Categories/data.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
-// This card UI can be used for
-// 1. Events List
-// 2. Favourites
-// 3. Registered events
-
-class EventCard extends StatelessWidget {
+class HighlightsCard extends StatelessWidget {
   final Event event;
-
-  EventCard(this.event);
+  HighlightsCard(this.event);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      height: MediaQuery.of(context).size.height / 5.5,
-      decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(20),
-      ),
+      margin: EdgeInsets.symmetric(horizontal: 1, vertical: 5),
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          // Image
+          // Image - TODO: Highlights Images
           Container(
             child: CachedNetworkImage(
-              imageUrl: event.icon,
+              imageUrl: categoriesMap[1]['imageUrl'],
               fit: BoxFit.cover,
             ),
           ),
           // Gradient
           Opacity(
-            opacity: 0.8,
+            opacity: 0.4,
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
@@ -49,7 +39,7 @@ class EventCard extends StatelessWidget {
           ),
           // Details
           Container(
-            padding: EdgeInsets.fromLTRB(25, 0, 0, 20),
+            padding: EdgeInsets.fromLTRB(25, 0, 0, 25),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,16 +50,17 @@ class EventCard extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 27,
+                    fontSize: 29,
                   ),
                 ),
                 SizedBox(height: 5),
                 // Date and Time
                 Text(
+                  // TODO: Fix date and Time
                   event.dateTime != null ? event.dateTime : 'No date | No time',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 15,
+                    fontSize: 17,
                   ),
                 ),
               ],
@@ -83,7 +74,6 @@ class EventCard extends StatelessWidget {
               onTap: () {},
             ),
           ),
-          // Favourites - Add below if required (Use Positioned)
         ],
       ),
     );

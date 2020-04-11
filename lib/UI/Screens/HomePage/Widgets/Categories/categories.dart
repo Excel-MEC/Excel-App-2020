@@ -1,3 +1,4 @@
+import 'package:excelapp/UI/Screens/HomePage/Widgets/Categories/data.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
 import './categoryCard.dart';
@@ -7,6 +8,7 @@ class Categories extends StatelessWidget {
     fontWeight: FontWeight.w700,
     fontSize: 24,
     fontFamily: pfontFamily,
+    color: Colors.black87,
   );
 
   @override
@@ -15,17 +17,35 @@ class Categories extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
+        // Heading
         Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.fromLTRB(28, 28, 28, 14),
-            child: Text(
-              "Categories",
-              style: headingStyle,
-            )),
-        categoryCard(0, context),
-        categoryCard(1, context),
-        categoryCard(2, context),
-        categoryCard(3, context),
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.symmetric(horizontal: 15,vertical: 20),
+          child: Text(
+            "Categories",
+            style: headingStyle,
+          ),
+        ),
+
+        // Categories
+        CategoryCard(categoriesMap[0]),
+        CategoryCard(categoriesMap[1]),
+        CategoryCard(categoriesMap[2]),
+        CategoryCard(categoriesMap[3]),
+
+        // Extras
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text("Excel 2020"),
+                Text("All rights reserved"),
+              ],
+            ),
+          ),
+        )
       ],
     );
   }
