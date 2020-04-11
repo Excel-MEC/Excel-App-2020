@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/event_card.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/Categories/data.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -10,25 +11,20 @@ class HighlightsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      height: MediaQuery.of(context).size.height / 5.5,
-      decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(10),
-      ),
+      margin: EdgeInsets.symmetric(horizontal: 1, vertical: 5),
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
           // Image
           Container(
             child: CachedNetworkImage(
-              imageUrl: event.icon,
+              imageUrl: categoriesMap[1]['imageUrl'],
               fit: BoxFit.cover,
             ),
           ),
           // Gradient
           Opacity(
-            opacity: 0.8,
+            opacity: 0.4,
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),

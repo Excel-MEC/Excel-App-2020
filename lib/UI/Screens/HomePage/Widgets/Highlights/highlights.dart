@@ -13,22 +13,22 @@ class HighLights extends StatefulWidget {
 }
 
 class HighLightsState extends State<HighLights> {
-
   int autoplayseconds = 5;
-  double carousalHeight = 240;
   var isLiked;
 
   // TODO: Move to Constants
   var titleStyle = TextStyle(
-      color: Colors.white,
-      fontFamily: pfontFamily,
-      fontSize: 28,
-      fontWeight: FontWeight.w600);
+    color: Colors.white,
+    fontFamily: pfontFamily,
+    fontSize: 28,
+    fontWeight: FontWeight.w600,
+  );
   var contentStyle = TextStyle(
-      color: Colors.white,
-      fontFamily: sfontFamily,
-      fontSize: 16,
-      fontWeight: FontWeight.w400);
+    color: Colors.white,
+    fontFamily: sfontFamily,
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+  );
 
   List<Event> highLightsMap;
 
@@ -42,7 +42,7 @@ class HighLightsState extends State<HighLights> {
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       itemCount: highLightsMap.length,
-      height: carousalHeight,
+      height: MediaQuery.of(context).size.height/3,
       viewportFraction: 0.9,
       enlargeCenterPage: true,
       autoPlay: true,
@@ -57,4 +57,3 @@ class HighLightsState extends State<HighLights> {
     );
   }
 }
-
