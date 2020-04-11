@@ -15,7 +15,7 @@ class HighlightsCard extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          // Image
+          // Image - TODO: Highlights Images
           Container(
             child: CachedNetworkImage(
               imageUrl: categoriesMap[1]['imageUrl'],
