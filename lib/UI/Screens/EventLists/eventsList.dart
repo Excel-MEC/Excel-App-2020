@@ -1,4 +1,5 @@
 import 'package:connectivity/connectivity.dart';
+import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_card.dart';
@@ -8,17 +9,22 @@ import 'package:excelapp/UI/Components/EventCard/event_card.dart';
 
 
 class EventsList extends StatefulWidget {
+  final String category;
+  EventsList(this.category);
+
   @override
   _EventsListState createState() => _EventsListState();
 }
 
 class _EventsListState extends State<EventsList> {
   DBProvider db;
+  String endpoint;
 
   @override
   void initState() { 
     super.initState();
     db = DBProvider();
+    endpoint = APIConfig.getEndpoint(widget.category);
   }
 
   Future<List<Event>> fetchEvents(String endpoint) async {
@@ -38,9 +44,9 @@ class _EventsListState extends State<EventsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customappbar('Events'),
+      appBar: customappbar(widget.category),
       body: FutureBuilder(
-        future: fetchEvents('events'),
+        future: fetchEvents(endpoint),
         builder: (context, snapshot) {
           List<Event> list = snapshot.data;
           if (snapshot.hasData) {
@@ -52,7 +58,7 @@ class _EventsListState extends State<EventsList> {
               itemBuilder: (BuildContext context,int index) {
                 return EventCard(list[index]);
               },
-            );
+            ); 
           }
           else
             return CircularProgressIndicator();

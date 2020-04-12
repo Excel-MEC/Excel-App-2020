@@ -28,16 +28,7 @@ class Categories extends StatelessWidget {
 
         // Extras
         Container(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("Excel 2020"),
-                Text("All rights reserved"),
-              ],
-            ),
-          ),
+          padding: EdgeInsets.symmetric(vertical: 25),
         )
       ],
     );

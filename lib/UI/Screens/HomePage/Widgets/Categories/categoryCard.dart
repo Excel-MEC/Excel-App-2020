@@ -1,3 +1,4 @@
+import 'package:excelapp/UI/Screens/EventLists/eventsList.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -67,8 +68,14 @@ class CategoryCard extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 OutlineButton(
-                  // TODO: Navigate to Event list page
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EventsList(category['name']),
+                      ),
+                    );
+                  },
                   child: Text('View'),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),

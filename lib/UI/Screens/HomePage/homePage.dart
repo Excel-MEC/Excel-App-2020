@@ -38,7 +38,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // custom appBar widget here
       appBar: homeAppBar(),
       body: Container(
         child: SingleChildScrollView(
