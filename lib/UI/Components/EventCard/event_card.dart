@@ -8,6 +8,49 @@ import 'package:flutter/material.dart';
 // 2. Favourites
 // 3. Registered events
 
+class TestCard extends StatelessWidget {
+  final Event event;
+
+  TestCard(this.event);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        // TODO: Naviagte to event details
+      },
+      child: Card(
+        elevation: 7.0,
+        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+        child: Container(
+          child: ListTile(
+            contentPadding:
+                EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            leading: Container(
+              padding: EdgeInsets.only(right: 12.0),
+              child: CachedNetworkImage(
+                imageUrl: event.icon,
+                // TODO: Placeholder
+                placeholder: (context, url) => CircularProgressIndicator(),
+              ),
+            ),
+            title: Text(
+              event.name[0].toUpperCase() + event.name.substring(1),
+            ),
+            subtitle: Text(
+              event.dateTime != null ? event.dateTime : 'No date | No time',
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Colors.black45,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class EventCard extends StatelessWidget {
   final Event event;
 
