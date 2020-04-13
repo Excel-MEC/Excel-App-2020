@@ -33,6 +33,8 @@ class _HomePageState extends State<HomePage> {
   _onChange(ConnectivityResult result) {
     if (result == ConnectivityResult.wifi ||
         result == ConnectivityResult.mobile) setState(() {});
+    else
+      print("no Internet");
   }
 
   @override
