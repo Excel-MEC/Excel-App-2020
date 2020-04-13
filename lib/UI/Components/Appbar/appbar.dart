@@ -13,6 +13,6 @@ Widget customappbar(String titleText) {
         fontWeight: FontWeight.bold,
       ),
     ),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.white
   );
 }

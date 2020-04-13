@@ -9,13 +9,14 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPageState extends State<EventPage> {
+
   // TODO: Network connectivity
   Future<EventDetails> fetchEventDetails(String endpoint, int id) async {
     EventDetails result = await EventsAPI.fetchEventDetails(endpoint, id);
     return result;
   }
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
@@ -23,8 +24,9 @@ class _EventPageState extends State<EventPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData)
             return EventPageBody(eventDetails: snapshot.data);
-          else
-            return CircularProgressIndicator();
+          else {
+            return Center(child: CircularProgressIndicator());
+          }
         },
       ),
     );

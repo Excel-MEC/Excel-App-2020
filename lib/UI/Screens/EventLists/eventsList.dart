@@ -1,7 +1,6 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/Services/Database/db_provider.dart';
-import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Services/API/events_api.dart';
@@ -14,7 +13,7 @@ class EventsList extends StatefulWidget {
 
   @override
   _EventsListState createState() => _EventsListState();
-}
+} 
 
 class _EventsListState extends State<EventsList> {
   DBProvider db;
@@ -23,20 +22,26 @@ class _EventsListState extends State<EventsList> {
   @override
   void initState() {
     super.initState();
-    db = DBProvider();
     endpoint = APIConfig.getEndpoint(widget.category);
+    db = DBProvider();
   }
 
   Future<List<Event>> fetchEvents(String endpoint) async {
+    // TODO: Handle handshake errors
     List<Event> result;
     var connectivityResult = await (Connectivity().checkConnectivity());
 
     if (connectivityResult == ConnectivityResult.wifi ||
         connectivityResult == ConnectivityResult.mobile) {
+      print("\nfetching");
       result = await EventsAPI.fetchEvents(endpoint);
+      print("adding to db");
       await db.addEvents(result, 'Competitions');
+      print("done");
     } else {
+      print("\nfrom db");
       result = await db.getEvents('Competitions');
+      print("done");
     }
     return result;
   }
@@ -45,23 +50,31 @@ class _EventsListState extends State<EventsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customappbar(widget.category),
-      body: FutureBuilder(
-        future: fetchEvents(endpoint),
-        builder: (context, snapshot) {
-          List<Event> list = snapshot.data;
-          if (snapshot.hasData) {
-            if (snapshot.data.isEmpty)
-              // TODO: Proper error UI
-              return Text('Something went wrong');
-            return ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (BuildContext context, int index) {
-                return TestCard(list[index]);
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: 20),
+          Expanded(
+            child: FutureBuilder(
+              future: fetchEvents(endpoint),
+              builder: (context, snapshot) {
+                List<Event> list = snapshot.data;
+                if (snapshot.hasData) {
+                  if (snapshot.data.isEmpty)
+                    // TODO: Proper error UI
+                    return Text('Something went wrong');
+                  return ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return EventCard(list[index]);
+                    },
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
               },
-            );
-          } else
-            return CircularProgressIndicator();
-        },
+            ),
+          ),
+        ],
       ),
     );
   }
