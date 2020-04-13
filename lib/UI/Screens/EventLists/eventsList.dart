@@ -27,6 +27,7 @@ class _EventsListState extends State<EventsList> {
   }
 
   Future<List<Event>> fetchEvents(String endpoint) async {
+    // TODO: Handle handshake errors
     List<Event> result;
     var connectivityResult = await (Connectivity().checkConnectivity());
 

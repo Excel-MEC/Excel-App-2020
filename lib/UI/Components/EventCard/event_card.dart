@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/event_card.dart';
+import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +18,8 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // TODO: Naviagte to event details
-      },
+        Navigator.push(context, MaterialPageRoute(builder: (context) => EventPage()));
+      }, 
       child: Card(
         elevation: 5.0,
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),

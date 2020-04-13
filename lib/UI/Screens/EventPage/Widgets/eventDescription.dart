@@ -5,72 +5,73 @@ Widget getEventDetails(EventDetails eventDetails, var _minpadding) {
   return Hero(
     tag: 'EventDescription',
     child: Padding(
-        padding: EdgeInsets.only(left: _minpadding * 8, top: _minpadding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+      padding: EdgeInsets.only(left: _minpadding * 10, top: _minpadding * 2),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          
+          // Date and Time
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Icon(
+                Icons.calendar_today,
+                size: 20.0,
+                color: Colors.white,
+              ),
+              SizedBox(width: _minpadding * 2),
+              eventDescriptionText(eventDetails.dateTime)
+            ],
+          ),
+          SizedBox(height: _minpadding * 2),
 
-              //Event Time Details
-              children: <Widget>[
-                Icon(
-                  Icons.calendar_today,
-                  size: 15.0,
-                  color: Colors.white,
-                ),
-                Container(padding: EdgeInsets.only(right: _minpadding * 2)),
-                eventDescriptionText(eventDetails.dateTime)
-              ],
-            ),
-            Container(padding: EdgeInsets.only(top: _minpadding * 2)),
+          // Venue
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Icon(
+                Icons.add_location,
+                size: 20.0,
+                color: Colors.white,
+              ),
+              SizedBox(width: _minpadding * 2),
+              eventDescriptionText(eventDetails.venue)
+            ],
+          ),
+          SizedBox(height: _minpadding * 2),
 
-            //Event Venue Details
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Icon(
-                  Icons.add_location,
-                  size: 15.0,
-                  color: Colors.white,
-                ),
-                Container(padding: EdgeInsets.only(right: _minpadding * 2)),
-                eventDescriptionText(eventDetails.venue)
-              ],
-            ),
-            Container(padding: EdgeInsets.only(top: _minpadding * 2)),
+          // Contacts
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Icon(
+                Icons.phone,
+                size: 20.0,
+                color: Colors.white,
+              ),
+              SizedBox(width: _minpadding * 2),
+              eventDescriptionText(
+                  eventDetails.contacts[0]['phone_number'].toString())
+            ],
+          ),
+          SizedBox(height: _minpadding * 2),
 
-            //EventContacts
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Icon(
-                  Icons.phone,
-                  size: 15.0,
-                  color: Colors.white,
-                ),
-                Padding(padding: EdgeInsets.only(right: _minpadding * 2)),
-                eventDescriptionText(
-                    eventDetails.contacts[0]['phone_number'].toString())
-              ],
-            ),
-            Container(padding: EdgeInsets.only(top: _minpadding * 2)),
-
-            //Event Fee Details
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Icon(
-                  Icons.label,
-                  size: 15.0,
-                  color: Colors.white,
-                ),
-                Container(padding: EdgeInsets.only(right: _minpadding * 2)),
-                eventDescriptionText(eventDetails.category)
-              ],
-            ),
-          ],
-        )),
+          // TODO: Prize money
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Icon(
+                Icons.label,
+                size: 20.0,
+                color: Colors.white,
+              ),
+              SizedBox(width: _minpadding * 2),
+              eventDescriptionText(eventDetails.category)
+            ],
+          ),
+        ],
+      ),
+    ),
   );
 }
 
@@ -81,8 +82,7 @@ Widget eventDescriptionText(String text) {
       text,
       style: TextStyle(
         color: Colors.white,
-        fontSize: 16.0,
-        decoration: TextDecoration.none,
+        fontSize: 17.0,
         fontFamily: 'Quicksand-Light',
         fontWeight: FontWeight.w300,
       ),
