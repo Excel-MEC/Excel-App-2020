@@ -27,126 +27,134 @@ class MoreDetailsState extends State<MoreDetails> {
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-        body: Stack(children: <Widget>[
-      // Background Image
-      getBackgroundImage(eventDetails, [
-        Color.fromRGBO(0, 0, 0, 1),
-        Color.fromRGBO(23, 18, 41, 0.8),
-        // primaryColor,
-        Color.fromRGBO(0, 0, 0, .6)
-      ]),
-
-      Container(
-          child: ListView(
+      body: Stack(
         children: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(
-                  left: _minpadding * 7, top: deviceHeight * 0.15),
-              child: Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  //Event Name Details
-                  Expanded(
-                    child: Hero(
-                      tag: 'EventName',
-                      child: Text(eventDetails.name,
-                          style: TextStyle(
+          // Background Image
+          getBackgroundImage(eventDetails, [
+            Color.fromRGBO(0, 0, 0, 1),
+            Color.fromRGBO(23, 18, 41, 0.8),
+            // primaryColor,
+            Color.fromRGBO(0, 0, 0, .6)
+          ]),
+
+          Container(
+            child: ListView(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: _minpadding * 7, top: deviceHeight * 0.15),
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      //Event Name Details
+                      Expanded(
+                        child: Hero(
+                          tag: 'EventName',
+                          child: Text(
+                            eventDetails.name,
+                            style: TextStyle(
                               decoration: TextDecoration.none,
                               fontFamily: pfontFamily,
                               height: 1.0,
                               fontSize: 40.0,
                               fontWeight: FontWeight.w800,
-                              color: Colors.white)),
-                    ),
-                  ),
-
-                  //Like Button
-                  Hero(
-                    tag: 'LikeButton',
-
-                    //Code to make the button under a Material widget during animation which otherwise throws error
-                    flightShuttleBuilder: (BuildContext flightContext,
-                            Animation<double> animation,
-                            HeroFlightDirection flightDirection,
-                            BuildContext fromHeroContext,
-                            BuildContext toHeroContext) =>
-                        Material(
-                            type: MaterialType.transparency,
-                            child: toHeroContext.widget),
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                      child: LikeButton(false),
-                    ),
-                  ),
-                ],
-              )),
-
-          //EventDetails
-          getEventDetails(eventDetails, _minpadding),
-
-          SizedBox(height: _minpadding * 2),
-
-          // More details card
-          Container(
-            height: deviceHeight * .65,
-            padding: EdgeInsets.only(top: _minpadding),
-            child: Hero(
-              tag: 'Card',
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30)),
-                child: DefaultTabController(
-                  initialIndex: 0,
-                  length: 4,
-                  child: Scaffold(
-                    appBar: PreferredSize(
-                      preferredSize: Size.fromHeight(60),
-                      child: AppBar(
-                        backgroundColor: Colors.white,
-                        elevation: 0,
-                        bottom: TabBar(
-                          indicatorSize: TabBarIndicatorSize.label,
-                          indicatorColor: primaryColor,
-                          labelColor: primaryColor,
-                          labelStyle: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w500),
-                          tabs: [
-                            Tab(
-                              text: 'About',
+                              color: Colors.white,
                             ),
-                            Tab(
-                              text: 'Format',
-                            ),
-                            Tab(
-                              text: 'Rules',
-                            ),
-                            Tab(
-                              text: 'Contacts',
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                    body: Container(
-                      color: Colors.white,
-                      child: TabBarView(
-                        children: [
-                          details(eventDetails.about),
-                          details(eventDetails.format),
-                          details(eventDetails.rules),
-                          contactDetails(eventDetails.contacts)
-                        ],
+                      //Like Button
+                      Hero(
+                        tag: 'LikeButton',
+
+                        //Code to make the button under a Material widget during animation which otherwise throws error
+                        flightShuttleBuilder: (BuildContext flightContext,
+                                Animation<double> animation,
+                                HeroFlightDirection flightDirection,
+                                BuildContext fromHeroContext,
+                                BuildContext toHeroContext) =>
+                            Material(
+                                type: MaterialType.transparency,
+                                child: toHeroContext.widget),
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                          child: LikeButton(false),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                //EventDetails
+                getEventDetails(eventDetails, _minpadding),
+
+                SizedBox(height: _minpadding * 2),
+
+                // More details card
+                Container(
+                  height: deviceHeight * .65,
+                  padding: EdgeInsets.only(top: _minpadding),
+                  child: Hero(
+                    tag: 'Card',
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                      child: DefaultTabController(
+                        initialIndex: 0,
+                        length: 4,
+                        child: Scaffold(
+                          appBar: PreferredSize(
+                            preferredSize: Size.fromHeight(60),
+                            child: AppBar(
+                              backgroundColor: Colors.white,
+                              elevation: 0,
+                              bottom: TabBar(
+                                indicatorSize: TabBarIndicatorSize.label,
+                                indicatorColor: primaryColor,
+                                labelColor: primaryColor,
+                                labelStyle: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w500),
+                                tabs: [
+                                  Tab(
+                                    text: 'About',
+                                  ),
+                                  Tab(
+                                    text: 'Format',
+                                  ),
+                                  Tab(
+                                    text: 'Rules',
+                                  ),
+                                  Tab(
+                                    text: 'Contacts',
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          body: Container(
+                            color: Colors.white,
+                            child: TabBarView(
+                              children: [
+                                details(eventDetails.about),
+                                details(eventDetails.format),
+                                details(eventDetails.rules),
+                                contactDetails(eventDetails.contacts)
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
         ],
-      )),
-    ]));
+      ),
+    );
   }
 
   Widget details(txt) {
@@ -181,10 +189,11 @@ class MoreDetailsState extends State<MoreDetails> {
     }
     return SingleChildScrollView(
       child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          child: Column(
-            children: finDetails,
-          )),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        child: Column(
+          children: finDetails,
+        ),
+      ),
     );
   }
 

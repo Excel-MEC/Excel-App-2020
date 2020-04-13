@@ -104,7 +104,15 @@ class EventPageBodyState extends State<EventPageBody> {
                       minWidth: MediaQuery.of(context).size.width / 2.3,
                       height: 45.0,
                       child: OutlineButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  MoreDetails(eventDetails: eventDetails),
+                            ),
+                          );
+                        },
                         borderSide: BorderSide(color: Colors.white),
                         child: Text('More Details'),
                         textColor: Colors.white,
@@ -147,7 +155,6 @@ class EventPageBodyState extends State<EventPageBody> {
                     ),
                   ),
                 ),
-                
               ],
             ),
           )
