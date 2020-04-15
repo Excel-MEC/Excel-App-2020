@@ -151,7 +151,7 @@ class EventPageBodyState extends State<EventPageBody> {
                       ),
                     ),
                     child: Container(
-                      height: 0,
+                      height: 0
                     ),
                   ),
                 ),
