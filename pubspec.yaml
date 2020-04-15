@@ -33,7 +33,8 @@ flutter:
 
   uses-material-design: true
 
-  # assets:
+  assets:
+  - assets/BG 2.jpg
   #  - assets/kryptos.jpg
   #  - assets/lost.jpg
 

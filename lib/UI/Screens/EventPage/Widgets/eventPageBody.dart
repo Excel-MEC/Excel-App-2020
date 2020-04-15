@@ -117,7 +117,7 @@ class EventPageBodyState extends State<EventPageBody> {
                         child: Text('More Details'),
                         textColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
@@ -131,7 +131,7 @@ class EventPageBodyState extends State<EventPageBody> {
                         color: Colors.white,
                         textColor: primaryColor,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
