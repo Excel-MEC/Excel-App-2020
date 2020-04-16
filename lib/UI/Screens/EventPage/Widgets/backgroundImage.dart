@@ -30,7 +30,7 @@ Widget getBackgroundImage(EventDetails eventDetails, List<Color> gradient) {
             ),
           ),
         ),
-      )
+      ),
     ],
   );
 }

@@ -19,12 +19,17 @@ class _LikeButton extends State<LikeButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: IconButton(
-          alignment: Alignment.center,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(70),
+      child: Container(
+        color: Colors.white,
+        child: IconButton(
+          alignment: Alignment.bottomCenter,
           iconSize: 30,
-          color: Colors.white,
-          icon: !likeState ? Icon(Icons.favorite) : Icon(Icons.favorite,color: Colors.red),
+          color: Colors.grey,
+          icon: !likeState
+              ? Icon(Icons.favorite)
+              : Icon(Icons.favorite, color: Colors.redAccent),
           onPressed: () {
             // TODO: Add to favourites
             setState(() {
@@ -32,6 +37,7 @@ class _LikeButton extends State<LikeButton> {
             });
           },
         ),
+      ),
     );
   }
 }
