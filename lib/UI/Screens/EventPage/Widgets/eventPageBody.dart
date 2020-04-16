@@ -95,8 +95,7 @@ class EventPageBodyState extends State<EventPageBody> {
                               iconSize: 40.0,
                               color: Colors.white,
                               onPressed: () {
-                                // TODO: Fix back button
-                                debugPrint("BackButtonPressed");
+                                Navigator.pop(context);
                               },
                             ),
                             //Event Name Details

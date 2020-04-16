@@ -1,4 +1,5 @@
 import 'package:excelapp/UI/Screens/LandingPage/landingPage.dart';
+import 'package:excelapp/UI/Screens/ProfilePage/profile_page.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
