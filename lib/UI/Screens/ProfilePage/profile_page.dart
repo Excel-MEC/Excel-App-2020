@@ -1,6 +1,7 @@
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/Widgets/qr_code.dart';
+import 'package:excelapp/UI/Screens/ProfilePage/Widgets/update_profile.dart';
 import 'package:excelapp/UI/Themes/profile_themes.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
                GestureDetector(
                 onTap: (){
                   // TODO: Update Profile
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateProfile()));
                 },
                 child: cardBuilder('Update Profile'),
               ),
@@ -61,6 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
 Widget cardBuilder(String name) {
   return Card(
+    margin: EdgeInsets.symmetric(vertical: 5,horizontal: 4),
     elevation: 3,
     child: ListTile(
       title: Text(
