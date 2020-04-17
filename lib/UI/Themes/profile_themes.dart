@@ -21,4 +21,9 @@ class ProfileTheme {
     fontFamily: pfontFamily,
     fontWeight: FontWeight.w600,
   );
+  static var detailsTextStyle = TextStyle(
+    color: primaryColor,
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+  );
 }
