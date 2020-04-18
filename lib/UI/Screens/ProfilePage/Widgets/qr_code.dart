@@ -10,9 +10,10 @@ class QrCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 1,
+      elevation: 3,
       child: Center(
         child: Container(
+          padding: EdgeInsets.symmetric(vertical: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -32,7 +33,7 @@ class QrCode extends StatelessWidget {
                       ),
                     ),
                   ),
-                  placeholder: (context, str) => CircularProgressIndicator(),
+                  placeholder: (context, str) => Center(child: CircularProgressIndicator()),
                 ),
               ),
               // User name
@@ -76,7 +77,7 @@ qrDialog(BuildContext context,String qrUrl) {
             width: MediaQuery.of(context).size.width/2,
             child: CachedNetworkImage(
               imageUrl: qrUrl,
-              placeholder: (context,str) => CircularProgressIndicator(),
+              placeholder: (context,str) => Center(child: CircularProgressIndicator()),
             ),
           ),
         ),
