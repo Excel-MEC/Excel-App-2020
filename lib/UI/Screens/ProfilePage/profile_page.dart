@@ -33,6 +33,14 @@ class _ProfilePageState extends State<ProfilePage> {
               Container(
                 child: QrCode(user.imageUrl, user.qrUrl, user.name),
               ),
+              // User Details
+              GestureDetector(
+                onTap: () {
+                  // TODO: Fetch user details -- Initially local value of profileUpdate is set to false
+                  // Once user updates profile, value will be set to true
+                },
+                child: cardBuilder('Profile'),
+              ),
               // Update profile
                GestureDetector(
                 onTap: (){
