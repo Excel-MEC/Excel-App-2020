@@ -1,6 +1,7 @@
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateProfile extends StatefulWidget {
@@ -12,10 +13,17 @@ class _UpdateProfileState extends State<UpdateProfile> {
   final _formKey = GlobalKey<FormState>();
   String _name;
   String _mobile;
-  List<String> _categories = <String>['college','school','professional'];
+  List<String> _categories = <String>['college', 'school', 'professional'];
   String _category = 'college';
-  List<String> _institutions = <String>['Harvard','Mec','Stanford','MIT','IIT Bombay'];
-  String _institutionName = 'Mec';
+  List<String> _institutions = <String>[
+    'Harvard',
+    'Model Engineering College',
+    'Stanford',
+    'MIT',
+    'IIT Bombay',
+    'HArry Potter Uni'
+  ];
+  String _institutionName = 'Model Engineering College';
 
   @override
   Widget build(BuildContext context) {
@@ -70,24 +78,47 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   Text("Category: "),
                   SizedBox(width: 10),
                   DropdownButton<String>(
-                   value: _category,
-                   items: _categories.map<DropdownMenuItem<String>>((val) {
-                     return DropdownMenuItem<String>(
-                       value: val,
-                       child: Text(val),
-                     );
-                   }).toList(),
-                   onChanged: (String value) {
-                     setState(() {
-                       _category = value;
-                     });
-                   },
+                    value: _category,
+                    items: _categories.map<DropdownMenuItem<String>>((val) {
+                      return DropdownMenuItem<String>(
+                        value: val,
+                        child: Text(val),
+                      );
+                    }).toList(),
+                    onChanged: (String value) {
+                      setState(() {
+                        _category = value;
+                      });
+                    },
                   ),
                 ],
               ),
-
               // Institutions
-              // TODO: Implement searchable drop down list
+              Row(
+                children: <Widget>[
+                  Text("Institutions: "),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: SearchableDropdown.single(
+                      value: _institutionName,
+                      items: _institutions.map<DropdownMenuItem<String>>((val) {
+                        return DropdownMenuItem<String>(
+                          value: val,
+                          child: Text(val),
+                        );
+                      }).toList(),
+                      hint: 'Select Institution',
+                      searchHint: 'Enter here',
+                      onChanged: (value) {
+                        setState(() {
+                          _institutionName = value;
+                        });
+                      },
+                      isExpanded: true,
+                    ),
+                  ),
+                ],
+              ),
               RaisedButton(
                 child: Text("Submit"),
                 onPressed: () {
@@ -96,7 +127,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   _formKey.currentState.validate();
                 },
               ),
-              Text(_category)
+              Text(_institutionName)
             ],
           ),
         ),

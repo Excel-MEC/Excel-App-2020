@@ -20,6 +20,7 @@ dependencies:
   connectivity: ^0.4.8+2
 
   # UI
+  searchable_dropdown:
   url_launcher: ^5.4.2
   carousel_slider: ^1.4.1
 
