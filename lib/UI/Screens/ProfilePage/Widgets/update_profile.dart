@@ -2,12 +2,14 @@ import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateProfile extends StatefulWidget {
   @override
   _UpdateProfileState createState() => _UpdateProfileState();
 }
+
+// TODO: Fetch institutions from API
+// TODO: Send data to backend
 
 class _UpdateProfileState extends State<UpdateProfile> {
   final _formKey = GlobalKey<FormState>();
@@ -111,8 +113,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     Text("Note : Not applicable for professionals"),
                     Row(
                       children: <Widget>[
-                        // Text("Institution: "),
-                        // SizedBox(width: 10),
                         Expanded(
                           child: SearchableDropdown.single(
                             value: _institutionName,
@@ -138,7 +138,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   ],
                 ),
                 SizedBox(height: 10),
-
                 // Select Gender
                 Row(
                   children: <Widget>[
