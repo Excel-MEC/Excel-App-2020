@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import './TestPage/testPage.dart';
-
-
-
-
+import './PreTestPage/preTestPage.dart';
 
 class DemoPage extends StatelessWidget {
   @override
@@ -23,6 +20,13 @@ class DemoPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => TestPage()));
+                  }
+                  ),
+                                RaisedButton(
+                  child: Text('Page Before Test'),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => PreTestPage()));
                   }
                   ),
 
