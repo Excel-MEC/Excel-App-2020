@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
 
 Widget pageBody(
-    questionDetails, Map<String, String> answers, var updateAnswer) {
+    questionDetails, Map<String, String> answers, var updateAnswer,var nextQuestion,var prevQuestion) {
   return Center(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -58,7 +58,7 @@ Widget pageBody(
           children: [
             GestureDetector(
               onTap: () {
-                print('prev');
+                prevQuestion();
               },
               child: Container(
                 height: 40,
@@ -84,7 +84,7 @@ Widget pageBody(
             ),
             GestureDetector(
               onTap: () {
-                print('next');
+                nextQuestion();
               },
               child: Container(
                 height: 40,

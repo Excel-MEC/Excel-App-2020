@@ -31,36 +31,54 @@ class _TestPageState extends State<TestPage> {
     });
   }
 
+  nextQuestion() {
+    if (selectedQuestion < questions.length-1) {
+      setState(() {
+        selectedQuestion = selectedQuestion + 1;
+        appbarText = 'Question '+(selectedQuestion+1).toString();
+      });
+    }
+  }
+
+  prevQuestion() {
+    if (selectedQuestion > 0) {
+      setState(() {
+        selectedQuestion = selectedQuestion - 1;
+        appbarText = 'Question '+(selectedQuestion+1).toString();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          drawer: navDrawer(context, questions, changePage),
-          appBar: AppBar(
-            centerTitle: true,
-            title: Text(
-              appbarText,
-              style: TextStyle(
-                color: primaryColor,
+        drawer: navDrawer(context, questions, changePage),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            appbarText,
+            style: TextStyle(
+              color: primaryColor,
+            ),
+          ),
+          actions: <Widget>[
+            Center(
+              child: Text(
+                '30.09',
+                style: TextStyle(
+                    color: primaryColor, fontSize: 20, fontFamily: pfontFamily),
               ),
             ),
-            actions: <Widget>[
-              Center(
-                child: Text(
-                  '30.09',
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 20,
-                      fontFamily: pfontFamily),
-                ),
-              ),
-              SizedBox(width: 10)
-            ],
-            iconTheme: new IconThemeData(color: primaryColor),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          ),
-          body: pageBody(questions[selectedQuestion], answers, updateAnswer)),
+            SizedBox(width: 10)
+          ],
+          iconTheme: new IconThemeData(color: primaryColor),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: pageBody(questions[selectedQuestion], answers, updateAnswer,
+            nextQuestion, prevQuestion),
+      ),
     );
   }
 }
