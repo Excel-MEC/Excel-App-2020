@@ -18,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   authentication(BuildContext context) async {
-    // Show loader
+    
     final alertDialog = alertBox();
     showDialog(
       context: context,
@@ -29,12 +29,14 @@ class _LoginScreenState extends State<LoginScreen> {
     await authService.logout();
     String auth = await authService.login();
     if(auth == 'success') {
-      print("Authentication Success");
+      // TODO : Fetch user details
+      await authService.fetchUserDetails();
+      // TODO : Create User Model and Add to database
     }
     else {
       print("Authentication went wrong");
     }
-    // TODO : Fetch User details
+
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => CheckUserLoggedIn()));
   }

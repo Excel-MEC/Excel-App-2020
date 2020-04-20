@@ -13,6 +13,7 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
 
   Future<String> checkUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    return 'login';
     if (prefs.getBool('isLogged') == false ||
         prefs.getBool('isLogged') == null) {
           return 'login';

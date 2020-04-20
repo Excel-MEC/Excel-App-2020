@@ -76,7 +76,7 @@ class AuthService {
       //store user details locally -- details to store can be modified later
       // TODO: Store User in DB
       Map<String,dynamic> responseData = json.decode(response.body);
-
+      print(responseData);
       // await prefs.setString('name', responseData['response']['name']);
       // await prefs.setString('email',responseData['response']['email']);
       // await prefs.setString('picture', responseData['response']['picture']);
