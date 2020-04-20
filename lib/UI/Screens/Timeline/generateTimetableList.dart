@@ -26,7 +26,7 @@ class TimeTableList extends StatelessWidget {
     for (int i = 0; i < eventDetails.length; i++) {
       eventList.add(
         Event(eventDetails[i]['name'], eventDetails[i]['venue'],
-            eventDetails[i]['time'], eventDetails[i]['image']),
+            eventDetails[i]['time'], eventDetails[i]['image'],i),
       );
     }
   }
@@ -37,11 +37,12 @@ class Event extends StatefulWidget {
   final String _venue;
   final String _time;
   final String _imgurl;
+  final int lineNumber;
 
-  Event(this._eventName, this._venue, this._time, this._imgurl);
+  Event(this._eventName, this._venue, this._time, this._imgurl, this.lineNumber);
   @override
   EventState createState() =>
-      EventState(this._eventName, this._venue, this._time, this._imgurl);
+      EventState(this._eventName, this._venue, this._time, this._imgurl,this.lineNumber);
 }
 
 class EventState extends State<Event> {
@@ -49,17 +50,18 @@ class EventState extends State<Event> {
   final String _venue;
   final String _time;
   final String _imgurl;
+  final int lineNumber;
 
   Size cardSize;
   // GlobalKey _cardKey = GlobalKey();
 
-  EventState(this._eventName, this._venue, this._time, this._imgurl);
+  EventState(this._eventName, this._venue, this._time, this._imgurl, this.lineNumber);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        lineAndDot(),
+        lineAndDot(lineNumber),
         Expanded(
           child: Container(
             margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -150,16 +152,18 @@ var primaryColor=Color(0xff666688);
   );
 }
 
-Widget lineAndDot() {
+Widget lineAndDot(lineNumber) {
+  print(lineNumber);
+  double rowHeight=85.0;
   return Stack(
     children: <Widget>[
       Container(
         width: 45,
       ),
       Container(
-        margin: EdgeInsets.only(left: 22.5),
+        margin: lineNumber!=0?EdgeInsets.only(left: 22.5):EdgeInsets.only(left: 22.5, top: rowHeight/2),
         width: 1.0,
-        height: 85,
+        height: lineNumber!=0?rowHeight:rowHeight/2,
         color: Color(0xff777777),
       ),
       Container(
