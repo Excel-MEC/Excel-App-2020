@@ -24,7 +24,7 @@ class HighlightsCard extends StatelessWidget {
           ),
           // Gradient
           Opacity(
-            opacity: 0.4,
+            opacity: 0.15,
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
@@ -50,7 +50,7 @@ class HighlightsCard extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 29,
+                    fontSize: 20,
                   ),
                 ),
                 SizedBox(height: 5),
@@ -60,7 +60,7 @@ class HighlightsCard extends StatelessWidget {
                   event.dateTime != null ? event.dateTime : 'No date | No time',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 17,
+                    fontSize: 13,
                   ),
                 ),
               ],
