@@ -2,7 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
 
-Widget pageBody(questionDetails, Map<String, String> answers) {
+Widget pageBody(
+    questionDetails, Map<String, String> answers, var updateAnswer) {
   return Center(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -35,20 +36,18 @@ Widget pageBody(questionDetails, Map<String, String> answers) {
                 ? primaryColor
                 : Colors.white,
             onPressed: () {
-              answers.update(
-                questionDetails['id'],
-                (_) => index.toString(),
-                ifAbsent: () => index.toString(),
-              );
-              print(answers);
+              updateAnswer(questionDetails['id'], index.toString());
             },
             child: Container(
               width: 200,
               child: Center(
                 child: Text(
                   questionDetails['options'][index.toString()],
-                  style:
-                      TextStyle(fontFamily: pfontFamily, color: primaryColor),
+                  style: TextStyle(
+                      fontFamily: pfontFamily,
+                      color: answers[questionDetails['id']] == index.toString()
+                          ? Colors.white
+                          : primaryColor),
                 ),
               ),
             ),

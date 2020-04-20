@@ -20,6 +20,17 @@ class _TestPageState extends State<TestPage> {
     });
   }
 
+  updateAnswer(index, id) {
+    setState(() {
+      answers.update(
+        index.toString(),
+        (_) => id,
+        ifAbsent: () => id,
+      );
+      print(answers);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -49,7 +60,7 @@ class _TestPageState extends State<TestPage> {
             backgroundColor: Colors.transparent,
             elevation: 0,
           ),
-          body: pageBody(questions[selectedQuestion], answers)),
+          body: pageBody(questions[selectedQuestion], answers, updateAnswer)),
     );
   }
 }
