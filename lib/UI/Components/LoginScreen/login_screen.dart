@@ -29,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
     await authService.logout();
     String auth = await authService.login();
     if(auth == 'success') {
-      // TODO : Fetch user details
       await authService.fetchUserDetails();
       // TODO : Create User Model and Add to database
     }
