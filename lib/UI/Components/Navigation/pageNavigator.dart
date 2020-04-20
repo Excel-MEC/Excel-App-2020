@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Screens/HomePage/homePage.dart';
 import 'package:excelapp/UI/Screens/Timeline/timeline.dart';
+import 'package:excelapp/UI/Screens/Tests/TestPage/testPage.dart';
 // import '../UI/Home/profile.dart';
 // import '../../Screens/FavouritesPage/favouritesPage.dart';
 
@@ -20,9 +21,9 @@ class NavigatingPage extends StatelessWidget {
       // case 2:
       //   return FavouritePage();
       //   break;
-      // case 3:
-      //   return ProfilePage();
-      //   break;
+      case 3:
+        return TestPage();
+        break;
       default:
         return Center();
     }

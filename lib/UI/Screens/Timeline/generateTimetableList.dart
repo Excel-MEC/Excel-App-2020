@@ -17,7 +17,7 @@ class TimeTableList extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[Padding(padding: EdgeInsets.all(8))] + eventList,
+      children: <Widget>[Padding(padding: EdgeInsets.all(8))] + eventList +[SizedBox(height: 90,)],
     );
   }
 
@@ -183,7 +183,7 @@ Widget lineAndDot(lineNumber, noOfEvents) {
       Container(
         margin: EdgeInsets.only(left: 19, top: 38),
         child: CircleAvatar(
-          backgroundColor: lineNumber % 2 == 0 ? Colors.blue : Colors.red,
+          backgroundColor: lineNumber % 2 == 0 ? Colors.cyan : Colors.red,
           radius: 4,
         ),
       )
