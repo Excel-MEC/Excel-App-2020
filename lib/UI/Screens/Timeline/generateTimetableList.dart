@@ -59,6 +59,7 @@ class EventState extends State<Event> {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
+        lineAndDot(),
         Expanded(
           child: Container(
             margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -149,4 +150,25 @@ var primaryColor=Color(0xff666688);
   );
 }
 
-
+Widget lineAndDot() {
+  return Stack(
+    children: <Widget>[
+      Container(
+        width: 45,
+      ),
+      Container(
+        margin: EdgeInsets.only(left: 22.5),
+        width: 1.0,
+        height: 85,
+        color: Color(0xff777777),
+      ),
+      Container(
+        margin: EdgeInsets.only(left: 19, top: 38),
+        child: CircleAvatar(
+          backgroundColor: Colors.blue,
+          radius: 4,
+        ),
+      )
+    ],
+  );
+}
