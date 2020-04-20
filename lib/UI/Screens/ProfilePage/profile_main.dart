@@ -3,7 +3,6 @@ import 'package:excelapp/UI/Screens/ProfilePage/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// This is used to check if User has logged in or not
 
 class CheckUserLoggedIn extends StatefulWidget {
   @override

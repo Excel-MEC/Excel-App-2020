@@ -28,11 +28,12 @@ class AuthService {
 
       //store access token locally
       accessToken = response['access_token'].toString();
+      print("Access Token : $accessToken");
       prefs.setString('access_token', accessToken);
     }
     catch(e) {
       print("Error: $e");
-    }
+    } 
 
 
     //send access token to backend -- recieve jwt
@@ -46,6 +47,7 @@ class AuthService {
       final Map<String, dynamic> responseData = json.decode(response.body);
       //store JWT token locally
       String jwt = responseData['token'].toString();
+      print("JWT : $jwt");
       prefs.setString('jwt', jwt);
 
       //User has logged in
@@ -74,9 +76,10 @@ class AuthService {
       //store user details locally -- details to store can be modified later
       // TODO: Store User in DB
       Map<String,dynamic> responseData = json.decode(response.body);
-      await prefs.setString('name', responseData['response']['name']);
-      await prefs.setString('email',responseData['response']['email']);
-      await prefs.setString('picture', responseData['response']['picture']);
+
+      // await prefs.setString('name', responseData['response']['name']);
+      // await prefs.setString('email',responseData['response']['email']);
+      // await prefs.setString('picture', responseData['response']['picture']);
 
     }catch(e) {
       print("Error: $e");
