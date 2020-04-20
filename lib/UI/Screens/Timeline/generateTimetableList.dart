@@ -25,8 +25,13 @@ class TimeTableList extends StatelessWidget {
     eventList = List<Widget>();
     for (int i = 0; i < eventDetails.length; i++) {
       eventList.add(
-        Event(eventDetails[i]['name'], eventDetails[i]['venue'],
-            eventDetails[i]['time'], eventDetails[i]['image'],i),
+        Event(
+            eventDetails[i]['name'],
+            eventDetails[i]['venue'],
+            eventDetails[i]['time'],
+            eventDetails[i]['image'],
+            i,
+            eventDetails.length),
       );
     }
   }
@@ -38,11 +43,13 @@ class Event extends StatefulWidget {
   final String _time;
   final String _imgurl;
   final int lineNumber;
+  final int eventLength;
 
-  Event(this._eventName, this._venue, this._time, this._imgurl, this.lineNumber);
+  Event(this._eventName, this._venue, this._time, this._imgurl, this.lineNumber,
+      this.eventLength);
   @override
-  EventState createState() =>
-      EventState(this._eventName, this._venue, this._time, this._imgurl,this.lineNumber);
+  EventState createState() => EventState(this._eventName, this._venue,
+      this._time, this._imgurl, this.lineNumber, this.eventLength);
 }
 
 class EventState extends State<Event> {
@@ -51,17 +58,19 @@ class EventState extends State<Event> {
   final String _time;
   final String _imgurl;
   final int lineNumber;
+  final int eventLength;
 
   Size cardSize;
   // GlobalKey _cardKey = GlobalKey();
 
-  EventState(this._eventName, this._venue, this._time, this._imgurl, this.lineNumber);
+  EventState(this._eventName, this._venue, this._time, this._imgurl,
+      this.lineNumber, this.eventLength);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        lineAndDot(lineNumber),
+        lineAndDot(lineNumber, eventLength),
         Expanded(
           child: Container(
             margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -126,8 +135,7 @@ class EventState extends State<Event> {
 }
 
 Widget iconAndText(var icon, String text) {
-  
-var primaryColor=Color(0xff666688);
+  var primaryColor = Color(0xff666688);
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[
@@ -152,23 +160,30 @@ var primaryColor=Color(0xff666688);
   );
 }
 
-Widget lineAndDot(lineNumber) {
-  double rowHeight=90.0;
+Widget lineAndDot(lineNumber, noOfEvents) {
+  noOfEvents = noOfEvents - 1;
+  double rowHeight = 90.0;
   return Stack(
     children: <Widget>[
       Container(
         width: 45,
       ),
       Container(
-        margin: lineNumber!=0?EdgeInsets.only(left: 22.5):EdgeInsets.only(left: 22.5, top: rowHeight/2),
+        margin: lineNumber != 0
+            ? (lineNumber == noOfEvents
+                ? EdgeInsets.only(left: 22.5, bottom: rowHeight / 2)
+                : EdgeInsets.only(left: 22.5))
+            : EdgeInsets.only(left: 22.5, top: rowHeight / 2),
         width: 1.0,
-        height: lineNumber!=0?rowHeight:rowHeight/2,
+        height: lineNumber != 0
+            ? lineNumber==noOfEvents?rowHeight/2: rowHeight
+            : rowHeight / 2,
         color: Color(0xff777777),
       ),
       Container(
         margin: EdgeInsets.only(left: 19, top: 38),
         child: CircleAvatar(
-          backgroundColor: lineNumber%2==0?Colors.blue:Colors.red,
+          backgroundColor: lineNumber % 2 == 0 ? Colors.blue : Colors.red,
           radius: 4,
         ),
       )
