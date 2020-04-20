@@ -18,17 +18,17 @@ class _TimelineState extends State<Timeline> {
       initialIndex: 0,
       length: 3,
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
           bottom: TabBar(
             indicatorSize: TabBarIndicatorSize.label,
-            indicatorWeight: 3,
+            indicatorWeight: 2,
             indicatorColor: primaryColor,
-            labelColor: Color(0xff252a50),
+            labelColor: primaryColor,
             labelStyle: TextStyle(
-                fontSize: 15,
+                fontSize: 14,
                 fontFamily: pfontFamily,
-                color: Color(0xff282849),
                 fontWeight: FontWeight.w600),
             tabs: [
               Tab(
@@ -45,7 +45,7 @@ class _TimelineState extends State<Timeline> {
           title: Text(
             'Timeline',
             style: TextStyle(
-                fontSize: 20,
+                fontSize: 19,
                 fontFamily: pfontFamily,
                 color: Color(0xff282849),
                 fontWeight: FontWeight.w600),
@@ -74,12 +74,7 @@ class _TimelineState extends State<Timeline> {
     else if (dayNumber == 3) returnWidget = TimeTableList(sampleDataDay3);
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children:
-            <Widget>[Padding(padding: EdgeInsets.all(8))] + [returnWidget],
-      ),
+      child: returnWidget,
     );
   }
 }
@@ -87,97 +82,102 @@ class _TimelineState extends State<Timeline> {
 List<Map<String, String>> sampleDataDay1 = [
   {
     'name': 'Robosoccer Day 1',
-    'content': '10AM - 4PM | Amphitheatre',
-    'image':
-        'https://free4kwallpapers.com/uploads/wallpaper/neon-retro-computers-by-lorenzo-herrera-wallpaper-1024x768-wallpaper.jpg'
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
+    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
   },
   {
     'name': 'Khoj',
-    'content': '10AM - 4PM | Amphitheatre',
-    'image': 'https://wallpapercave.com/wp/pZPTMMO.jpg'
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
+    'image': 'http://storage.excelmec.org/excel-2019/event-icons/algorithm.png'
   },
   {
     'name': 'Reverse Coding',
-    'content': '10AM - 4PM | Amphitheatre',
-    'image':
-        'https://free4kwallpapers.com/uploads/wallpaper/neon-retro-computers-by-lorenzo-herrera-wallpaper-1024x768-wallpaper.jpg'
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
+    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
   },
   {
     'name': 'Next Event',
-    'content': '10AM - 4PM | Amphitheatre',
-    'image':
-        'https://free4kwallpapers.com/uploads/wallpaper/neon-retro-computers-by-lorenzo-herrera-wallpaper-1024x768-wallpaper.jpg'
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
+    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
   },
   {
     'name': 'Robosoccer Day 1',
-    'content': '10AM - 4PM | Amphitheatre',
-    'image':
-        'https://free4kwallpapers.com/uploads/wallpaper/neon-retro-computers-by-lorenzo-herrera-wallpaper-1024x768-wallpaper.jpg'
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
+    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
   },
   {
     'name': 'Khoj',
-    'content': '10AM - 4PM | Amphitheatre',
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
     'image': 'https://wallpapercave.com/wp/pZPTMMO.jpg'
   },
   {
     'name': 'Robosoccer Day 1',
-    'content': '10AM - 4PM | Amphitheatre',
-    'image':
-        'https://free4kwallpapers.com/uploads/wallpaper/neon-retro-computers-by-lorenzo-herrera-wallpaper-1024x768-wallpaper.jpg'
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
+    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
   },
   {
     'name': 'Khoj',
-    'content': '10AM - 4PM | Amphitheatre',
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
     'image': 'https://wallpapercave.com/wp/pZPTMMO.jpg'
   },
 ];
 List<Map<String, String>> sampleDataDay2 = [
   {
     'name': 'Day 2 Soccer',
-    'content': '10AM - 4PM | Amphitheatre',
-    'image':
-        'https://free4kwallpapers.com/uploads/wallpaper/neon-retro-computers-by-lorenzo-herrera-wallpaper-1024x768-wallpaper.jpg'
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
+    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
   },
   {
     'name': 'Khoj Day 2',
-    'content': '10AM - 4PM | Amphitheatre',
-    'image': 'https://wallpapercave.com/wp/pZPTMMO.jpg'
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
+    'image': 'http://storage.excelmec.org/excel-2019/event-icons/algorithm.png'
   },
   {
     'name': 'Reverse Coding',
-    'content': '10AM - 4PM | Amphitheatre',
-    'image':
-        'https://free4kwallpapers.com/uploads/wallpaper/neon-retro-computers-by-lorenzo-herrera-wallpaper-1024x768-wallpaper.jpg'
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
+    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
   },
   {
     'name': 'Next Event',
-    'content': 'Amphitheatre\n10AM - 4PM',
-    'image':
-        'https://free4kwallpapers.com/uploads/wallpaper/neon-retro-computers-by-lorenzo-herrera-wallpaper-1024x768-wallpaper.jpg'
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
+    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
   },
 ];
 List<Map<String, String>> sampleDataDay3 = [
   {
     'name': 'Robosoccer Day3',
-    'content': '10AM - 4PM | Amphitheatre',
-    'image':
-        'https://free4kwallpapers.com/uploads/wallpaper/neon-retro-computers-by-lorenzo-herrera-wallpaper-1024x768-wallpaper.jpg'
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
+    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
   },
   {
     'name': 'Khoj',
-    'content': '10AM - 4PM | Amphitheatre',
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
     'image': 'https://wallpapercave.com/wp/pZPTMMO.jpg'
   },
   {
     'name': 'Reverse Coding',
-    'content': '10AM - 4PM | Amphitheatre',
-    'image':
-        'https://free4kwallpapers.com/uploads/wallpaper/neon-retro-computers-by-lorenzo-herrera-wallpaper-1024x768-wallpaper.jpg'
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
+    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
   },
   {
     'name': 'Next Event',
-    'content': 'Amphitheatre\n10AM - 4PM',
-    'image':
-        'https://free4kwallpapers.com/uploads/wallpaper/neon-retro-computers-by-lorenzo-herrera-wallpaper-1024x768-wallpaper.jpg'
+    'time': '10AM - 4PM',
+    'venue': 'Amphitheatre',
+    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
   },
 ];

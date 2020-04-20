@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+
 import '../../constants.dart';
 import 'package:flutter/material.dart';
 
@@ -12,16 +14,10 @@ class TimeTableList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     addEventToList();
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.fromLTRB(36, 10, 0, 0),
-      child: SingleChildScrollView(
-        key: _listKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[] + eventList,
-        ),
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[Padding(padding: EdgeInsets.all(8))] + eventList,
     );
   }
 
@@ -29,8 +25,8 @@ class TimeTableList extends StatelessWidget {
     eventList = List<Widget>();
     for (int i = 0; i < eventDetails.length; i++) {
       eventList.add(
-        Event(eventDetails[i]['content'], eventDetails[i]['name'],
-            eventDetails[i]['image']),
+        Event(eventDetails[i]['name'], eventDetails[i]['venue'],
+            eventDetails[i]['time'], eventDetails[i]['image']),
       );
     }
   }
@@ -38,93 +34,119 @@ class TimeTableList extends StatelessWidget {
 
 class Event extends StatefulWidget {
   final String _eventName;
-  final String _content;
+  final String _venue;
+  final String _time;
   final String _imgurl;
 
-  Event(this._content, this._eventName, this._imgurl);
+  Event(this._eventName, this._venue, this._time, this._imgurl);
   @override
   EventState createState() =>
-      EventState(this._content, this._eventName, this._imgurl);
+      EventState(this._eventName, this._venue, this._time, this._imgurl);
 }
 
 class EventState extends State<Event> {
   final String _eventName;
-  final String _content;
+  final String _venue;
+  final String _time;
   final String _imgurl;
-
-  double circleDiameter = 7;
-  double circleTopMargin = 52;
 
   Size cardSize;
   // GlobalKey _cardKey = GlobalKey();
 
-  EventState(this._content, this._eventName, this._imgurl);
+  EventState(this._eventName, this._venue, this._time, this._imgurl);
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Row(
       children: <Widget>[
-        Container(
-          margin: EdgeInsets.fromLTRB(40, 10, 0, 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(24.0),
-              topRight: Radius.zero,
-              bottomLeft: Radius.circular(24),
-              bottomRight: Radius.zero,
-            ),
-            color: Colors.deepPurpleAccent[400],
-            shape: BoxShape.rectangle,
-            image: DecorationImage(
-                image: NetworkImage(_imgurl), fit: BoxFit.cover),
-          ),
+        Expanded(
           child: Container(
-              padding: EdgeInsets.fromLTRB(30, 25, 0, 25),
-              decoration: BoxDecoration(
-                color:timelineCardColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24.0),
-                  topRight: Radius.zero,
-                  bottomLeft: Radius.circular(24),
-                  bottomRight: Radius.zero,
+            margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+            padding: EdgeInsets.fromLTRB(13, 7, 5, 7),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(5.0),
+                topRight: Radius.zero,
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.zero,
+              ),
+              // border: Border.all(width: .5, color: Color(0xffbbbbbb)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  blurRadius: 1.0,
+                  spreadRadius: -0.2,
+                  offset: Offset(-0.4, 0.4),
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text(
-                    _eventName,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontFamily: pfontFamily,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 19),
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Container(
+                  width: 45.0,
+                  height: 45.0,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: CachedNetworkImageProvider(_imgurl)),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    color: Colors.transparent,
                   ),
-                  SizedBox(height: 4),
-                  Text(
-                    _content,
-                    style: TextStyle(
-                        fontFamily: sfontFamily,
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Text(
+                        _eventName,
+                        style: TextStyle(
+                            color: Color(0xff333333),
+                            fontSize: 15,
+                            fontFamily: pfontFamily),
+                      ),
+                      SizedBox(height: 5),
+                      iconAndText(Icons.place, _venue),
+                      iconAndText(Icons.timer, _time),
+                    ],
                   ),
-                ],
-              )),
+                ),
+              ],
+            ),
+          ),
         ),
-        Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: Container(
-              margin: EdgeInsets.only(top: circleTopMargin),
-              height: circleDiameter,
-              width: circleDiameter,
-              decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.circular(30),
-              ),
-            )),
       ],
     );
   }
 }
+
+Widget iconAndText(var icon, String text) {
+  
+var primaryColor=Color(0xff666688);
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: <Widget>[
+      SizedBox(width: 10),
+      Icon(
+        icon,
+        size: 13.0,
+        color: primaryColor,
+      ),
+      SizedBox(width: 5),
+      Expanded(
+        child: Text(
+          text,
+          style: TextStyle(
+              color: primaryColor,
+              fontSize: 11.0,
+              decoration: TextDecoration.none,
+              fontFamily: pfontFamily),
+        ),
+      )
+    ],
+  );
+}
+
+
