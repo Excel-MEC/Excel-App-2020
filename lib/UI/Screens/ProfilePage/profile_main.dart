@@ -1,8 +1,8 @@
+import 'package:excelapp/UI/Components/LoginScreen/login_screen.dart';
+import 'package:excelapp/UI/Screens/ProfilePage/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// This is used to check if User has logged in or not
-// If logged in then take user to profile page
 
 class CheckUserLoggedIn extends StatefulWidget {
   @override
@@ -11,22 +11,35 @@ class CheckUserLoggedIn extends StatefulWidget {
 
 class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
 
-  @override
-  void initState() {
-    super.initState();
-    checkUser();
-  }
-
-  // Check if user is authenticated
-  void checkUser() async {
-    // TODO: Evaluate User
+  Future<String> checkUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return 'login';
+    if (prefs.getBool('isLogged') == false ||
+        prefs.getBool('isLogged') == null) {
+          return 'login';
+    } else {
+      // fetch user details from DB -- setState
+      // return 'profile';
+    }
+    return 'null';
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
+    return Material(
+      child: FutureBuilder(
+        future: checkUser(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data == 'login') {
+              return LoginScreen();
+            } else if (snapshot.data == 'profile') {
+              return ProfilePage();
+            }
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }
