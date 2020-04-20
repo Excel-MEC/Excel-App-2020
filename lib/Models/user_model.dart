@@ -1,4 +1,3 @@
-// Replace this file with API data
 
 class User {
   int id;
