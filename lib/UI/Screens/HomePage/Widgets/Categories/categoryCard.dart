@@ -23,8 +23,10 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 3.5,
-      color: Colors.black,
+      margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+      height: MediaQuery.of(context).size.height / 4,
+      decoration: BoxDecoration(
+          color: Colors.black, borderRadius: BorderRadius.circular(20)),
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
