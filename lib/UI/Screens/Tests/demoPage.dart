@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import './TestPage/testPage.dart';
 import './PreTestPage/preTestPage.dart';
 import './TetstsList/listOfTests.dart';
+import 'package:excelapp/UI/Screens/ProfilePage/profile_page.dart';
 
 class DemoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Test Pages'),
+          title: Text('UI of other Pages'),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -33,6 +34,12 @@ class DemoPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => ListOfTests()));
+                  }),
+              RaisedButton(
+                  child: Text('Profile Page'),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ProfilePage()));
                   }),
             ],
           ),
