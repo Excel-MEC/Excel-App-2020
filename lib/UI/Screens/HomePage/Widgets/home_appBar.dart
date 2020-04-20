@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 Widget homeAppBar() {
   return PreferredSize(
-    preferredSize: Size.fromHeight(60.0),
+    preferredSize: Size.fromHeight(65.0),
     child: AppBar(
       leading: Icon(Icons.menu, color: primaryColor),
       backgroundColor: Colors.white,
-      elevation: 7,
+      elevation: 1,
       title: Text(
         'Excel 2020',
         style: TextStyle(
