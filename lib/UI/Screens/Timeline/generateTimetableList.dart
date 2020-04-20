@@ -153,8 +153,7 @@ var primaryColor=Color(0xff666688);
 }
 
 Widget lineAndDot(lineNumber) {
-  print(lineNumber);
-  double rowHeight=85.0;
+  double rowHeight=90.0;
   return Stack(
     children: <Widget>[
       Container(
@@ -169,7 +168,7 @@ Widget lineAndDot(lineNumber) {
       Container(
         margin: EdgeInsets.only(left: 19, top: 38),
         child: CircleAvatar(
-          backgroundColor: Colors.blue,
+          backgroundColor: lineNumber%2==0?Colors.blue:Colors.red,
           radius: 4,
         ),
       )
