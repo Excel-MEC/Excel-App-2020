@@ -20,7 +20,7 @@ class EventsAPI {
         .map<Event>((event) => Event.fromJson(event))
         .toList();
   }
-
+ 
   // Fetch event details from endpoint
   static Future<EventDetails> fetchEventDetails(String endpoint,int id) async {
     var response;

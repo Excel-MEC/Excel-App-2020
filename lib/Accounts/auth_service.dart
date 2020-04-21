@@ -1,4 +1,5 @@
 import 'package:excelapp/Accounts/account_config.dart';
+import 'package:excelapp/Models/user_model.dart';
 import 'package:flutter_auth0/flutter_auth0.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -61,31 +62,6 @@ class AuthService {
   }
 
 
-  Future<String> fetchUserDetails() async {
-
-    AccountConfig config = AccountConfig();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
-
-    try {
-      var response = await http.get(
-      config.url+'profile/',
-      headers: config.getHeader(jwt),
-      );
-
-      //store user details locally -- details to store can be modified later
-      // TODO: Store User in DB
-      Map<String,dynamic> responseData = json.decode(response.body);
-      print(responseData);
-      // await prefs.setString('name', responseData['response']['name']);
-      // await prefs.setString('email',responseData['response']['email']);
-      // await prefs.setString('picture', responseData['response']['picture']);
-
-    }catch(e) {
-      print("Error: $e");
-    }
-    return "success";
-  }
 
   Future<String> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
