@@ -2,15 +2,15 @@
 
 class DBUserTable {
   // TODO: Store User Information
-  String userTable() {
+  static String userTable() {
     String table = "CREATE TABLE User ("
       "id INTEGER PRIMARY KEY,"
       "name TEXT,"
       "email TEXT,"
       "picture TEXT,"
       "qrCodeUrl TEXT,"
-      "institutionId TEXT,"
-      "gender TEXT,"
+      "institutionId INTEGER,"
+      "institutionName TEXT,"
       "gender TEXT,"
       "mobileNumber TEXT,"
       "category TEXT"
