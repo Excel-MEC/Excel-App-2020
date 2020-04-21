@@ -32,8 +32,7 @@ class _HomePageState extends State<HomePage> {
   // Method invoked when connection changes
   _onChange(ConnectivityResult result) {
     if (result == ConnectivityResult.wifi ||
-        result == ConnectivityResult.mobile)
-      setState(() {});
+        result == ConnectivityResult.mobile) setState(() {});
     else
       print("no Internet");
   }
@@ -48,7 +47,7 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               // Highlights
               Container(
-                  child: Column(
+                child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
@@ -73,8 +72,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               )),
               // Categories
-              Categories(),
-              SizedBox(height: 40),
+              Categories()
             ],
           ),
         ),
