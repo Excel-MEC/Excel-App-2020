@@ -31,9 +31,9 @@ class User {
     qrCodeUrl = json['qrCodeUrl'];
     institutionId = json['institutionId'];
     institutionName = json.containsKey('institutionName') ? json['institutionName'] : 'Not Registered'; 
-    gender = json['gender'];
-    mobileNumber = json['mobileNumber'];
-    category = json['category'];
+    gender = json['gender'] != null ? json['gender'] : 'Not Registered';
+    mobileNumber = json['mobileNumber'] != null ? json['mobileNumber'] : 'Not Registered';
+    category = json['category'] != null ? json['category'] : 'Not Registered';
   }
 
   Map<String, dynamic> toJson() {
