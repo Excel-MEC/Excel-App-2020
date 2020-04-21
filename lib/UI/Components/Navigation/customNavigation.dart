@@ -9,12 +9,6 @@ class CustomNavigator extends StatefulWidget {
   State<StatefulWidget> createState() => CustomNavigatorState();
 }
 
-// To add pages to tabs:
-// 1. Modify _navigatorKeys below,
-// 2. Modify Stack in Scaffold
-// 3. Modify tabname & BottomNavigation in bottom_navigation.dart
-// 4. Set Pages to open in Page Navigator
-
 class CustomNavigatorState extends State<CustomNavigator> {
   TabItem _currentTab = TabItem.page1;
   Map<TabItem, GlobalKey<NavigatorState>> _navigatorKeys = {
@@ -87,7 +81,11 @@ Widget _buildFab(BuildContext context) {
       backgroundColor: Color(0xff252a50),
       onPressed: () {},
       // tooltip: 'Increment',
-      child: CachedNetworkImage(imageUrl: 'https://avatars1.githubusercontent.com/u/30120883?s=280&v=4', color: Colors.white, height: 35),
+      child: CachedNetworkImage(
+          imageUrl:
+              'https://avatars1.githubusercontent.com/u/30120883?s=280&v=4',
+          color: Colors.white,
+          height: 35),
       elevation: 2.0,
     ),
   );

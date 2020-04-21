@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Screens/HomePage/homePage.dart';
-// import '../UI/Timeline/timeline.dart';
-// import '../UI/Home/profile.dart';
-// import '../../Screens/FavouritesPage/favouritesPage.dart';
+import 'package:excelapp/UI/Screens/ProfilePage/profile_main.dart';
+import 'package:excelapp/UI/Screens/Schedule/schedule.dart';
 
 class NavigatingPage extends StatelessWidget {
   NavigatingPage({this.pageNumber});
@@ -14,15 +13,15 @@ class NavigatingPage extends StatelessWidget {
       case 0:
         return HomePage();
         break;
-      // case 1:
-      //   return Timeline();
-      //   break;
+      case 1:
+      return Schedule();
+      // break;
       // case 2:
       //   return FavouritePage();
       //   break;
-      // case 3:
-      //   return ProfilePage();
-      //   break;
+      case 3:
+        return CheckUserLoggedIn();
+        break;
       default:
         return Center();
     }
