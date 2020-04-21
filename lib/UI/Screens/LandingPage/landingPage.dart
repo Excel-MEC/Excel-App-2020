@@ -20,7 +20,7 @@ class LandingPageState extends State<LandingPage> {
     return GestureDetector(
       onVerticalDragStart: (_) {
         _pageController.animateToPage(1,
-            duration: Duration(milliseconds: 1000), curve: Curves.easeInOut);
+            duration: Duration(milliseconds: 1500), curve: Curves.easeInOut);
       },
       child: Scaffold(
         body: Stack(
@@ -34,7 +34,7 @@ class LandingPageState extends State<LandingPage> {
                   child: WelcomeCard(),
                   onTap: () {
                     _pageController.animateToPage(1,
-                        duration: Duration(milliseconds: 1000),
+                        duration: Duration(milliseconds: 1500),
                         curve: Curves.easeInOut);
                   },
                 ),

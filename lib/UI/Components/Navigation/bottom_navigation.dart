@@ -29,7 +29,7 @@ class BottomNavigation extends StatelessWidget {
         FABBottomAppBarItem(iconData: Icons.home, text: ''),
         FABBottomAppBarItem(iconData: Icons.list, text: ''),
         FABBottomAppBarItem(iconData: Icons.favorite, text: ''),
-        FABBottomAppBarItem(iconData: Icons.toc, text: ''),
+        FABBottomAppBarItem(iconData: Icons.account_circle, text: ''),
       ],
     );
   }
