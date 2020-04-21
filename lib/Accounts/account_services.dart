@@ -18,7 +18,7 @@ class AccountServices {
         headers: config.getHeader(jwt),
       );
 
-      // TODO: Store User in DB
+      // Store User in DB 
       Map<String, dynamic> responseData = json.decode(response.body);
       print(responseData);
       user = User.fromJson(responseData);
@@ -26,6 +26,9 @@ class AccountServices {
       DBProvider dbProvider = DBProvider();
       await dbProvider.addUser(user, 'User');
       print("done");
+
+      // Store user id in shared preference
+      await prefs.setInt('userId', user.id);
 
     } catch (e) {
       print("Error: $e");

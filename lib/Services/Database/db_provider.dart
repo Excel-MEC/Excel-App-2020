@@ -46,6 +46,15 @@ class DBProvider {
     await db.insert(table, user.toJson(),conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
+  // Retrieve user 
+  Future<User> getUser(String table, int id) async {
+    final db = await database;
+    List<Map<String,dynamic>> res = await db.query(table, where: 'id = ?', whereArgs: [id]);
+    Map<String,dynamic> user = res[0];
+    User userDetails = User.fromJson(user);
+    return userDetails;
+  }
+
   // Add multiple records(events) to table
   addEvents(List<Event> events, String table) async {
     final db = await database;
@@ -81,5 +90,7 @@ class DBProvider {
     EventDetails eventDetails = EventDetails.fromJson(event);
     return eventDetails;
   }
+
+  
 
 }

@@ -1,3 +1,4 @@
+import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:excelapp/UI/Components/LoginScreen/login_screen.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -10,16 +11,21 @@ class CheckUserLoggedIn extends StatefulWidget {
 }
 
 class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
+  DBProvider db;
+
+  @override
+  void initState() { 
+    super.initState();
+    db = DBProvider();
+  }
 
   Future<String> checkUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return 'login';
     if (prefs.getBool('isLogged') == false ||
         prefs.getBool('isLogged') == null) {
           return 'login';
     } else {
-      // fetch user details from DB -- setState
-      // return 'profile';
+      
     }
     return 'null';
   }
