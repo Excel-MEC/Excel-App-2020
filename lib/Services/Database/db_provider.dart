@@ -89,8 +89,6 @@ class DBProvider {
     Map<String,dynamic> event = res[0];
     EventDetails eventDetails = EventDetails.fromJson(event);
     return eventDetails;
-  }
-
-  
+  }  
 
 }

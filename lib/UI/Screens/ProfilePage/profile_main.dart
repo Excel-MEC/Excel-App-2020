@@ -1,3 +1,4 @@
+import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:excelapp/UI/Components/LoginScreen/login_screen.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/profile_page.dart';
@@ -19,15 +20,18 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
     db = DBProvider();
   }
 
-  Future<String> checkUser() async {
+  Future<dynamic> checkUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getBool('isLogged') == false ||
         prefs.getBool('isLogged') == null) {
           return 'login';
     } else {
-      
+      // Fetch user details from database
+      int userId = prefs.getInt('userId');
+      print(userId);
+      User user = await db.getUser('User', userId);
+      return user;
     }
-    return 'null';
   }
 
   @override
@@ -39,8 +43,8 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
           if (snapshot.hasData) {
             if (snapshot.data == 'login') {
               return LoginScreen();
-            } else if (snapshot.data == 'profile') {
-              return ProfilePage();
+            } else {
+              return ProfilePage(snapshot.data);
             }
           } else {
             return Center(child: CircularProgressIndicator());
