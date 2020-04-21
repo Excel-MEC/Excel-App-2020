@@ -6,7 +6,7 @@ class DBEventsTable {
   // 1.Competitions
   // 2.Talks
   // 3.Workshops
-  static String createEventTable(String tableName) {
+  static String eventTable(String tableName) {
     String table = "CREATE TABLE $tableName ("
       "id INTEGER PRIMARY KEY,"
       "name TEXT,"
@@ -18,7 +18,7 @@ class DBEventsTable {
   }
 
   // Table for storing event details
-  static String createEventDetailsTable(String tableName) {
+  static String eventDetailsTable(String tableName) {
     String table = "CREATE TABLE $tableName ("
       "id INTEGER PRIMARY KEY,"
       "name TEXT,"

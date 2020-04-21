@@ -29,7 +29,7 @@ class DBProvider {
 
   void _onCreate(Database db, int version) async {
     // TODO: execute all table creation as batch - for single transaction
-    await db.execute(DBEventsTable.createEventTable('Competitions'));
+    await db.execute(DBEventsTable.eventTable('Competitions'));
   }
 
   void dispose() async {

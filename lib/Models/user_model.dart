@@ -6,6 +6,7 @@ class User {
   String picture;
   String qrCodeUrl;
   int institutionId;
+  String institutionName;
   String gender;
   String mobileNumber;
   String category;
@@ -17,6 +18,7 @@ class User {
       this.picture,
       this.qrCodeUrl,
       this.institutionId,
+      this.institutionName,
       this.gender,
       this.mobileNumber,
       this.category});
@@ -28,6 +30,7 @@ class User {
     picture = json['picture'];
     qrCodeUrl = json['qrCodeUrl'];
     institutionId = json['institutionId'];
+    institutionName = json['institutionName'] != null ? json['institutionName'] : 'Not Registered'; 
     gender = json['gender'];
     mobileNumber = json['mobileNumber'];
     category = json['category'];
@@ -41,6 +44,7 @@ class User {
     data['picture'] = this.picture;
     data['qrCodeUrl'] = this.qrCodeUrl;
     data['institutionId'] = this.institutionId;
+    data['institutionName'] = this.institutionName;
     data['gender'] = this.gender;
     data['mobileNumber'] = this.mobileNumber;
     data['category'] = this.category;
