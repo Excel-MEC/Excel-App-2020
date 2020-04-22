@@ -1,6 +1,7 @@
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Accounts/auth_service.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
+import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/profile_main.dart';
 import 'package:flutter/material.dart';
 
@@ -11,17 +12,15 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   AuthService authService;
-  AccountServices accountServices;
 
   @override
   void initState() {
     super.initState();
     authService = AuthService();
-    accountServices = AccountServices();
   }
 
   void authentication(BuildContext context) async {
-    final alertDialog = alertBox();
+    final alertDialog = alertBox("Please Wait");
     showDialog(
       context: context,
       builder: (BuildContext context) => alertDialog,
@@ -34,14 +33,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (auth == 'success') {
       // Fetch User details and Update local database - User table
-      await accountServices.fetchUserDetails();
-      Navigator.pop(context);
+      await AccountServices.fetchUserDetails();
+      Navigator.of(context, rootNavigator: true).pop();
     } else {
       print("Authentication went wrong");
     }
 
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => CheckUserLoggedIn()));
+      context,
+      MaterialPageRoute(builder: (context) => CheckUserLoggedIn()),
+    );
   }
 
   @override
@@ -56,21 +57,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-}
-
-// Loading UI - Alert Dialog
-Widget alertBox() {
-  return AlertDialog(
-    content: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        CircularProgressIndicator(),
-        SizedBox(width: 40.0),
-        Text(
-          "Please Wait",
-          style: TextStyle(color: Colors.grey),
-        )
-      ],
-    ),
-  );
 }

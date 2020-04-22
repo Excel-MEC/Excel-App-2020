@@ -28,7 +28,6 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
     } else {
       // Fetch user details from database
       int userId = prefs.getInt('userId');
-      print(userId);
       User user = await db.getUser('User', userId);
       return user;
     }

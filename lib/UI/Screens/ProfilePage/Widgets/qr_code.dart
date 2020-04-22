@@ -19,8 +19,8 @@ class QrCode extends StatelessWidget {
             children: <Widget>[
               // profile pic
               Container(
-                height: 160,
-                width: 160,
+                height: MediaQuery.of(context).size.height/6,
+                width: MediaQuery.of(context).size.height/6,
                 decoration: BoxDecoration(shape: BoxShape.circle),
                 child: CachedNetworkImage(
                   imageUrl: imageUrl,
@@ -52,10 +52,7 @@ class QrCode extends StatelessWidget {
                   'SHOW QR CODE',
                   style: ProfileTheme.buttonTextStyle,
                 ),
-                onPressed: () {
-                  // Show QR
-                  qrDialog(context,qrUrl);
-                },
+                onPressed: () => qrDialog(context,qrUrl)
               ),
             ],
           ),

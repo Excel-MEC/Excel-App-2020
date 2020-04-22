@@ -6,16 +6,16 @@ import 'package:excelapp/Accounts/account_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountServices {
-  Future<String> fetchUserDetails() async {
+  
+  static Future<String> fetchUserDetails() async {
     User user;
-    AccountConfig config = AccountConfig();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
 
     try {
       var response = await http.get(
-        config.url + 'profile/',
-        headers: config.getHeader(jwt),
+        AccountConfig.url + 'profile/',
+        headers: AccountConfig.getHeader(jwt),
       );
 
       // Store User in DB 
@@ -34,6 +34,25 @@ class AccountServices {
       print("Error: $e");
     }
 
-    return "Success";
+    return "success";
   }
+
+  static Future<List<Institution>> fetchInstitutions(String category) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwt = prefs.getString('jwt');
+
+    try {
+      print("fetching institutions");
+      var response = await http.get(
+        AccountConfig.url + 'institution/$category/list',
+        headers: AccountConfig.getHeader(jwt),
+      );
+      print(response.body);
+      List<Map<String,dynamic>> responseData = json.decode(response.body);
+      return responseData.map<Institution>((institution) => Institution.fromJson(institution)).toList();
+    } catch(e) {
+      print("Error: $e");
+    }
+  }
+
 }
