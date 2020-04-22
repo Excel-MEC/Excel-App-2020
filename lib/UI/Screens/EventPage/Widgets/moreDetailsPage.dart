@@ -17,11 +17,6 @@ class MoreDetails extends StatefulWidget {
 class MoreDetailsState extends State<MoreDetails> {
   EventDetails eventDetails;
   MoreDetailsState(this.eventDetails);
-  //Stores the current active tab in more details
-  String activeTab = 'About';
-
-  //All paddings made as multiples of _minpadding
-  double _minpadding = 5.0;
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +25,23 @@ class MoreDetailsState extends State<MoreDetails> {
       body: Stack(
         children: <Widget>[
           // Background Image
-          getBackgroundImage(eventDetails, [
-            Color.fromRGBO(0, 0, 0, 1),
-            Color.fromRGBO(23, 18, 41, 0.8),
-            // primaryColor,
-            Color.fromRGBO(0, 0, 0, .6)
-          ]),
+          getBackgroundImage(
+            eventDetails,
+            [
+              Color.fromRGBO(0, 0, 0, 0),
+              Color.fromRGBO(23, 18, 41, .8),
+              Color.fromRGBO(0, 0, 0, .8),
+              Color.fromRGBO(255, 255, 255, 1),
+              Color.fromRGBO(255, 255, 255, 1)
+            ],
+          ),
 
           Container(
             child: ListView(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(
-                      left: _minpadding * 7, top: deviceHeight * 0.15),
+                  padding:
+                      EdgeInsets.only(left: 35.0, top: deviceHeight * 0.15),
                   child: Row(
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -56,7 +55,7 @@ class MoreDetailsState extends State<MoreDetails> {
                               decoration: TextDecoration.none,
                               fontFamily: pfontFamily,
                               height: 1.0,
-                              fontSize: 40.0,
+                              fontSize: 35.0,
                               fontWeight: FontWeight.w800,
                               color: Colors.white,
                             ),
@@ -86,14 +85,14 @@ class MoreDetailsState extends State<MoreDetails> {
                 ),
 
                 //EventDetails
-                getEventDetails(eventDetails, _minpadding),
+                getEventDetails(eventDetails),
 
-                SizedBox(height: _minpadding * 2),
+                SizedBox(height: 10.0),
 
                 // More details card
                 Container(
                   height: deviceHeight * .65,
-                  padding: EdgeInsets.only(top: _minpadding),
+                  padding: EdgeInsets.only(top: 5.0),
                   child: Hero(
                     tag: 'Card',
                     child: ClipRRect(
@@ -206,7 +205,9 @@ class MoreDetailsState extends State<MoreDetails> {
           size: 15.0,
           color: primaryColor,
         ),
-        Container(padding: EdgeInsets.only(right: _minpadding * 2)),
+        Container(
+          padding: EdgeInsets.only(right: 10.0),
+        ),
         Expanded(
           child: Text(
             text,
