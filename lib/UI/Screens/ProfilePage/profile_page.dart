@@ -29,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   logoutUser(BuildContext context) async {
-    final alertDialog = alertBox();
+    final alertDialog = alertBox("Please Wait");
     showDialog(
       context: context,
       builder: (BuildContext context) => alertDialog,

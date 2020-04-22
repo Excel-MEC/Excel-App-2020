@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void authentication(BuildContext context) async {
-    final alertDialog = alertBox();
+    final alertDialog = alertBox("Please Wait");
     showDialog(
       context: context,
       builder: (BuildContext context) => alertDialog,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Loading UI - Alert Dialog
-Widget alertBox() {
+Widget alertBox(String text) {
   return AlertDialog(
     content: Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -9,7 +9,7 @@ Widget alertBox() {
         CircularProgressIndicator(),
         SizedBox(width: 40.0),
         Text(
-          "Please Wait",
+          text,
           style: TextStyle(color: Colors.grey),
         )
       ],

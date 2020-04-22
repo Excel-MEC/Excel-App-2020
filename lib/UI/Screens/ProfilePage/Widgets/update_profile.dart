@@ -1,6 +1,7 @@
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
+import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
@@ -17,15 +18,35 @@ class UpdateProfile extends StatefulWidget {
 
 class _UpdateProfileState extends State<UpdateProfile> {
   User userDetails;
+  bool categorySelected;
+  List<Institution> institutions;
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
+    categorySelected = false;
     userDetails = widget.user;
-    AccountServices.fetchInstitutions('college');
   }
 
-  fetchInstitutions() async {
+  // Fetch institutions based on category
+  fetchInstitutions(BuildContext context,String category) async {
+    final alertDialog = alertBox("Fetching Institutions");
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => alertDialog,
+      barrierDismissible: false,
+    );
+
+    List<Institution> res = await AccountServices.fetchInstitutions(category);
+    setState(() {
+      institutions = res;
+      categorySelected = true;
+    });
+    // Navigator.of(context, rootNavigator: true).pop();
+  }
+
+  // Submit form
+  submitForm() async {
 
   }
 
@@ -51,7 +72,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customappbar('Update Profile'),
-      
       body: Container(
         padding: EdgeInsets.all(20),
         child: Form(
@@ -92,7 +112,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     if (value.isEmpty) {
                       return "Please enter your mobile number";
                     }
-                    if(value.length > 10) {
+                    if (value.length > 10) {
                       return "Invalid Mobile number";
                     }
                   },
@@ -119,6 +139,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         setState(() {
                           _category = value;
                         });
+                        fetchInstitutions(context, value);
                       },
                     ),
                   ],
@@ -135,11 +156,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         Expanded(
                           child: SearchableDropdown.single(
                             value: _institutionName,
-                            items: _institutions
+                            readOnly: categorySelected,
+                            items: institutions
                                 .map<DropdownMenuItem<String>>((val) {
                               return DropdownMenuItem<String>(
-                                value: val,
-                                child: Text(val),
+                                value: val.name,
+                                child: Text(val.name),
                               );
                             }).toList(),
                             hint: 'Select Institution',
