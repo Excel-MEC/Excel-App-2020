@@ -65,35 +65,3 @@ var userMap = {
   "isCollege": true,
 };
 
-class Person {
-  String name;
-  String imageUrl;
-  String qrUrl;
-  String email;
-  String phone;
-  String gender;
-  int institutionId;
-  String institutionName;
-  bool isCollege;
-
-  Person(
-      {this.name,
-      this.imageUrl,
-      this.qrUrl,
-      this.email,
-      this.phone,
-      this.institutionId,
-      this.institutionName,
-      this.isCollege});
-
-  Person.fromMapObject(Map<String, dynamic> map) {
-    this.name = map['name'];
-    this.imageUrl = map['imgUrl'];
-    this.qrUrl = map['qrUrl'];
-    this.phone = map['phone'];
-    this.email = map['email'];
-    this.institutionId = map['institutionId'];
-    this.institutionName = map['institutionName'];
-    this.isCollege = map['isCollege'];
-  }
-}

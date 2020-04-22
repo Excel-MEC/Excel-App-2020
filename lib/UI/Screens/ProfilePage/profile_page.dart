@@ -71,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 // TODO: Update Profile
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => UpdateProfile()),
+                  MaterialPageRoute(builder: (context) => UpdateProfile(_user)),
                 );
               },
               child: cardBuilder('Update Profile'),

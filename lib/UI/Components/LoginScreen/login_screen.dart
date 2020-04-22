@@ -12,13 +12,11 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   AuthService authService;
-  AccountServices accountServices;
 
   @override
   void initState() {
     super.initState();
     authService = AuthService();
-    accountServices = AccountServices();
   }
 
   void authentication(BuildContext context) async {
@@ -35,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (auth == 'success') {
       // Fetch User details and Update local database - User table
-      await accountServices.fetchUserDetails();
+      await AccountServices.fetchUserDetails();
       Navigator.of(context, rootNavigator: true).pop();
     } else {
       print("Authentication went wrong");

@@ -1,5 +1,4 @@
 import 'package:excelapp/Accounts/account_config.dart';
-import 'package:excelapp/Models/user_model.dart';
 import 'package:flutter_auth0/flutter_auth0.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -11,10 +10,9 @@ class AuthService {
   Future<String> login() async {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    AccountConfig config = AccountConfig();
     Auth0 auth0 = Auth0(
-      baseUrl: config.baseUrl,
-      clientId:config.clientId,
+      baseUrl: AccountConfig.baseUrl,
+      clientId: AccountConfig.clientId,
     );
 
     //Get access token from Auth0
@@ -22,8 +20,8 @@ class AuthService {
     try {
       var response = await auth0.webAuth.authorize({
         'response_type' : 'token',
-        'client_id'     : config.clientId,
-        'redirect_uri'  : config.redirect,
+        'client_id'     : AccountConfig.clientId,
+        'redirect_uri'  : AccountConfig.redirect,
         'scope'         : 'openid profile email',
       });
 
@@ -41,7 +39,7 @@ class AuthService {
     try {
       Map<String, String> token = {"auth_token": accessToken};
       var response = await http.post(
-        config.url+'auth/login/',
+        AccountConfig.url+'auth/login/',
         headers: {"Content-Type": "application/json"},
         body: json.encode(token),
       );

@@ -1,9 +1,13 @@
+import 'package:excelapp/Accounts/account_services.dart';
+import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class UpdateProfile extends StatefulWidget {
+  final User user;
+  UpdateProfile(this.user);
   @override
   _UpdateProfileState createState() => _UpdateProfileState();
 }
@@ -12,6 +16,19 @@ class UpdateProfile extends StatefulWidget {
 // TODO: Send data to backend
 
 class _UpdateProfileState extends State<UpdateProfile> {
+  User userDetails;
+
+  @override
+  void initState() { 
+    super.initState();
+    userDetails = widget.user;
+    AccountServices.fetchInstitutions('college');
+  }
+
+  fetchInstitutions() async {
+
+  }
+
   final _formKey = GlobalKey<FormState>();
   String _name;
   String _mobile;
@@ -34,7 +51,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customappbar('Update Profile'),
-      // TODO: future Builder to fetch list of institutions from backend
+      
       body: Container(
         padding: EdgeInsets.all(20),
         child: Form(
@@ -45,6 +62,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               children: <Widget>[
                 // Name
                 TextFormField(
+                  initialValue: userDetails.name,
                   onSaved: (String value) {
                     setState(() {
                       _name = value;
@@ -64,6 +82,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 // Mobile Number
                 TextFormField(
                   keyboardType: TextInputType.number,
+                  initialValue: userDetails.mobileNumber,
                   onSaved: (String value) {
                     setState(() {
                       _mobile = value;
