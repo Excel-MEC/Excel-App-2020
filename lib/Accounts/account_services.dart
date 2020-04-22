@@ -34,6 +34,6 @@ class AccountServices {
       print("Error: $e");
     }
 
-    return "Success";
+    return "success";
   }
 }
