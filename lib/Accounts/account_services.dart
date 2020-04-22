@@ -38,6 +38,10 @@ class AccountServices {
   }
 
   static Future<List<Institution>> fetchInstitutions(String category) async {
+    if(category == "professional") {
+      return [];
+    }
+    
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
 
@@ -48,7 +52,7 @@ class AccountServices {
         headers: AccountConfig.getHeader(jwt),
       );
       print(response.body);
-      List<Map<String,dynamic>> responseData = json.decode(response.body);
+      List<dynamic> responseData = json.decode(response.body);
       return responseData.map<Institution>((institution) => Institution.fromJson(institution)).toList();
     } catch(e) {
       print("Error: $e");
