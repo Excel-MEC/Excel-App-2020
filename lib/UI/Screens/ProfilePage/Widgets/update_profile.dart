@@ -13,23 +13,20 @@ class UpdateProfile extends StatefulWidget {
   _UpdateProfileState createState() => _UpdateProfileState();
 }
 
-// TODO: Fetch institutions from API
-// TODO: Send data to backend
-
 class _UpdateProfileState extends State<UpdateProfile> {
   User userDetails;
   bool categorySelected;
-  List<Institution> institutions;
+  List<Institution> institutions = [];
 
   @override
   void initState() {
     super.initState();
-    categorySelected = false;
     userDetails = widget.user;
+    categorySelected = false;
   }
 
   // Fetch institutions based on category
-  fetchInstitutions(BuildContext context,String category) async {
+  fetchInstitutions(BuildContext context, String category) async {
     final alertDialog = alertBox("Fetching Institutions");
     showDialog(
       context: context,
@@ -39,16 +36,15 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
     List<Institution> res = await AccountServices.fetchInstitutions(category);
     setState(() {
-      institutions = res;
+      institutions.clear();
+      institutions.addAll(res);
       categorySelected = true;
     });
-    // Navigator.of(context, rootNavigator: true).pop();
+    Navigator.of(context, rootNavigator: true).pop();
   }
 
   // Submit form
-  submitForm() async {
-
-  }
+  submitForm() async {}
 
   final _formKey = GlobalKey<FormState>();
   String _name;
@@ -139,7 +135,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         setState(() {
                           _category = value;
                         });
-                        fetchInstitutions(context, value);
+                        if (value != "professional") {
+                          fetchInstitutions(context, value);
+                        }
                       },
                     ),
                   ],
@@ -151,12 +149,13 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   children: <Widget>[
                     // Note - Professionals
                     Text("Note : Not applicable for professionals"),
+                    categorySelected ? Text(" ") : Text("Select category first",style: TextStyle(color: Colors.red),),
                     Row(
                       children: <Widget>[
                         Expanded(
                           child: SearchableDropdown.single(
                             value: _institutionName,
-                            readOnly: categorySelected,
+                            readOnly: !categorySelected,
                             items: institutions
                                 .map<DropdownMenuItem<String>>((val) {
                               return DropdownMenuItem<String>(
