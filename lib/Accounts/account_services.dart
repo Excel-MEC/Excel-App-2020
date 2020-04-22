@@ -37,7 +37,7 @@ class AccountServices {
     return "success";
   }
 
-  static Future<dynamic> fetchInstitutions(String category) async {
+  static Future<List<Institution>> fetchInstitutions(String category) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
 
@@ -49,9 +49,9 @@ class AccountServices {
       );
       print(response.body);
       List<Map<String,dynamic>> responseData = json.decode(response.body);
-
+      return responseData.map<Institution>((institution) => Institution.fromJson(institution)).toList();
     } catch(e) {
-
+      print("Error: $e");
     }
   }
 
