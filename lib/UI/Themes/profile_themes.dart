@@ -13,7 +13,7 @@ class ProfileTheme {
   static var nameStyle = TextStyle(
     fontWeight: FontWeight.w700,
     fontFamily: pfontFamily,
-    fontSize: 24.0,
+    fontSize: 20.0,
     color: primaryColor,
   );
   static var buttonTextStyle = TextStyle(

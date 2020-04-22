@@ -37,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
 
     await authService.logout();
-    Navigator.of(context,rootNavigator: true).pop();
+    Navigator.of(context, rootNavigator: true).pop();
     print("Logout");
     Navigator.pushReplacement(
       context,
@@ -63,14 +63,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 // TODO: Fetch user details -- Initially local value of profileUpdate is set to false
                 // Once user updates profile, value will be set to true
               },
-              child: cardBuilder('Profile'),
+              child: cardBuilder('View Profile'),
             ),
             // Update profile
             GestureDetector(
               onTap: () {
                 // TODO: Update Profile
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => UpdateProfile()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UpdateProfile()),
+                );
               },
               child: cardBuilder('Update Profile'),
             ),
@@ -83,9 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             // Logout
             GestureDetector(
-              onTap: () {
-                logoutUser(context);
-              },
+              onTap: () => logoutUser(context),
               child: cardBuilder('Logout'),
             ),
           ],
