@@ -43,26 +43,19 @@ class _UpdateProfileState extends State<UpdateProfile> {
     Navigator.of(context, rootNavigator: true).pop();
   }
 
-  // Submit form
-  submitForm() async {}
 
+  // Form Fields
   final _formKey = GlobalKey<FormState>();
   String _name;
   String _mobile;
-  List<String> _categories = <String>['college', 'school', 'professional'];
   String _category = 'college';
-  List<String> _genders = <String>['Male', 'Female', 'Other'];
+  int _institutionId;
+  String _institutionName = "Mec";
   String _gender = 'Male';
-  List<String> _institutions = <String>[
-    'Harvard',
-    'Model Engineering College',
-    'Stanford',
-    'MIT',
-    'IIT Bombay',
-    'HArry Potter Uni',
-    'Other',
-  ];
-  String _institutionName = 'Model Engineering College';
+  List<String> _categories = <String>['college', 'school', 'professional'];
+  List<String> _genders = <String>['Male', 'Female', 'Other'];
+  
+
 
   @override
   Widget build(BuildContext context) {
