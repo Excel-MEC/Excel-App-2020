@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './bottom_navigation.dart';
 import './tab_navigator.dart';
 import './BottomNavigationBarWidget/layout.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 
 class CustomNavigator extends StatefulWidget {
   @override
@@ -17,6 +18,19 @@ class CustomNavigatorState extends State<CustomNavigator> {
     TabItem.page3: GlobalKey<NavigatorState>(),
     TabItem.page4: GlobalKey<NavigatorState>(),
   };
+
+  bool isKeyboardVisible = false;
+
+  @protected
+  void initState() {
+    super.initState();
+
+    KeyboardVisibilityNotification().addNewListener(
+      onChange: (bool visible) {
+        isKeyboardVisible = visible;
+      },
+    );
+  }
 
   void _selectTab(TabItem tabItem) {
     if (tabItem == _currentTab) {
@@ -53,12 +67,15 @@ class CustomNavigatorState extends State<CustomNavigator> {
           _buildOffstageNavigator(TabItem.page3),
           _buildOffstageNavigator(TabItem.page4),
         ]),
-        bottomNavigationBar: BottomNavigation(
-          currentTab: _currentTab,
-          onSelectTab: _selectTab,
+        bottomNavigationBar: Visibility(
+          visible: isKeyboardVisible ? false : true,
+          child: BottomNavigation(
+            currentTab: _currentTab,
+            onSelectTab: _selectTab,
+          ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: _buildFab(context),
+        floatingActionButton: _buildFab(context, isKeyboardVisible),
       ),
     );
   }
@@ -74,19 +91,22 @@ class CustomNavigatorState extends State<CustomNavigator> {
   }
 }
 
-Widget _buildFab(BuildContext context) {
-  return AnchoredOverlay(
-    showOverlay: false,
-    child: FloatingActionButton(
-      backgroundColor: Color(0xff252a50),
-      onPressed: () {},
-      // tooltip: 'Increment',
-      child: CachedNetworkImage(
-          imageUrl:
-              'https://avatars1.githubusercontent.com/u/30120883?s=280&v=4',
-          color: Colors.white,
-          height: 35),
-      elevation: 2.0,
+Widget _buildFab(BuildContext context, isKeyboardVisible) {
+  return Visibility(
+    visible: isKeyboardVisible ? false : true,
+    child: AnchoredOverlay(
+      showOverlay: false,
+      child: FloatingActionButton(
+        backgroundColor: Color(0xff252a50),
+        onPressed: () {},
+        // tooltip: 'Increment',
+        child: CachedNetworkImage(
+            imageUrl:
+                'https://avatars1.githubusercontent.com/u/30120883?s=280&v=4',
+            color: Colors.white,
+            height: 35),
+        elevation: 2.0,
+      ),
     ),
   );
 }
