@@ -2,6 +2,7 @@ import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
+import 'package:excelapp/UI/Components/LoadingUI/snackBar.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
@@ -14,19 +15,40 @@ class UpdateProfile extends StatefulWidget {
 }
 
 class _UpdateProfileState extends State<UpdateProfile> {
-  User userDetails;
   bool categorySelected;
   List<Institution> institutions = [];
+
+  // Form Fields
+  final _formKey = GlobalKey<FormState>();
+  int _id;
+  String _name;
+  String _mobile;
+  String _category;
+  int _institutionId;
+  String _institutionName;
+  String _gender = 'Male';
+  List<String> _categories = <String>['college', 'school', 'professional'];
+  List<String> _genders = <String>['Male', 'Female', 'Other'];
 
   @override
   void initState() {
     super.initState();
-    userDetails = widget.user;
+    initialiseUserDetails(widget.user);
     categorySelected = false;
   }
 
+  // Initialize form fields
+  initialiseUserDetails(User user) {
+    _id = user.id;
+    _name = user.name;
+    _mobile = user.mobileNumber;
+    _category = user.category != "Not Registered" ? user.category : "college";
+    _institutionId = user.institutionId;
+    _institutionName = user.institutionName;
+  }
+
   // Fetch institutions based on category
-  fetchInstitutions(BuildContext context, String category) async {
+  getInstitutions(BuildContext context, String category) async {
     final alertDialog = alertBox("Fetching Institutions");
     showDialog(
       context: context,
@@ -44,18 +66,48 @@ class _UpdateProfileState extends State<UpdateProfile> {
   }
 
 
-  // Form Fields
-  final _formKey = GlobalKey<FormState>();
-  String _name;
-  String _mobile;
-  String _category = 'college';
-  int _institutionId;
-  String _institutionName = "Mec";
-  String _gender = 'Male';
-  List<String> _categories = <String>['college', 'school', 'professional'];
-  List<String> _genders = <String>['Male', 'Female', 'Other'];
+  // Submit Form
+  Future<String> submitForm() async {
+    setState(() {});
+    final alertDialog = alertBox("Submitting Form");
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => alertDialog,
+      barrierDismissible: false,
+    );
+
+    _institutionId = await getInstitutionId(_institutionName);
+    if (_institutionId == -1) {
+      Navigator.of(context, rootNavigator: true).pop();
+      return "One more fields are invalid!";
+    }
+
+    Map<String, dynamic> userInfo = {
+      "name": _name,
+      "institutionId": _institutionId,
+      "institutionName": _institutionName,
+      "gender": _gender,
+      "mobileNumber": _mobile,
+      "category": _category
+    };
+
+    var res = await AccountServices.updateProfile(userInfo);
+    print(res);
+    Navigator.of(context, rootNavigator: true).pop();
+    return "Submitted";
+  }
   
 
+  // Method to get institution Id
+  Future<int> getInstitutionId(String institutionName) async {
+    int id = -1;
+    institutions.forEach((e) {
+      if (institutionName == e.name) {
+        id = e.id;
+      }
+    });
+    return id;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +123,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               children: <Widget>[
                 // Name
                 TextFormField(
-                  initialValue: userDetails.name,
+                  initialValue: _name,
                   onSaved: (String value) {
                     setState(() {
                       _name = value;
@@ -91,7 +143,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 // Mobile Number
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  initialValue: userDetails.mobileNumber,
                   onSaved: (String value) {
                     setState(() {
                       _mobile = value;
@@ -118,6 +169,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     SizedBox(width: 10),
                     DropdownButton<String>(
                       value: _category,
+                      hint: Text("Select Category"),
                       items: _categories.map<DropdownMenuItem<String>>((val) {
                         return DropdownMenuItem<String>(
                           value: val,
@@ -129,7 +181,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           _category = value;
                         });
                         if (value != "professional") {
-                          fetchInstitutions(context, value);
+                          getInstitutions(context, value);
                         }
                       },
                     ),
@@ -142,13 +194,19 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   children: <Widget>[
                     // Note - Professionals
                     Text("Note : Not applicable for professionals"),
-                    categorySelected ? Text(" ") : Text("Select category first",style: TextStyle(color: Colors.red),),
+                    categorySelected
+                        ? Text(" ")
+                        : Text(
+                            "Select category first",
+                            style: TextStyle(color: Colors.red),
+                          ),
                     Row(
                       children: <Widget>[
                         Expanded(
                           child: SearchableDropdown.single(
                             value: _institutionName,
-                            readOnly: !categorySelected,
+                            readOnly: !categorySelected ||
+                                _category == "professional",
                             items: institutions
                                 .map<DropdownMenuItem<String>>((val) {
                               return DropdownMenuItem<String>(
@@ -170,7 +228,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 // Select Gender
                 Row(
                   children: <Widget>[
@@ -192,13 +250,17 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 30),
                 RaisedButton(
                   child: Text("Submit"),
                   onPressed: () {
                     _formKey.currentState.save();
-                    // TODO: It return whether form is valid or not. Therefore appropriate steps can be taken
-                    _formKey.currentState.validate();
+                    _formKey.currentState.validate()
+                        ? submitForm()
+                            .then((value) => Scaffold.of(context)
+                                .showSnackBar(snackBar(value)),)
+                            .catchError((e) => print(e))
+                        : print("Not valid");
                   },
                 ),
               ],
