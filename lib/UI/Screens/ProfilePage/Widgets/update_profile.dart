@@ -2,6 +2,7 @@ import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
+import 'package:excelapp/UI/Components/LoadingUI/snackBar.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
@@ -17,7 +18,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   bool categorySelected;
   List<Institution> institutions = [];
 
-    // Form Fields
+  // Form Fields
   final _formKey = GlobalKey<FormState>();
   int _id;
   String _name;
@@ -63,9 +64,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
     Navigator.of(context, rootNavigator: true).pop();
   }
 
-
   // Submit Form
-  submitForm() async {
+  Future<String> submitForm() async {
     setState(() {});
     final alertDialog = alertBox("Submitting Form");
     showDialog(
@@ -75,37 +75,37 @@ class _UpdateProfileState extends State<UpdateProfile> {
     );
 
     _institutionId = await getInstitutionId(_institutionName);
-    if(_institutionId == -1) {
+    if (_institutionId == -1) {
       // TODO : Failed - No such institution
-      print("Select valid Institution");
+      print("No Institution selected");
       Navigator.of(context, rootNavigator: true).pop();
-      return;
+      return "One more fields are invalid!";
     }
-    Map<String,dynamic> userInfo = {
-      "name"            : _name,
-      "institutionId"   : _institutionId,
-      "institutionName" : _institutionName,
-      "gender"          : _gender,
-      "mobileNumber"    : _mobile,
-      "category"        : _category
+    Map<String, dynamic> userInfo = {
+      "name": _name,
+      "institutionId": _institutionId,
+      "institutionName": _institutionName,
+      "gender": _gender,
+      "mobileNumber": _mobile,
+      "category": _category
     };
-    
+
     var res = await AccountServices.updateProfile(userInfo);
     print(res);
     // TODO : Display snack bar indicating if submission was a success or not
     Navigator.of(context, rootNavigator: true).pop();
+    return "Submitted";
   }
-  
+
   Future<int> getInstitutionId(String institutionName) async {
     int id = -1;
     institutions.forEach((e) {
-      if(institutionName == e.name) {
-        return e.id;
+      if (institutionName == e.name) {
+        id = e.id;
       }
     });
     return id;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -192,13 +192,19 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   children: <Widget>[
                     // Note - Professionals
                     Text("Note : Not applicable for professionals"),
-                    categorySelected ? Text(" ") : Text("Select category first",style: TextStyle(color: Colors.red),),
+                    categorySelected
+                        ? Text(" ")
+                        : Text(
+                            "Select category first",
+                            style: TextStyle(color: Colors.red),
+                          ),
                     Row(
                       children: <Widget>[
                         Expanded(
                           child: SearchableDropdown.single(
                             value: _institutionName,
-                            readOnly: !categorySelected || _category == "professional",
+                            readOnly: !categorySelected ||
+                                _category == "professional",
                             items: institutions
                                 .map<DropdownMenuItem<String>>((val) {
                               return DropdownMenuItem<String>(
@@ -212,7 +218,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               setState(() {
                                 _institutionName = value;
                               });
-                            },    
+                            },
                             isExpanded: true,
                           ),
                         ),
@@ -248,7 +254,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   onPressed: () {
                     _formKey.currentState.save();
                     // TODO: It return whether form is valid or not. Therefore appropriate steps can be taken
-                    _formKey.currentState.validate() ? submitForm() : print("Not valid");
+                    _formKey.currentState.validate()
+                        ? submitForm()
+                            .then((value) => Scaffold.of(context)
+                                .showSnackBar(snackBar(value)),)
+                            .catchError((e) => print(e))
+                        : print("Not valid");
                   },
                 ),
               ],
