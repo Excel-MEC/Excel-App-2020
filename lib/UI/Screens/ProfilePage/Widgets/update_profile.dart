@@ -37,6 +37,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     categorySelected = false;
   }
 
+  // Initialize form fields
   initialiseUserDetails(User user) {
     _id = user.id;
     _name = user.name;
@@ -64,6 +65,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     Navigator.of(context, rootNavigator: true).pop();
   }
 
+
   // Submit Form
   Future<String> submitForm() async {
     setState(() {});
@@ -76,11 +78,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
     _institutionId = await getInstitutionId(_institutionName);
     if (_institutionId == -1) {
-      // TODO : Failed - No such institution
-      print("No Institution selected");
       Navigator.of(context, rootNavigator: true).pop();
       return "One more fields are invalid!";
     }
+
     Map<String, dynamic> userInfo = {
       "name": _name,
       "institutionId": _institutionId,
@@ -92,11 +93,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
     var res = await AccountServices.updateProfile(userInfo);
     print(res);
-    // TODO : Display snack bar indicating if submission was a success or not
     Navigator.of(context, rootNavigator: true).pop();
     return "Submitted";
   }
+  
 
+  // Method to get institution Id
   Future<int> getInstitutionId(String institutionName) async {
     int id = -1;
     institutions.forEach((e) {
@@ -253,7 +255,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   child: Text("Submit"),
                   onPressed: () {
                     _formKey.currentState.save();
-                    // TODO: It return whether form is valid or not. Therefore appropriate steps can be taken
                     _formKey.currentState.validate()
                         ? submitForm()
                             .then((value) => Scaffold.of(context)
