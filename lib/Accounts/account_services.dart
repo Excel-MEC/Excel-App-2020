@@ -51,12 +51,28 @@ class AccountServices {
         AccountConfig.url + 'institution/$category/list',
         headers: AccountConfig.getHeader(jwt),
       );
-      print(response.body);
       List<dynamic> responseData = json.decode(response.body);
       return responseData.map<Institution>((institution) => Institution.fromJson(institution)).toList();
     } catch(e) {
       print("Error: $e");
     }
+  }
+
+  static Future<String> updateProfile(Map<String,dynamic> userInfo) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwt = prefs.getString('jwt');
+
+    try {
+      var response = await http.post(
+        AccountConfig.url + 'profile/update',
+        headers: AccountConfig.getHeader(jwt),
+        body: json.encode(userInfo),
+      );
+      print(response.body);
+    } catch (e) {
+      print("Error: $e");
+    }
+    return "done";
   }
 
 }
