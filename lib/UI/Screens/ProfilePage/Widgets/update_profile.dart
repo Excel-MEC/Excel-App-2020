@@ -75,6 +75,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
     );
 
     _institutionId = await getInstitutionId(_institutionName);
+    if(_institutionId == -1) {
+      // TODO : Failed - No such institution
+      print("Select valid Institution");
+      Navigator.of(context, rootNavigator: true).pop();
+      return;
+    }
     Map<String,dynamic> userInfo = {
       "name"            : _name,
       "institutionId"   : _institutionId,
@@ -91,10 +97,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
   }
   
   Future<int> getInstitutionId(String institutionName) async {
-    int id;
+    int id = -1;
     institutions.forEach((e) {
       if(institutionName == e.name) {
-        id = e.id;
+        return e.id;
       }
     });
     return id;
@@ -206,12 +212,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               setState(() {
                                 _institutionName = value;
                               });
-                            },
-                            validator: (val) {
-                              if(val == "Not Registered") {
-                                return "Select Institution";
-                              }
-                            },
+                            },    
                             isExpanded: true,
                           ),
                         ),
