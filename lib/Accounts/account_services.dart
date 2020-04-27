@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountServices {
   
+  // Fetch user details right after authentication
   static Future<String> fetchUserDetails() async {
     User user;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -37,6 +38,7 @@ class AccountServices {
     return "success";
   }
 
+  // Fetch list of institutions
   static Future<List<Institution>> fetchInstitutions(String category) async {
     if(category == "professional") {
       return [];
@@ -58,6 +60,7 @@ class AccountServices {
     }
   }
 
+  // Update User Profile
   static Future<String> updateProfile(Map<String,dynamic> userInfo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
