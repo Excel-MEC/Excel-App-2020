@@ -12,7 +12,6 @@ class CheckUserLoggedIn extends StatefulWidget {
 
 class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
   DBProvider db;
-  bool profileUpdated;
 
   @override
   void initState() {
@@ -28,10 +27,6 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
     } else {
       // Fetch user details from database
       int userId = prefs.getInt('userId');
-      bool isProfileUpdated = prefs.getBool('isProfileUpdated');
-      setState(() {
-        profileUpdated = isProfileUpdated;
-      });
       User user = await db.getUser('User', userId);
       return user;
     }
@@ -47,7 +42,7 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
             if (snapshot.data == 'login') {
               return LoginScreen();
             } else {
-              return ProfilePage(snapshot.data,profileUpdated);
+              return ProfilePage(snapshot.data);
             }
           } else {
             return Center(child: CircularProgressIndicator());
