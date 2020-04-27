@@ -31,7 +31,7 @@ class QrCode extends StatelessWidget {
                         image: image,
                         fit: BoxFit.cover,
                       ),
-                    ),
+                    ), 
                   ),
                   placeholder: (context, str) => Center(child: CircularProgressIndicator()),
                 ),

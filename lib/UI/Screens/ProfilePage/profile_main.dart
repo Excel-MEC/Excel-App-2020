@@ -5,7 +5,6 @@ import 'package:excelapp/UI/Screens/ProfilePage/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class CheckUserLoggedIn extends StatefulWidget {
   @override
   _CheckUserLoggedInState createState() => _CheckUserLoggedInState();
@@ -13,9 +12,10 @@ class CheckUserLoggedIn extends StatefulWidget {
 
 class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
   DBProvider db;
+  bool profileUpdated;
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     db = DBProvider();
   }
@@ -24,10 +24,14 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getBool('isLogged') == false ||
         prefs.getBool('isLogged') == null) {
-          return 'login';
+      return 'login';
     } else {
       // Fetch user details from database
       int userId = prefs.getInt('userId');
+      bool isProfileUpdated = prefs.getBool('isProfileUpdated');
+      setState(() {
+        profileUpdated = isProfileUpdated;
+      });
       User user = await db.getUser('User', userId);
       return user;
     }
@@ -43,7 +47,7 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
             if (snapshot.data == 'login') {
               return LoginScreen();
             } else {
-              return ProfilePage(snapshot.data);
+              return ProfilePage(snapshot.data,profileUpdated);
             }
           } else {
             return Center(child: CircularProgressIndicator());
