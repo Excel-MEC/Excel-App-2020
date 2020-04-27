@@ -7,10 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ViewProfile extends StatelessWidget {
   Future<dynamic> viewUserProfile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getBool('isProfileupdated') == false ||
+    if (prefs.getBool('isProfileUpdated') == false ||
         prefs.getBool('isProfileUpdated') == null) {
       return "Not Updated";
-    } else {
+    } else { 
       User user = await AccountServices.viewProfile();
       return user;
     }
