@@ -3,6 +3,7 @@ import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
 import 'package:excelapp/UI/Components/LoadingUI/snackBar.dart';
+import 'package:excelapp/UI/Screens/ProfilePage/profile_main.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
@@ -65,7 +66,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
     Navigator.of(context, rootNavigator: true).pop();
   }
 
-
   // Submit Form
   Future<String> submitForm() async {
     setState(() {});
@@ -79,7 +79,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     _institutionId = await getInstitutionId(_institutionName);
     if (_institutionId == -1) {
       Navigator.of(context, rootNavigator: true).pop();
-      return "One more fields are invalid!";
+      return "One or more fields are invalid!";
     }
 
     Map<String, dynamic> userInfo = {
@@ -96,7 +96,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
     Navigator.of(context, rootNavigator: true).pop();
     return "Submitted";
   }
-  
 
   // Method to get institution Id
   Future<int> getInstitutionId(String institutionName) async {
@@ -256,10 +255,17 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   onPressed: () {
                     _formKey.currentState.save();
                     _formKey.currentState.validate()
-                        ? submitForm()
-                            .then((value) => Scaffold.of(context)
-                                .showSnackBar(snackBar(value)),)
-                            .catchError((e) => print(e))
+                        ? submitForm().then((value) {
+                            Scaffold.of(context).showSnackBar(snackBar(value));
+                            if (value == "Submitted") {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CheckUserLoggedIn(),
+                                ),
+                              );
+                            }
+                          }).catchError((e) => print(e))
                         : print("Not valid");
                   },
                 ),

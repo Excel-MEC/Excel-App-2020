@@ -29,7 +29,7 @@ class User {
     email = json['email'];
     picture = json['picture'];
     qrCodeUrl = json['qrCodeUrl'];
-    institutionId = json['institutionId'];
+    institutionId = json.containsKey('institutionId') ? json['institutionId'] : 0;
     institutionName = json.containsKey('institutionName') ? json['institutionName'] : 'Not Registered'; 
     gender = json['gender'] != null ? json['gender'] : 'Not Registered';
     mobileNumber = json['mobileNumber'] != null ? json['mobileNumber'] : 'Not Registered';
