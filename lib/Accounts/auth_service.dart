@@ -66,6 +66,7 @@ class AuthService {
     //clear access token and jwt
     await prefs.remove('access_token');
     await prefs.remove('jwt');
+    await prefs.setBool('isProfileUpdated', false);
     await prefs.setBool('isLogged', false);
 
     return 'success';

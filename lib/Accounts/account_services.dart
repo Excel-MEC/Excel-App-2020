@@ -55,7 +55,9 @@ class AccountServices {
       await dbProvider.addUser(user, 'User');
       print("done");
       return user;
-    } catch (e) {}
+    } catch (e) {
+      print("Error : $e");
+    }
   }
 
   // Fetch list of institutions
@@ -86,6 +88,7 @@ class AccountServices {
   static Future<String> updateProfile(Map<String, dynamic> userInfo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
+    User user;
 
     try {
       var response = await http.post(
@@ -96,6 +99,26 @@ class AccountServices {
       print(response.body);
     } catch (e) {
       print("Error: $e");
+    }
+
+    // Update shared preferences 
+    prefs.setBool('isProfileUpdated', true);
+    // Update user database
+    try {
+      print("fetching user details");
+      var response = await http.get(
+        AccountConfig.url + 'profile/view',
+        headers: AccountConfig.getHeader(jwt),
+      );
+      Map<String,dynamic> responseData = json.decode(response.body);
+      user = User.fromJson(responseData);
+      print("adding to database");
+      DBProvider dbProvider = DBProvider();
+      await dbProvider.addUser(user, 'User');
+      print("done");
+
+    } catch (e) {
+      print("Error : $e");
     }
     return "done";
   }

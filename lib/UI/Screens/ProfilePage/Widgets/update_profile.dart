@@ -79,7 +79,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     _institutionId = await getInstitutionId(_institutionName);
     if (_institutionId == -1) {
       Navigator.of(context, rootNavigator: true).pop();
-      return "One more fields are invalid!";
+      return "One or more fields are invalid!";
     }
 
     Map<String, dynamic> userInfo = {
@@ -94,7 +94,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     var res = await AccountServices.updateProfile(userInfo);
     print(res);
     Navigator.of(context, rootNavigator: true).pop();
-    return "Submitted";
+    return "Submitted!";
   }
   
 
