@@ -76,8 +76,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
       barrierDismissible: false,
     );
 
-    _institutionId = await getInstitutionId(_institutionName);
-    if (_institutionId == -1) {
+    // get institutionId only if category is school or professional
+    if (_category != "professional") {
+      _institutionId = await getInstitutionId(_institutionName);
+    }
+    if (_institutionId < 0) {
       Navigator.of(context, rootNavigator: true).pop();
       return "One or more fields are invalid!";
     }
@@ -179,6 +182,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         setState(() {
                           _category = value;
                         });
+                        if (value == "professional") {
+                          setState(() {
+                            categorySelected = true;
+                            _institutionId = 0;
+                          });
+                        }
                         if (value != "professional") {
                           getInstitutions(context, value);
                         }
@@ -256,14 +265,17 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     _formKey.currentState.save();
                     _formKey.currentState.validate()
                         ? submitForm().then((value) {
-                            Scaffold.of(context).showSnackBar(snackBar(value));
                             if (value == "Submitted") {
-                              Navigator.pushReplacement(
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => CheckUserLoggedIn(),
                                 ),
+                                (Route<dynamic> route) => false,
                               );
+                            } else {
+                              Scaffold.of(context)
+                                  .showSnackBar(snackBar(value));
                             }
                           }).catchError((e) => print(e))
                         : print("Not valid");

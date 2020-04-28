@@ -28,10 +28,7 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
     } else {
       // Fetch user details from database
       int userId = prefs.getInt('userId');
-      bool check = prefs.getBool('isProfileUpdated');
-      setState(() {
-        isProfileUpdated = check ?? false;
-      });
+      isProfileUpdated = prefs.getBool('isProfileUpdated') ?? false;
       User user = await db.getUser('User', userId);
       return user;
     }
