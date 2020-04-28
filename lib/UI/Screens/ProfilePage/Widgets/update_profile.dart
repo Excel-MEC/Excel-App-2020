@@ -203,14 +203,14 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       children: <Widget>[
                         Expanded(
                           child: SearchableDropdown.single(
-                            value: _institutionName,
+                            // value: _institutionName,
                             readOnly: !categorySelected ||
                                 _category == "professional",
                             items: institutions
                                 .map<DropdownMenuItem<String>>((val) {
                               return DropdownMenuItem<String>(
                                 value: val.name,
-                                child: Text(val.name),
+                                child: Text(val.name.toString()),
                               );
                             }).toList(),
                             hint: 'Select Institution',
