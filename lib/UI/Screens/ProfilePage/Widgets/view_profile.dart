@@ -1,20 +1,27 @@
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
+import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ViewProfile extends StatelessWidget {
+  final DBProvider db = DBProvider();
+
+  // If user profile is updated, fetch user information from DB
   Future<dynamic> viewUserProfile() async {
+    User user;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getBool('isProfileUpdated') == false ||
         prefs.getBool('isProfileUpdated') == null) {
       return "Not Updated";
     } else { 
-      User user = await AccountServices.viewProfile();
+      int userId = prefs.getInt('userId');
+      print("Fetching from DB");
+      user = await db.getUser('User', userId);
       return user;
     }
-  }
+  } 
 
   @override
   Widget build(BuildContext context) {

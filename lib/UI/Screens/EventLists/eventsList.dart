@@ -42,7 +42,7 @@ class _EventsListState extends State<EventsList> {
       print("\nfrom db");
       result = await db.getEvents('Competitions');
       print("done");
-    }
+    } 
     return result;
   }
 
