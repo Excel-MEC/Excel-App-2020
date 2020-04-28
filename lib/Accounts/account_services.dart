@@ -58,7 +58,7 @@ class AccountServices {
     } catch (e) {
       print("Error : $e");
     }
-  }
+  } 
 
   // Fetch list of institutions
   static Future<List<Institution>> fetchInstitutions(String category) async {
@@ -76,6 +76,7 @@ class AccountServices {
         headers: AccountConfig.getHeader(jwt),
       );
       List<dynamic> responseData = json.decode(response.body);
+      // print(responseData);
       return responseData
           .map<Institution>((institution) => Institution.fromJson(institution))
           .toList();

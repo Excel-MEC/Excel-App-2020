@@ -12,19 +12,22 @@ import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;
-  ProfilePage(this.user);
+  final bool isProfileUpdated;
+  ProfilePage(this.user, this.isProfileUpdated);
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   User _user;
+  bool _isProfileUpdated;
   AuthService authService;
 
   @override
   void initState() {
     super.initState();
     _user = widget.user;
+    _isProfileUpdated = widget.isProfileUpdated;
     authService = AuthService();
   }
 
@@ -68,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         MaterialPageRoute(builder: (context) => ViewProfile()),
                       );
                     },
-                    child: cardBuilder('View Profile'),
+                    child: cardBuilder('View Profile',true),
                   ),
                   // Update profile
                   GestureDetector(
@@ -79,19 +82,19 @@ class _ProfilePageState extends State<ProfilePage> {
                             builder: (context) => UpdateProfile(_user)),
                       );
                     },
-                    child: cardBuilder('Update Profile'),
+                    child: cardBuilder('Update Profile',_isProfileUpdated),
                   ),
                   // Registered Events
                   GestureDetector(
                     onTap: () {
                       // TODO: Navigate to registered events
                     },
-                    child: cardBuilder('Registered Events'),
+                    child: cardBuilder('Registered Events',true),
                   ),
                   // Logout
                   GestureDetector(
                     onTap: () => logoutUser(context),
-                    child: cardBuilder('Logout'),
+                    child: cardBuilder('Logout',true),
                   ),
                 ],
               ),
@@ -103,14 +106,20 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-Widget cardBuilder(String name) {
+Widget cardBuilder(String name, bool check) {
   return Card(
     margin: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
     elevation: 3,
     child: ListTile(
-      title: Text(
-        name,
-        style: ProfileTheme.detailsTextStyle,
+      title: Row(
+        children: <Widget>[
+          Text(
+            name,
+            style: ProfileTheme.detailsTextStyle,
+          ),
+          SizedBox(width: 5),
+          check != true ? Icon(Icons.info_outline,color: Colors.green) : Container(),
+        ],
       ),
       trailing: Icon(Icons.arrow_forward_ios, color: primaryColor),
     ),
