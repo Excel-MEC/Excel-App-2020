@@ -15,7 +15,7 @@ class _EventPageState extends State<EventPage> {
     EventDetails result = await EventsAPI.fetchEventDetails(endpoint, id);
     return result;
   }
-
+ 
   @override 
   Widget build(BuildContext context) {
     return Scaffold(
