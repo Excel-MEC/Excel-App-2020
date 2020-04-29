@@ -4,6 +4,14 @@ import './bottom_navigation.dart';
 import './tab_navigator.dart';
 import './BottomNavigationBarWidget/layout.dart';
 
+// To add pages to Bottom Navigation Bar, import & add them to /lib/UI/Components/Navigation/pageNavigator.dart
+
+// To hide bottom navigatiom bar, import this file and call hideBottomNav()
+// To show bottom navigatiom bar, import this file and call showBottomNav()
+
+Function hideBottomNav;
+Function showBottomNav;
+
 class CustomNavigator extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => CustomNavigatorState();
@@ -18,10 +26,20 @@ class CustomNavigatorState extends State<CustomNavigator> {
     TabItem.page4: GlobalKey<NavigatorState>(),
   };
 
-  bool isKeyboardVisible = false;
+  bool bottonNavHidden = false;
 
   @protected
   void initState() {
+    hideBottomNav = () {
+      setState(() {
+        bottonNavHidden = true;
+      });
+    };
+    showBottomNav = () {
+      setState(() {
+        bottonNavHidden = false;
+      });
+    };
     super.initState();
   }
 
@@ -61,14 +79,14 @@ class CustomNavigatorState extends State<CustomNavigator> {
           _buildOffstageNavigator(TabItem.page4),
         ]),
         bottomNavigationBar: Visibility(
-          visible: isKeyboardVisible ? false : true,
+          visible: bottonNavHidden ? false : true,
           child: BottomNavigation(
             currentTab: _currentTab,
             onSelectTab: _selectTab,
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: _buildFab(context, isKeyboardVisible),
+        floatingActionButton: _buildFab(context, bottonNavHidden),
       ),
     );
   }
@@ -84,9 +102,9 @@ class CustomNavigatorState extends State<CustomNavigator> {
   }
 }
 
-Widget _buildFab(BuildContext context, isKeyboardVisible) {
+Widget _buildFab(BuildContext context, bottonNavHidden) {
   return Visibility(
-    visible: isKeyboardVisible ? false : true,
+    visible: bottonNavHidden ? false : true,
     child: AnchoredOverlay(
       showOverlay: false,
       child: FloatingActionButton(
