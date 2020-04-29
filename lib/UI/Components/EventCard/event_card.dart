@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
-import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
 // This card UI can be used for
@@ -11,14 +10,15 @@ import 'package:flutter/material.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
+  final String category;
+  EventCard(this.event,this.category);
 
-  EventCard(this.event);
-
-  @override
+  @override 
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => EventPage()));
+        // TODO: Replace hardcoded 1 with event.id , when API is ready
+        Navigator.push(context, MaterialPageRoute(builder: (context) => EventPage(category,1)));
       }, 
       child: Card(
         elevation: 5.0,

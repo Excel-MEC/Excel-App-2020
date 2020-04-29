@@ -62,7 +62,7 @@ class DBProvider {
     for (var event in events) {
       batch.insert(
         table,
-        event.toJson(),
+        event.toJson(), 
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     }

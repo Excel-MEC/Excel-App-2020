@@ -10,13 +10,13 @@ class CategoryCard extends StatelessWidget {
   final titleStyle = TextStyle(
     color: Colors.white,
     fontFamily: pfontFamily,
-    fontSize: 27,
+    fontSize: 25,
     fontWeight: FontWeight.w600,
   );
   final contentStyle = TextStyle(
     color: Colors.white,
     fontFamily: sfontFamily,
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: FontWeight.w500,
   );
 
@@ -76,7 +76,7 @@ class CategoryCard extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text('View'),
+                  child: Text('View'), 
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
