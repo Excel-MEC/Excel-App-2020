@@ -1,31 +1,27 @@
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
-import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:excelapp/UI/constants.dart';
 
 class ViewProfile extends StatelessWidget {
-  final DBProvider db = DBProvider();
-
-  // If user profile is updated, fetch user information from DB
   Future<dynamic> viewUserProfile() async {
-    User user;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getBool('isProfileUpdated') == false ||
         prefs.getBool('isProfileUpdated') == null) {
       return "Not Updated";
-    } else { 
-      int userId = prefs.getInt('userId');
-      print("Fetching from DB");
-      user = await db.getUser('User', userId);
+    } else {
+      User user = await AccountServices.viewProfile();
       return user;
     }
-  } 
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: customappbar('View Profile'),
       body: FutureBuilder(
         future: viewUserProfile(),
@@ -34,19 +30,7 @@ class ViewProfile extends StatelessWidget {
             if (snapshot.data == "Not Updated") {
               return Center(child: Text("Profile not updated"));
             } else {
-              // TODO : Proper UI for View Profile
-              return Container(
-                child: Column(
-                  children: <Widget>[
-                    Text(snapshot.data.name),
-                    Text(snapshot.data.email),
-                    Text(snapshot.data.category),
-                    Text(snapshot.data.institutionName),
-                    Text(snapshot.data.gender),
-                    Text(snapshot.data.mobileNumber),
-                  ],
-                ),
-              );
+              return viewProfileBody(snapshot.data, context);
             }
           } else {
             return Center(child: CircularProgressIndicator());
@@ -55,4 +39,81 @@ class ViewProfile extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget viewProfileBody(User userData, context) {
+  return Container(
+    padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+    child: SingleChildScrollView(
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: MediaQuery.of(context).size.height / 20),
+            Card(
+              elevation: 3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  // User Details
+                  detailItem('Name', userData.name, Icons.person),
+                  line(),
+                  detailItem('Email', userData.email, Icons.email),
+                  line(),
+                  detailItem('Gender', userData.gender, Icons.face),
+                  line(),
+                  detailItem('Phone No.', userData.mobileNumber, Icons.phone),
+                  line(),
+                  // Capitalises First letter of Institution type.
+                  detailItem(
+                      userData.category[0].toUpperCase() +
+                          userData.category.substring(1),
+                      userData.institutionName,
+                      Icons.home),
+                  SizedBox(height: 10)
+                ],
+              ),
+            ),
+            SizedBox(height: 100)
+          ]),
+    ),
+  );
+}
+
+Widget detailItem(String fieldName, String value, var icon) {
+  return Container(
+      // padding: EdgeInsets.fromLTRB(2, 10, 2, 2),
+      child: Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: <Widget>[
+      ListTile(
+        title: Row(
+          children: <Widget>[
+            Icon(
+              icon,
+              color: primaryColor,
+              size: 18,
+            ),
+            SizedBox(width: 5),
+            Text(
+              fieldName,
+              style: TextStyle(
+                  color: primaryColor, fontFamily: pfontFamily, fontSize: 15),
+            ),
+          ],
+        ),
+        subtitle: Text(
+          value,
+          style: TextStyle( fontFamily: pfontFamily),
+        ),
+      ),
+    ],
+  ));
+}
+
+Widget line() {
+  return Container(
+    margin: EdgeInsets.fromLTRB(20, 5, 20, 10),
+    height: 2,
+    color: Colors.grey[300],
+  );
 }
