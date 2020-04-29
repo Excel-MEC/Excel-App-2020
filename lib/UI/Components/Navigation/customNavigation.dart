@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import './bottom_navigation.dart';
 import './tab_navigator.dart';
 import './BottomNavigationBarWidget/layout.dart';
-import 'package:keyboard_visibility/keyboard_visibility.dart';
 
 class CustomNavigator extends StatefulWidget {
   @override
@@ -24,12 +23,6 @@ class CustomNavigatorState extends State<CustomNavigator> {
   @protected
   void initState() {
     super.initState();
-
-    KeyboardVisibilityNotification().addNewListener(
-      onChange: (bool visible) {
-        isKeyboardVisible = visible;
-      },
-    );
   }
 
   void _selectTab(TabItem tabItem) {
