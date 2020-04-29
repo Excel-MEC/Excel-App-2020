@@ -79,6 +79,7 @@ class CustomNavigatorState extends State<CustomNavigator> {
           _buildOffstageNavigator(TabItem.page4),
         ]),
         bottomNavigationBar: Visibility(
+          maintainState: true,
           visible: bottonNavHidden ? false : true,
           child: BottomNavigation(
             currentTab: _currentTab,
@@ -104,6 +105,7 @@ class CustomNavigatorState extends State<CustomNavigator> {
 
 Widget _buildFab(BuildContext context, bottonNavHidden) {
   return Visibility(
+    maintainState: true,
     visible: bottonNavHidden ? false : true,
     child: AnchoredOverlay(
       showOverlay: false,
