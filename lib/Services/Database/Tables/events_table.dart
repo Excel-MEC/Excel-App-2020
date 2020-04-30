@@ -2,10 +2,15 @@
 
 class DBEventsTable {
 
-  // Table to store all events 
-  // 1.Competitions
-  // 2.Talks
-  // 3.Workshops
+  // To obtain details table name for corresponding category
+  static String tableName(String endpoint) {
+    if(endpoint == "Competitions") return "Competitions";
+    if(endpoint == "Events") return "Events";
+    if(endpoint == "Workshops") return "Workshops";
+  }
+  
+
+  // For table Creations
   static String eventTable(String tableName) {
     String table = "CREATE TABLE $tableName ("
       "id INTEGER PRIMARY KEY,"

@@ -1,5 +1,6 @@
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/events_api.dart';
+import 'package:excelapp/Services/Database/Tables/events_table.dart';
 import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/eventPageBody.dart';
@@ -16,12 +17,14 @@ class _EventPageState extends State<EventPage> {
   DBProvider dbProvider;
   String _endpoint;
   int _eventId;
+  String _tableName;
 
   @override
   void initState() { 
     super.initState();
     _endpoint = widget.endpoint;
     _eventId = widget.eventId;
+    _tableName = DBEventsTable.tableName(widget.endpoint);
     dbProvider = DBProvider();
   }
 
