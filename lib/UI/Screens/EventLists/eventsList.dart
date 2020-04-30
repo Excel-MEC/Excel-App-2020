@@ -1,5 +1,6 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:excelapp/Services/API/api_config.dart';
+import 'package:excelapp/Services/Database/Tables/events_table.dart';
 import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_card.dart';
@@ -18,11 +19,13 @@ class EventsList extends StatefulWidget {
 class _EventsListState extends State<EventsList> {
   DBProvider db;
   String endpoint;
+  String tableName;
 
   @override
   void initState() {
     super.initState();
     endpoint = APIConfig.getEndpoint(widget.category);
+    tableName = widget.category;
     db = DBProvider();
   }
 
@@ -35,12 +38,12 @@ class _EventsListState extends State<EventsList> {
         connectivityResult == ConnectivityResult.mobile) {
       print("\nfetching");
       result = await EventsAPI.fetchEvents(endpoint);
-      print("adding to db");
-      await db.addEvents(result, 'Competitions');
+      print("adding to $tableName table");
+      await db.addEvents(result, tableName);
       print("done");
     } else {
-      print("\nfrom db");
-      result = await db.getEvents('Competitions');
+      print("\nfrom $tableName table");
+      result = await db.getEvents(tableName);
       print("done");
     } 
     return result;

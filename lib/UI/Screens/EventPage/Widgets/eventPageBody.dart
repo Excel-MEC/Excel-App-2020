@@ -37,12 +37,6 @@ class EventPageBodyState extends State<EventPageBody> {
           //Background Image
           getBackgroundImage(
             eventDetails,
-            // For Light theme
-            // [
-            //   Color.fromRGBO(255, 255, 255, 0.5),
-            //   Color.fromRGBO(255, 255, 255, 0.5),
-            //   Color.fromRGBO(255, 255, 255, 0.5)
-            // ],
             [
               Color.fromRGBO(0, 0, 0, 0),
               Color.fromRGBO(23, 18, 41, .8),
