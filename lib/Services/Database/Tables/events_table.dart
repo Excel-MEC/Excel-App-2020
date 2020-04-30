@@ -4,9 +4,10 @@ class DBEventsTable {
 
   // To obtain details table name for corresponding category
   static String tableName(String endpoint) {
-    if(endpoint == "Competitions") return "Competitions";
-    if(endpoint == "Events") return "Events";
-    if(endpoint == "Workshops") return "Workshops";
+    // TODO: replace and add endpoints for event details tables
+    if(endpoint == "events") return "CompetitionsDetails";
+    if(endpoint == "talks") return "TalksDetails";
+    if(endpoint == "workshops") return "WorkshopsDetails"; 
   }
   
 
@@ -20,7 +21,7 @@ class DBEventsTable {
       "date_time TEXT"
       ")";
       return table;
-  }
+  } 
 
   // Table for storing event details
   static String eventDetailsTable(String tableName) {

@@ -35,6 +35,7 @@ class DBProvider {
     await db.execute(DBEventsTable.eventTable('Events'));
     await db.execute(DBEventsTable.eventTable('Talks'));
     await db.execute(DBEventsTable.eventTable('Workshops'));
+    await db.execute(DBEventsTable.eventDetailsTable('CompetitionsDetails'));
     await db.execute(DBUserTable.userTable());
   }
 
