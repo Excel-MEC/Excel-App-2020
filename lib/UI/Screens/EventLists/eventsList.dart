@@ -27,7 +27,7 @@ class _EventsListState extends State<EventsList> {
   }
 
   Future<List<Event>> fetchEvents(String endpoint) async {
-    // TODO: Handle handshake errors
+    // TODO: Handle handshake errors 
     List<Event> result;
     var connectivityResult = await (Connectivity().checkConnectivity());
 
@@ -65,7 +65,7 @@ class _EventsListState extends State<EventsList> {
                   return ListView.builder(
                     itemCount: list.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return EventCard(list[index]);
+                      return EventCard(list[index],endpoint);
                     },
                   );
                 } else {
