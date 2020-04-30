@@ -43,7 +43,6 @@ class MoreDetailsState extends State<MoreDetails> {
                   padding:
                       EdgeInsets.only(left: 35.0, top: deviceHeight * 0.15),
                   child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       //Event Name Details
                       Expanded(
@@ -139,7 +138,9 @@ class MoreDetailsState extends State<MoreDetails> {
                                 details(eventDetails.about),
                                 details(eventDetails.format),
                                 details(eventDetails.rules),
-                                contactDetails(eventDetails.contacts)
+                                eventDetails.contacts != null
+                                    ? contactDetails(eventDetails.contacts)
+                                    : offlineContacts()
                               ],
                             ),
                           ),
@@ -163,6 +164,26 @@ class MoreDetailsState extends State<MoreDetails> {
         child: Text(
           txt.toString(),
           style: TextStyle(color: primaryColor),
+        ),
+      ),
+    );
+  }
+
+  // Easter egg
+  Widget offlineContacts() {
+    return SingleChildScrollView(
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height/5),
+        // color: Colors.green,
+        child: Center(
+          child: Text(
+            "Net on cheyy Mwonuse!",
+            style: TextStyle(
+              color: primaryColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+            ),
+          ),
         ),
       ),
     );
