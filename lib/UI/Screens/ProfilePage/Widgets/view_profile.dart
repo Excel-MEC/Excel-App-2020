@@ -71,7 +71,7 @@ Widget viewProfileBody(User userData, context) {
                     details('Name', userData.name, Icons.person),
                     details('Email', userData.email, Icons.email),
                     details('Gender', userData.gender, Icons.face),
-                    details('Phone No.', userData.mobileNumber, Icons.phone),
+                    details('Mobile', userData.mobileNumber, Icons.phone),
                     details(
                       userData.category[0].toUpperCase() +
                           userData.category.substring(1),
