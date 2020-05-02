@@ -1,4 +1,3 @@
-import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
@@ -15,7 +14,7 @@ class _ViewProfileState extends State<ViewProfile> {
   DBProvider db;
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     db = DBProvider();
   }
@@ -27,7 +26,7 @@ class _ViewProfileState extends State<ViewProfile> {
       return "Not Updated";
     } else {
       int userId = prefs.getInt('userId');
-      User user = await db.getUser('User',userId);
+      User user = await db.getUser('User', userId);
       return user;
     }
   }
@@ -54,80 +53,52 @@ class _ViewProfileState extends State<ViewProfile> {
   }
 }
 
-
 Widget viewProfileBody(User userData, context) {
   return Container(
-    padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+    padding: EdgeInsets.symmetric(horizontal: 20),
     child: SingleChildScrollView(
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: MediaQuery.of(context).size.height / 20),
-            Card(
+        children: <Widget>[
+          SizedBox(height: MediaQuery.of(context).size.height / 8),
+          Container(
+            child: Card(
               elevation: 3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  // User Details
-                  detailItem('Name', userData.name, Icons.person),
-                  line(),
-                  detailItem('Email', userData.email, Icons.email),
-                  line(),
-                  detailItem('Gender', userData.gender, Icons.face),
-                  line(),
-                  detailItem('Phone No.', userData.mobileNumber, Icons.phone),
-                  line(),
-                  // Capitalises First letter of Institution type.
-                  detailItem(
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    details('Name', userData.name, Icons.person),
+                    details('Email', userData.email, Icons.email),
+                    details('Gender', userData.gender, Icons.face),
+                    details('Phone No.', userData.mobileNumber, Icons.phone),
+                    details(
                       userData.category[0].toUpperCase() +
                           userData.category.substring(1),
                       userData.institutionName,
-                      Icons.home),
-                  SizedBox(height: 10)
-                ],
+                      Icons.home,
+                    ),
+                  ],
+                ),
               ),
             ),
-            SizedBox(height: 100)
-          ]),
+          ),
+        ],
+      ),
     ),
   );
 }
 
-Widget detailItem(String fieldName, String value, var icon) {
-  return Container(
-      // padding: EdgeInsets.fromLTRB(2, 10, 2, 2),
-      child: Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: <Widget>[
-      ListTile(
-        title: Row(
-          children: <Widget>[
-            Icon(
-              icon,
-              color: primaryColor,
-              size: 18,
-            ),
-            SizedBox(width: 5),
-            Text(
-              fieldName,
-              style: TextStyle(
-                  color: primaryColor, fontFamily: pfontFamily, fontSize: 15),
-            ),
-          ],
-        ),
-        subtitle: Text(
-          value,
-          style: TextStyle( fontFamily: pfontFamily),
-        ),
+Widget details(String field, String value, var icon) {
+  return ListTile(
+    leading: Icon(icon,color: primaryColor),
+    title: Text(
+      field,
+      style: TextStyle(
+        color: primaryColor,
+        fontFamily: pfontFamily,
       ),
-    ],
-  ));
-}
-
-Widget line() {
-  return Container(
-    margin: EdgeInsets.fromLTRB(20, 5, 20, 10),
-    height: 2,
-    color: Colors.grey[300],
+    ),
+    subtitle: Text(value),
   );
 }
