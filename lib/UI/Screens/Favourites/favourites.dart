@@ -11,9 +11,9 @@ class FavouritesScreen extends StatefulWidget {
 
 class _FavouritesScreenState extends State<FavouritesScreen> {
   DBProvider db;
-  
+
   @override
-  void initState() { 
+  void initState() {
     db = DBProvider();
     super.initState();
   }
@@ -28,25 +28,42 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customappbar("Favourites"),
-      body: FutureBuilder(
-        future: fetchFavourites(),
-        builder: (BuildContext context,AsyncSnapshot snapshot) {
-          if(snapshot.hasData) {
-            List<Favourites> list = snapshot.data;
-            if(list.isEmpty) {
-              return Center(child: Text("No Favorites"));
-            }
-            return ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (BuildContext context, int index) {
-                return FavouriteCard(list[index]);
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Center(
+              child: Text(
+                "Swipe to delete",
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Expanded(
+            child: FutureBuilder(
+              future: fetchFavourites(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  List<Favourites> list = snapshot.data;
+                  if (list.isEmpty) {
+                    return Center(child: Text("No Favorites"));
+                  }
+                  return ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return FavouriteCard(list[index]);
+                    },
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
               },
-            );
-          }
-          else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
+            ),
+          ),
+        ],
       ),
     );
   }
