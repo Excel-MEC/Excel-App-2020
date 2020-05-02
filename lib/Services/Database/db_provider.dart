@@ -38,7 +38,7 @@ class DBProvider {
     await db.execute(DBEventsTable.eventTable('Talks'));
     await db.execute(DBEventsTable.eventTable('Workshops'));
     await db.execute(DBEventsTable.eventDetailsTable('CompetitionsDetails'));
-    await db.execute(DBFavouritesTable.favouritesTable());
+    await db.execute(DBFavouritesTable.favouritesTable("Favourites"));
     await db.execute(DBUserTable.userTable());
   }
 
@@ -67,6 +67,13 @@ class DBProvider {
     final db = await database;
     await db.insert('Favourites',favourites.toJson(),conflictAlgorithm: ConflictAlgorithm.replace);
   }
+
+  // Retrieve all favourites
+  Future<List<Favourites>> getFavourites() async {
+    final db = await database;
+    final List<Map<String,dynamic>> res = await db.query('Favourites');
+    return res.map<Favourites>((row) => Favourites.fromJson(row)).toList();
+  } 
 
   // Add multiple records(events) to table
   addEvents(List<Event> events, String table) async {

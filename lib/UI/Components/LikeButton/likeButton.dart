@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 class LikeButton extends StatefulWidget {
   final bool favo;
   final String icon;
-  final String tableName;
+  final String endpoint;
   final EventDetails eventDetails;
-  LikeButton(this.favo, this.eventDetails, this.icon, this.tableName);
+  LikeButton(this.favo, this.eventDetails, this.icon, this.endpoint);
   @override
   State<StatefulWidget> createState() {
     return _LikeButton();
@@ -20,13 +20,13 @@ class _LikeButton extends State<LikeButton> {
   bool likeState;
   EventDetails _eventDetails;
   String _icon;
-  String _tableName;
+  String _endpoint;
   DBProvider db;
 
   @override
   void initState() {
     _icon = widget.icon;
-    _tableName = widget.tableName;
+    _endpoint = widget.endpoint;
     likeState = widget.favo;
     _eventDetails = widget.eventDetails;
     db = DBProvider();
@@ -37,12 +37,12 @@ class _LikeButton extends State<LikeButton> {
     if (likeState == true) {
       print("Like");
       Map<String, dynamic> json = {
-        'fav_id': _tableName + _eventDetails.id.toString(),
+        'fav_id': _endpoint + _eventDetails.id.toString(),
         'id': _eventDetails.id,
         'name': _eventDetails.name,
         'icon': _icon,
         'date_time': _eventDetails.dateTime,
-        'table_name': _tableName
+        'endpoint': _endpoint
       };
 
       Favourites favourite = Favourites.fromJson(json);

@@ -60,7 +60,7 @@ class _EventPageState extends State<EventPage> {
         future: fetchEventDetails(_endpoint, _eventId),
         builder: (context, snapshot) {
           if (snapshot.hasData)
-            return EventPageBody(eventDetails: snapshot.data,icon: _icon,tableName: _tableName);
+            return EventPageBody(eventDetails: snapshot.data,icon: _icon,endpoint: _endpoint);
           else {
             return Center(child: CircularProgressIndicator());
           }
