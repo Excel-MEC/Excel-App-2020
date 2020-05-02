@@ -9,7 +9,8 @@ import 'package:excelapp/UI/Screens/EventPage/Widgets/eventPageBody.dart';
 class EventPage extends StatefulWidget {
   final String endpoint;
   final int eventId;
-  EventPage(this.endpoint, this.eventId);
+  final String icon;
+  EventPage(this.endpoint, this.eventId,this.icon);
   @override
   _EventPageState createState() => _EventPageState();
 }
@@ -19,10 +20,12 @@ class _EventPageState extends State<EventPage> {
   String _endpoint;
   int _eventId;
   String _tableName;
+  String _icon;
 
   @override
   void initState() {
     super.initState();
+    _icon = widget.icon;
     _endpoint = widget.endpoint;
     _eventId = widget.eventId;
     // To get details-table name from endpoint
@@ -57,7 +60,7 @@ class _EventPageState extends State<EventPage> {
         future: fetchEventDetails(_endpoint, _eventId),
         builder: (context, snapshot) {
           if (snapshot.hasData)
-            return EventPageBody(eventDetails: snapshot.data);
+            return EventPageBody(eventDetails: snapshot.data,icon: _icon,tableName: _tableName);
           else {
             return Center(child: CircularProgressIndicator());
           }

@@ -18,7 +18,7 @@ class EventCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // TODO: Replace hardcoded 1 with event.id , when API is ready
-        Navigator.push(context, MaterialPageRoute(builder: (context) => EventPage(endpoint,1)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => EventPage(endpoint,1,event.icon)));
       }, 
       child: Card(
         elevation: 5.0,

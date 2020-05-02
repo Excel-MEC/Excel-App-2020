@@ -61,24 +61,24 @@ class MoreDetailsState extends State<MoreDetails> {
                           ),
                         ),
                       ),
-                      //Like Button
-                      Hero(
-                        tag: 'LikeButton',
+                      // Like Button
+                      // Hero(
+                      //   tag: 'LikeButton',
 
-                        //Code to make the button under a Material widget during animation which otherwise throws error
-                        flightShuttleBuilder: (BuildContext flightContext,
-                                Animation<double> animation,
-                                HeroFlightDirection flightDirection,
-                                BuildContext fromHeroContext,
-                                BuildContext toHeroContext) =>
-                            Material(
-                                type: MaterialType.transparency,
-                                child: toHeroContext.widget),
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                          child: LikeButton(false),
-                        ),
-                      ),
+                      //   //Code to make the button under a Material widget during animation which otherwise throws error
+                      //   flightShuttleBuilder: (BuildContext flightContext,
+                      //           Animation<double> animation,
+                      //           HeroFlightDirection flightDirection,
+                      //           BuildContext fromHeroContext,
+                      //           BuildContext toHeroContext) =>
+                      //       Material(
+                      //           type: MaterialType.transparency,
+                      //           child: toHeroContext.widget),
+                      //   child: Padding(
+                      //     padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                      //     child: LikeButton(false),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

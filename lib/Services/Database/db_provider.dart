@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Models/event_details.dart';
+import 'package:excelapp/Models/favourites_model.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/Tables/events_table.dart';
+import 'package:excelapp/Services/Database/Tables/favourites_table.dart';
 import 'package:excelapp/Services/Database/Tables/user_table.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -36,6 +38,7 @@ class DBProvider {
     await db.execute(DBEventsTable.eventTable('Talks'));
     await db.execute(DBEventsTable.eventTable('Workshops'));
     await db.execute(DBEventsTable.eventDetailsTable('CompetitionsDetails'));
+    await db.execute(DBFavouritesTable.favouritesTable());
     await db.execute(DBUserTable.userTable());
   }
 
@@ -57,6 +60,12 @@ class DBProvider {
     Map<String,dynamic> user = res[0];
     User userDetails = User.fromJson(user);
     return userDetails;
+  }
+
+  // Add favourites 
+  addFavourites(Favourites favourites) async {
+    final db = await database;
+    await db.insert('Favourites',favourites.toJson(),conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   // Add multiple records(events) to table

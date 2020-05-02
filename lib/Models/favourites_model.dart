@@ -1,15 +1,17 @@
 
 class Favourites {
+  String favId;
   int id;
   String name;
   String icon;
   String dateTime;
   String tableName;
 
-  Favourites({this.id,this.name,this.icon,this.dateTime,this.tableName});
+  Favourites({this.favId,this.id,this.name,this.icon,this.dateTime,this.tableName});
 
   factory Favourites.fromJson(Map<String,dynamic> json) {
     return Favourites(
+      favId: json['fav_id'],
       id: json['id'],
       name: json['name'],
       icon: json['icon'],
@@ -20,6 +22,7 @@ class Favourites {
 
   Map<String,dynamic> toJson() {
     return({
+      'fav_id': favId,
       'id'    : id,
       'name'  : name,
       'icon'  : icon,
