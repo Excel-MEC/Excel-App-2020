@@ -3,7 +3,6 @@ import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/UI/constants.dart';
 
 class ViewProfile extends StatelessWidget {
