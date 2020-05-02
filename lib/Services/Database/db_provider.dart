@@ -84,7 +84,7 @@ class DBProvider {
         table,
         event.toJson(), 
         conflictAlgorithm: ConflictAlgorithm.replace,
-      );
+      ); 
     }
     await batch.commit(noResult: true);
   }
