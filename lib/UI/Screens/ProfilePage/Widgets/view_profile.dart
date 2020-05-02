@@ -1,18 +1,33 @@
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
+import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:excelapp/UI/constants.dart';
 
-class ViewProfile extends StatelessWidget {
+class ViewProfile extends StatefulWidget {
+  @override
+  _ViewProfileState createState() => _ViewProfileState();
+}
+
+class _ViewProfileState extends State<ViewProfile> {
+  DBProvider db;
+
+  @override
+  void initState() { 
+    super.initState();
+    db = DBProvider();
+  }
+
   Future<dynamic> viewUserProfile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getBool('isProfileUpdated') == false ||
         prefs.getBool('isProfileUpdated') == null) {
       return "Not Updated";
     } else {
-      User user = await AccountServices.viewProfile();
+      int userId = prefs.getInt('userId');
+      User user = await db.getUser('User',userId);
       return user;
     }
   }
@@ -20,7 +35,6 @@ class ViewProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
       appBar: customappbar('View Profile'),
       body: FutureBuilder(
         future: viewUserProfile(),
@@ -39,6 +53,7 @@ class ViewProfile extends StatelessWidget {
     );
   }
 }
+
 
 Widget viewProfileBody(User userData, context) {
   return Container(
