@@ -1,7 +1,7 @@
 // API config file
 
 class APIConfig {
-  static final String baseUrl = 'https://demo1680243.mockable.io';
+  static final String baseUrl = 'https://staging.events.excelmec.org/api';
 
   static String getEndpoint(String category) {
     // TODO: Replace MOCK API endpoints

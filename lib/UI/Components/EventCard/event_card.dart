@@ -3,10 +3,6 @@ import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
 import 'package:flutter/material.dart';
 
-// This card UI can be used for
-// 1. Events List
-// 2. Favourites
-// 3. Registered events
 
 class EventCard extends StatelessWidget {
   final Event event;
@@ -18,7 +14,7 @@ class EventCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // TODO: Replace hardcoded 1 with event.id , when API is ready
-        Navigator.push(context, MaterialPageRoute(builder: (context) => EventPage(endpoint,1,event.icon)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => EventPage(endpoint,event.id,event.icon)));
       }, 
       child: Card(
         elevation: 5.0,
@@ -28,6 +24,7 @@ class EventCard extends StatelessWidget {
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             leading: Container(
+              color: Colors.black,
               padding: EdgeInsets.only(right: 12.0),
               child: CachedNetworkImage(
                 imageUrl: event.icon,
