@@ -17,7 +17,7 @@ class Event {
       name: json['name'],
       icon: json['icon'],
       category : json['category'],
-      dateTime: convertTimeStamp(json['date_time']),
+      dateTime: convertTimeStamp(json['datetime']),
     );
   }
 
@@ -27,7 +27,7 @@ class Event {
       'name': name,
       'icon': icon,
       'category': category,
-      'date_time': dateTime,
+      'datetime': dateTime,
     });
   }
 

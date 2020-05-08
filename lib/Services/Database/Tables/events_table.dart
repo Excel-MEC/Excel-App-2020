@@ -18,7 +18,7 @@ class DBEventsTable {
       "name TEXT,"
       "icon TEXT,"
       "category TEXT,"
-      "date_time TEXT"
+      "datetime TEXT"
       ")";
       return table;
   } 
