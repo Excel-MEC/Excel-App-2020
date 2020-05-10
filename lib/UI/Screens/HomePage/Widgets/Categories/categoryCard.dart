@@ -37,7 +37,7 @@ class CategoryCard extends StatelessWidget {
           ),
           // Gradient
           Opacity(
-            opacity: 0.4,
+            opacity: 0.2,
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(

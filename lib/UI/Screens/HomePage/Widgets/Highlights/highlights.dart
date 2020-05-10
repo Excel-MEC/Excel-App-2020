@@ -1,11 +1,11 @@
+import 'package:excelapp/Models/highlights_model.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Highlights/highlight_card.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:excelapp/UI/constants.dart';
-import 'package:excelapp/Models/event_card.dart';
 
 class HighLights extends StatefulWidget {
-  final List<Event> highLightsMap;
+  final List<Highlights> highLightsMap;
 
   HighLights({Key key, @required this.highLightsMap}) : super(key: key);
   @override
@@ -30,7 +30,7 @@ class HighLightsState extends State<HighLights> {
     fontWeight: FontWeight.w400,
   );
 
-  List<Event> highLightsMap;
+  List<Highlights> highLightsMap;
 
   @override
   void initState() {
@@ -50,8 +50,6 @@ class HighLightsState extends State<HighLights> {
       itemBuilder: (BuildContext build, index) {
         return GestureDetector(
           child: HighlightsCard(highLightsMap[index]),
-          // TODO: Navigate to details page
-          onTap: () {},
         );
       },
     );
