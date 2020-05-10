@@ -5,6 +5,19 @@ import 'package:excelapp/Services/API/api_config.dart';
 import 'package:http/http.dart' as http;
 
 class EventsAPI {
+
+  // Fetch hihglights from endpoint
+  static Future<List<Event>> fetchHighlights() async {
+    var response;
+    try {
+      response = await http.get(APIConfig.baseUrl + '/highlights');
+    } catch (e) {
+      print("Error $e");
+    }
+    List<dynamic> responseData = json.decode(response.body);
+    // return responseData.map
+  }
+
   // Fetches a list of events from the endpoint
   static Future<List<Event>> fetchEvents(String endpoint) async {
     var response;
