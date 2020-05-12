@@ -33,10 +33,10 @@ class EventCard extends StatelessWidget {
               ),
             ),
             title: Text(
-              event.name[0].toUpperCase() + event.name.substring(1),
+              event.name,
             ),
             subtitle: Text(
-              event.dateTime != null ? event.dateTime : 'No date | No time',
+              event.datetime != null ? event.datetime : 'No date | No time',
             ),
             trailing: Icon(
               Icons.keyboard_arrow_right,

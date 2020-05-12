@@ -33,10 +33,11 @@ class DBProvider {
 
   void _onCreate(Database db, int version) async {
     // TODO: execute all table creation as batch - for single transaction
+    await db.execute(DBEventsTable.eventTable('General'));
     await db.execute(DBEventsTable.eventTable('Competitions'));
-    await db.execute(DBEventsTable.eventTable('Events'));
     await db.execute(DBEventsTable.eventTable('Talks'));
     await db.execute(DBEventsTable.eventTable('Workshops'));
+    await db.execute(DBEventsTable.eventTable('Conferences'));
     await db.execute(DBEventsTable.eventDetailsTable('CompetitionsDetails'));
     await db.execute(DBFavouritesTable.favouritesTable("Favourites"));
     await db.execute(DBUserTable.userTable());

@@ -2,7 +2,6 @@
 
 class DBEventsTable {
 
-  // To obtain details table name for corresponding category
   static String tableName(String endpoint) {
     // TODO: replace and add endpoints for event details tables
     if(endpoint == "events") return "CompetitionsDetails";
@@ -11,12 +10,13 @@ class DBEventsTable {
   }
   
 
-  // For table Creations
+  // Events Table
   static String eventTable(String tableName) {
     String table = "CREATE TABLE $tableName ("
       "id INTEGER PRIMARY KEY,"
       "name TEXT,"
       "icon TEXT,"
+      "eventType TEXT,"
       "category TEXT,"
       "datetime TEXT"
       ")";

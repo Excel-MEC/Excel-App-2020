@@ -4,10 +4,10 @@ class APIConfig {
   static final String baseUrl = 'https://staging.events.excelmec.org/api';
 
   static String getEndpoint(String category) {
-    // TODO: Replace MOCK API endpoints
-    if (category == 'Competitions') return 'events';
-    if (category == 'Events') return 'events';
-    if (category == 'Talks') return 'events';
-    if (category == 'Workshops') return 'events';
+    if (category == 'Competitions') return 'competition';
+    if (category == 'General') return 'general';
+    if (category == 'Talks') return 'talk';
+    if (category == 'Workshops') return 'workshop';
+    if (category == 'Conferences') return 'conference';
   }
 }

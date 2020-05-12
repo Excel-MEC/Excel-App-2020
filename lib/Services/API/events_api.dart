@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class EventsAPI {
 
-  // Fetch hihglights from endpoint
+
   static Future<List<Highlights>> fetchHighlights() async {
     var response;
     try {
@@ -19,11 +19,12 @@ class EventsAPI {
     return responseData.map<Highlights>((highlight) => Highlights.fromJson(highlight)).toList();
   }
 
-  // Fetches a list of events from the endpoint
+
+
   static Future<List<Event>> fetchEvents(String endpoint) async {
     var response;
     try {
-      response = await http.get(APIConfig.baseUrl + '/$endpoint');
+      response = await http.get(APIConfig.baseUrl + '/events/type' + '/$endpoint');
     } catch (e) {
       print("Error $e");
     }
@@ -31,7 +32,8 @@ class EventsAPI {
     return responseData.map<Event>((event) => Event.fromJson(event)).toList();
   }
 
-  // Fetch event details from endpoint
+  
+
   static Future<EventDetails> fetchEventDetails(String endpoint, int id) async {
     var response;
     try {
