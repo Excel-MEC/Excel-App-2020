@@ -59,6 +59,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   FutureBuilder(
+                    // TODO: provide highlights API when ready
                     future: EventsAPI.fetchHighlights(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData)

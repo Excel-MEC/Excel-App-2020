@@ -26,10 +26,10 @@ class _EventsListState extends State<EventsList> {
     endpoint = APIConfig.getEndpoint(widget.category);
     tableName = widget.category;
     db = DBProvider();
-  }
+  } 
 
   Future<List<Event>> fetchEvents(String endpoint) async {
-    // TODO: Handle handshake errors 
+    
     List<Event> result;
     var connectivityResult = await (Connectivity().checkConnectivity());
 
@@ -61,9 +61,18 @@ class _EventsListState extends State<EventsList> {
               builder: (context, snapshot) {
                 List<Event> list = snapshot.data;
                 if (snapshot.hasData) {
-                  if (snapshot.data.isEmpty)
-                    // TODO: Proper error UI
-                    return Text('Something went wrong');
+                  // If no data is obtained from API
+                  if (snapshot.data.isEmpty) {
+                    return Center(
+                      child: Text(
+                        "No Events",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    );
+                  }
                   return ListView.builder(
                     itemCount: list.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -71,6 +80,7 @@ class _EventsListState extends State<EventsList> {
                     },
                   );
                 } else {
+                  // TODO : Proper load UI
                   return Center(child: CircularProgressIndicator());
                 }
               },
