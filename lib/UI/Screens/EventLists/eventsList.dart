@@ -29,7 +29,7 @@ class _EventsListState extends State<EventsList> {
   } 
 
   Future<List<Event>> fetchEvents(String endpoint) async {
-    
+
     List<Event> result;
     var connectivityResult = await (Connectivity().checkConnectivity());
 
@@ -68,6 +68,7 @@ class _EventsListState extends State<EventsList> {
                         "No Events",
                         textAlign: TextAlign.center,
                         style: TextStyle(
+                          fontSize: 17,
                           color: Colors.grey,
                         ),
                       ),
