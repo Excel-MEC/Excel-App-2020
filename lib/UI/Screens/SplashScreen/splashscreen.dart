@@ -1,8 +1,10 @@
+import 'package:excelapp/UI/Screens/LandingPage/landingPage.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:excelapp/UI/Components/Navigation/customNavigation.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Splashscreen extends StatefulWidget {
   @override
@@ -10,15 +12,27 @@ class Splashscreen extends StatefulWidget {
 }
 
 class _SplashscreenState extends State<Splashscreen> {
-  @override
-  void initState() {
-    Future.delayed(const Duration(milliseconds: 1000), () {
+  leavePage(context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool firstTime = prefs.getBool('firstTime');
+    if (firstTime == null || firstTime == true)
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LandingPage()),
+      );
+    else
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => CustomNavigator(),
         ),
       );
+  }
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      leavePage(context);
     });
     super.initState();
   }
