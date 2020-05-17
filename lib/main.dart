@@ -1,6 +1,6 @@
-import 'package:excelapp/UI/Screens/LandingPage/landingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:excelapp/UI/Screens/SplashScreen/splashscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LandingPage(),
+      home: Splashscreen(),
     );
   }
 }
