@@ -1,7 +1,7 @@
 // API config file
 
 class APIConfig {
-  static final String baseUrl = 'https://staging.events.excelmec.org/api';
+  static final String baseUrl = 'https://staging.apis.excelmec.org/events/api';
 
   static String getEndpoint(String category) {
     if (category == 'Competitions') return 'competition';
