@@ -24,7 +24,6 @@ class EventCard extends StatelessWidget {
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             leading: Container(
-              color: Colors.black,
               padding: EdgeInsets.only(right: 12.0),
               child: CachedNetworkImage(
                 imageUrl: event.icon,
