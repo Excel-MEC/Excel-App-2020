@@ -11,13 +11,13 @@ Widget getEventDetails(EventDetails eventDetails) {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           // Date and Time
-          detailRow(Icons.calendar_today, eventDetails.dateTime),
+          detailRow(Icons.calendar_today, eventDetails.datetime.toString()),
           SizedBox(height: 10.0),
           // Venue
-          detailRow(Icons.add_location, eventDetails.venue),
+          detailRow(Icons.add_location, eventDetails.venue.toString()),
           SizedBox(height: 10.0),
           // Prize money
-          detailRow(Icons.attach_money, eventDetails.prize + ' Rs'),
+          detailRow(Icons.attach_money, eventDetails.prizeMoney.toString() + ' Rs'),
         ],
       ),
     ),

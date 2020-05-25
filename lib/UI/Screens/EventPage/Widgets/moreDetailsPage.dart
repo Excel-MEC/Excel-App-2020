@@ -3,7 +3,6 @@ import 'package:excelapp/UI/Screens/EventPage/Widgets/backgroundImage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/eventDescription.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
-import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
 
 class MoreDetails extends StatefulWidget {
   final EventDetails eventDetails;
@@ -61,24 +60,6 @@ class MoreDetailsState extends State<MoreDetails> {
                           ),
                         ),
                       ),
-                      // Like Button
-                      // Hero(
-                      //   tag: 'LikeButton',
-
-                      //   //Code to make the button under a Material widget during animation which otherwise throws error
-                      //   flightShuttleBuilder: (BuildContext flightContext,
-                      //           Animation<double> animation,
-                      //           HeroFlightDirection flightDirection,
-                      //           BuildContext fromHeroContext,
-                      //           BuildContext toHeroContext) =>
-                      //       Material(
-                      //           type: MaterialType.transparency,
-                      //           child: toHeroContext.widget),
-                      //   child: Padding(
-                      //     padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                      //     child: LikeButton(false),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
@@ -138,8 +119,10 @@ class MoreDetailsState extends State<MoreDetails> {
                                 details(eventDetails.about),
                                 details(eventDetails.format),
                                 details(eventDetails.rules),
-                                eventDetails.contacts != null
-                                    ? contactDetails(eventDetails.contacts)
+                                eventDetails.eventHead1 != null &&
+                                        eventDetails.eventHead2 != null
+                                    ? contactDetails(eventDetails.eventHead1,
+                                        eventDetails.eventHead2)
                                     : offlineContacts()
                               ],
                             ),
@@ -173,7 +156,8 @@ class MoreDetailsState extends State<MoreDetails> {
   Widget offlineContacts() {
     return SingleChildScrollView(
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height/5),
+        margin: EdgeInsets.symmetric(
+            vertical: MediaQuery.of(context).size.height / 5),
         // color: Colors.green,
         child: Center(
           child: Text(
@@ -189,24 +173,13 @@ class MoreDetailsState extends State<MoreDetails> {
     );
   }
 
-  Widget contactDetails(List<dynamic> details) {
+  Widget contactDetails(EventHead1 eventHead1, EventHead1 eventHead2) {
     List<Widget> finDetails = [];
-    for (int i = 0; i < details.length; i++) {
-      finDetails.add(SizedBox(height: 10));
-      finDetails.add(
-        contactDetailRow(Icons.person, details[i]['name']),
-      );
-      finDetails.add(
-        contactDetailRow(Icons.blur_on, details[i]['responsibility']),
-      );
-      finDetails.add(
-        contactDetailRow(Icons.phone, details[i]['phone_number']),
-      );
-      finDetails.add(
-        contactDetailRow(Icons.email, details[i]['email']),
-      );
-      finDetails.add(SizedBox(height: 30));
-    }
+    finDetails.add(SizedBox(height: 10));
+    finDetails.add(contactDetailRow(Icons.person, eventHead1.name.toString()));
+    finDetails.add(contactDetailRow(Icons.person, eventHead1.email.toString()));
+    finDetails.add(contactDetailRow(Icons.person, eventHead1.phoneNumber.toString()));
+
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),

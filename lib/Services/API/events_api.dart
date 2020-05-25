@@ -34,11 +34,11 @@ class EventsAPI {
 
   
 
-  static Future<EventDetails> fetchEventDetails(String endpoint, int id) async {
+  static Future<EventDetails> fetchEventDetails(int id) async {
     var response;
     try {
       response =
-          await http.get(APIConfig.baseUrl + '/$endpoint/${id.toString()}');
+          await http.get(APIConfig.baseUrl + '/events/${id.toString()}');
     } catch (e) {
       print("Error $e");
     }

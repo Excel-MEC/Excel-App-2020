@@ -9,8 +9,7 @@ import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
 
 class EventPageBody extends StatefulWidget {
   final EventDetails eventDetails;
-  final String endpoint;
-  EventPageBody({this.eventDetails,this.endpoint});
+  EventPageBody({this.eventDetails});
   @override
   EventPageBodyState createState() => EventPageBodyState();
 }
@@ -18,10 +17,8 @@ class EventPageBody extends StatefulWidget {
 //Event Details
 class EventPageBodyState extends State<EventPageBody> {
   EventDetails eventDetails;
-  String _endpoint;
   @override
   void initState() {
-    _endpoint = widget.endpoint;
     eventDetails = widget.eventDetails;
     super.initState();
   }
@@ -62,7 +59,6 @@ class EventPageBodyState extends State<EventPageBody> {
                 height: deviceHeight * 0.2,
                 child: Card(
                   elevation: 8,
-                  // TODO: Provide icon from API
                   child: Container(
                     padding: EdgeInsets.all(20),
                     child: CachedNetworkImage(
