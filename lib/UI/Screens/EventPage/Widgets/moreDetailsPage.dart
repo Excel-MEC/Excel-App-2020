@@ -3,7 +3,6 @@ import 'package:excelapp/UI/Screens/EventPage/Widgets/backgroundImage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/eventDescription.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
-import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
 
 class MoreDetails extends StatefulWidget {
   final EventDetails eventDetails;
@@ -41,7 +40,7 @@ class MoreDetailsState extends State<MoreDetails> {
               children: <Widget>[
                 Padding(
                   padding:
-                      EdgeInsets.only(left: 35.0, top: deviceHeight * 0.15),
+                      EdgeInsets.only(left: 50.0, top: deviceHeight * 0.15),
                   child: Row(
                     children: <Widget>[
                       //Event Name Details
@@ -54,31 +53,13 @@ class MoreDetailsState extends State<MoreDetails> {
                               decoration: TextDecoration.none,
                               fontFamily: pfontFamily,
                               height: 1.0,
-                              fontSize: 35.0,
+                              fontSize: 30.0,
                               fontWeight: FontWeight.w800,
                               color: Colors.white,
                             ),
                           ),
                         ),
                       ),
-                      // Like Button
-                      // Hero(
-                      //   tag: 'LikeButton',
-
-                      //   //Code to make the button under a Material widget during animation which otherwise throws error
-                      //   flightShuttleBuilder: (BuildContext flightContext,
-                      //           Animation<double> animation,
-                      //           HeroFlightDirection flightDirection,
-                      //           BuildContext fromHeroContext,
-                      //           BuildContext toHeroContext) =>
-                      //       Material(
-                      //           type: MaterialType.transparency,
-                      //           child: toHeroContext.widget),
-                      //   child: Padding(
-                      //     padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                      //     child: LikeButton(false),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
@@ -138,8 +119,10 @@ class MoreDetailsState extends State<MoreDetails> {
                                 details(eventDetails.about),
                                 details(eventDetails.format),
                                 details(eventDetails.rules),
-                                eventDetails.contacts != null
-                                    ? contactDetails(eventDetails.contacts)
+                                eventDetails.eventHead1 != null &&
+                                        eventDetails.eventHead2 != null
+                                    ? contactDetails(eventDetails.eventHead1,
+                                        eventDetails.eventHead2)
                                     : offlineContacts()
                               ],
                             ),
@@ -160,10 +143,10 @@ class MoreDetailsState extends State<MoreDetails> {
   Widget details(txt) {
     return SingleChildScrollView(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Text(
           txt.toString(),
-          style: TextStyle(color: primaryColor),
+          style: TextStyle(color: primaryColor, fontSize: 17.0),
         ),
       ),
     );
@@ -173,8 +156,8 @@ class MoreDetailsState extends State<MoreDetails> {
   Widget offlineContacts() {
     return SingleChildScrollView(
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height/5),
-        // color: Colors.green,
+        margin: EdgeInsets.symmetric(
+            vertical: MediaQuery.of(context).size.height / 5),
         child: Center(
           child: Text(
             "Net on cheyy Mwonuse!",
@@ -189,24 +172,23 @@ class MoreDetailsState extends State<MoreDetails> {
     );
   }
 
-  Widget contactDetails(List<dynamic> details) {
+  Widget contactDetails(EventHead1 eventHead1, EventHead1 eventHead2) {
     List<Widget> finDetails = [];
-    for (int i = 0; i < details.length; i++) {
-      finDetails.add(SizedBox(height: 10));
-      finDetails.add(
-        contactDetailRow(Icons.person, details[i]['name']),
-      );
-      finDetails.add(
-        contactDetailRow(Icons.blur_on, details[i]['responsibility']),
-      );
-      finDetails.add(
-        contactDetailRow(Icons.phone, details[i]['phone_number']),
-      );
-      finDetails.add(
-        contactDetailRow(Icons.email, details[i]['email']),
-      );
-      finDetails.add(SizedBox(height: 30));
-    }
+
+    // Contact 1
+    finDetails.add(SizedBox(height: 10));
+    finDetails.add(contactDetailRow(Icons.person, eventHead1.name.toString()));
+    finDetails.add(contactDetailRow(Icons.email,eventHead1.email.toString()));
+    finDetails
+        .add(contactDetailRow(Icons.phone, eventHead1.phoneNumber.toString()));
+
+    // Contact 2
+    finDetails.add(SizedBox(height: 25));
+    finDetails.add(contactDetailRow(Icons.person, eventHead2.name.toString()));
+    finDetails.add(contactDetailRow(Icons.email,eventHead2.email.toString()));
+    finDetails
+        .add(contactDetailRow(Icons.phone, eventHead2.phoneNumber.toString()));
+
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -218,29 +200,30 @@ class MoreDetailsState extends State<MoreDetails> {
   }
 
   Widget contactDetailRow(var icon, String text) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Icon(
-          icon,
-          size: 15.0,
-          color: primaryColor,
-        ),
-        Container(
-          padding: EdgeInsets.only(right: 10.0),
-        ),
-        Expanded(
-          child: Text(
-            text,
-            style: TextStyle(
-              color: primaryColor,
-              fontSize: 16.0,
-              decoration: TextDecoration.none,
-              fontFamily: 'Quicksand-Light',
-            ),
+    return Container(
+      margin: EdgeInsets.only(bottom: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Icon(
+            icon,
+            size: 20.0,
+            color: primaryColor,
           ),
-        )
-      ],
+          SizedBox(width: 15),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                color: primaryColor,
+                fontSize: 17.0,
+                decoration: TextDecoration.none,
+                fontFamily: 'Quicksand-Light',
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -9,9 +9,7 @@ import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
 
 class EventPageBody extends StatefulWidget {
   final EventDetails eventDetails;
-  final String icon;
-  final String endpoint;
-  EventPageBody({this.eventDetails, this.icon, this.endpoint});
+  EventPageBody({this.eventDetails});
   @override
   EventPageBodyState createState() => EventPageBodyState();
 }
@@ -19,12 +17,8 @@ class EventPageBody extends StatefulWidget {
 //Event Details
 class EventPageBodyState extends State<EventPageBody> {
   EventDetails eventDetails;
-  String _icon;
-  String _endpoint;
   @override
   void initState() {
-    _icon = widget.icon;
-    _endpoint = widget.endpoint;
     eventDetails = widget.eventDetails;
     super.initState();
   }
@@ -65,11 +59,10 @@ class EventPageBodyState extends State<EventPageBody> {
                 height: deviceHeight * 0.2,
                 child: Card(
                   elevation: 8,
-                  // TODO: Provide icon from API
                   child: Container(
                     padding: EdgeInsets.all(20),
                     child: CachedNetworkImage(
-                      imageUrl: _icon,
+                      imageUrl: eventDetails.icon,
                       placeholder: (context, str) =>
                           CircularProgressIndicator(),
                     ),
@@ -108,7 +101,7 @@ class EventPageBodyState extends State<EventPageBody> {
                         style: TextStyle(
                           decoration: TextDecoration.none,
                           fontFamily: pfontFamily,
-                          fontSize: 35.0,
+                          fontSize: 30.0,
                           fontWeight: FontWeight.w800,
                           color: textColor,
                         ),
@@ -120,7 +113,7 @@ class EventPageBodyState extends State<EventPageBody> {
                     tag: 'LikeButton',
                     child: Padding(
                       padding: EdgeInsets.all(10.0),
-                      child: LikeButton(false, eventDetails, _icon,_endpoint),
+                      child: LikeButton(false),
                     ),
                   ),
                 ],

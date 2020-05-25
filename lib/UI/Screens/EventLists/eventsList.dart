@@ -27,7 +27,7 @@ class _EventsListState extends State<EventsList> {
     tableName = widget.category;
     db = DBProvider();
   } 
-
+ 
   Future<List<Event>> fetchEvents(String endpoint) async {
 
     List<Event> result;
@@ -77,7 +77,7 @@ class _EventsListState extends State<EventsList> {
                   return ListView.builder(
                     itemCount: list.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return EventCard(list[index],endpoint);
+                      return EventCard(list[index]);
                     },
                   );
                 } else {

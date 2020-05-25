@@ -6,15 +6,14 @@ import 'package:flutter/material.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
-  final String endpoint;
-  EventCard(this.event,this.endpoint);
+  EventCard(this.event);
 
   @override 
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         // TODO: Replace hardcoded 1 with event.id , when API is ready
-        Navigator.push(context, MaterialPageRoute(builder: (context) => EventPage(endpoint,event.id,event.icon)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => EventPage(event.id)));
       }, 
       child: Card(
         elevation: 5.0,
@@ -24,7 +23,6 @@ class EventCard extends StatelessWidget {
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             leading: Container(
-              color: Colors.black,
               padding: EdgeInsets.only(right: 12.0),
               child: CachedNetworkImage(
                 imageUrl: event.icon,
