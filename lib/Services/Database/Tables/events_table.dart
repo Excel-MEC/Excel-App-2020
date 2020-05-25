@@ -1,14 +1,6 @@
 
 
-class DBEventsTable {
-
-  static String tableName(String endpoint) {
-    // TODO: replace and add endpoints for event details tables
-    if(endpoint == "events") return "CompetitionsDetails";
-    if(endpoint == "talks") return "TalksDetails";
-    if(endpoint == "workshops") return "WorkshopsDetails"; 
-  }
-  
+class DBEventsTable {  
 
   // Events Table
   static String eventTable(String tableName) {
@@ -23,15 +15,15 @@ class DBEventsTable {
       return table;
   } 
 
-  // Table for storing event details
+  // Event Details Table
   static String eventDetailsTable(String tableName) {
     String table = "CREATE TABLE $tableName ("
       "id INTEGER PRIMARY KEY,"
       "name TEXT,"
-      "category TEXT,"
+      "icon TEXT,"
+      "datetime TEXT,"
+      "prizeMoney INTEGER,"
       "venue TEXT,"
-      "prize_money TEXT,"
-      "date_time TEXT,"
       "about TEXT,"
       "format TEXT,"
       "rules TEXT"

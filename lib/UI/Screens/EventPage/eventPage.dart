@@ -16,14 +16,12 @@ class EventPage extends StatefulWidget {
 class _EventPageState extends State<EventPage> {
   DBProvider dbProvider;
   int _eventId;
-  String _tableName;
+  String _tableName = "EventDetails";
 
   @override
   void initState() {
     super.initState();
     _eventId = widget.eventId;
-    // To get details-table name from endpoint
-    // _tableName = DBEventsTable.tableName(widget.endpoint);
     dbProvider = DBProvider();
   }
 
@@ -36,12 +34,12 @@ class _EventPageState extends State<EventPage> {
         connectivityResult == ConnectivityResult.mobile) {
           print("Fetching details");
           result = await EventsAPI.fetchEventDetails(id);
-          // print("adding to $_tableName table");
-          // await dbProvider.addEventDetails(result, _tableName);
+          print("adding to $_tableName table");
+          await dbProvider.addEventDetails(result, _tableName);
           print("done");
         } else {
           print("from $_tableName table");
-          result = await dbProvider.getEventDetails(_tableName, _eventId);
+          result = await dbProvider.getEventDetails(_tableName, id);
           print("done");
         }
     return result;
@@ -53,8 +51,9 @@ class _EventPageState extends State<EventPage> {
       body: FutureBuilder(
         future: fetchEventDetails(_eventId),
         builder: (context, snapshot) {
-          if (snapshot.hasData)
+          if (snapshot.hasData) {
             return EventPageBody(eventDetails: snapshot.data);
+          }
           else {
             return Center(child: CircularProgressIndicator());
           }
