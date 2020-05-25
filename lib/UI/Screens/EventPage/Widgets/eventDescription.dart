@@ -11,13 +11,14 @@ Widget getEventDetails(EventDetails eventDetails) {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           // Date and Time
-          detailRow(Icons.calendar_today, eventDetails.datetime.toString()),
-          SizedBox(height: 10.0),
-          // Venue
-          detailRow(Icons.add_location, eventDetails.venue.toString()),
+          detailRow(Icons.data_usage, eventDetails.datetime.toString()),
           SizedBox(height: 10.0),
           // Prize money
           detailRow(Icons.attach_money, eventDetails.prizeMoney.toString() + ' Rs'),
+          SizedBox(height: 10.0),
+           // Venue
+          detailRow(Icons.location_on, eventDetails.venue.toString()),
+          SizedBox(height: 10.0),
         ],
       ),
     ),
@@ -30,7 +31,7 @@ Widget detailRow(IconData icon, String text) {
     children: <Widget>[
       Icon(
         icon,
-        size: 20.0,
+        size: 25.0,
         color: Colors.white,
       ),
       SizedBox(width: 10.0),
@@ -39,9 +40,9 @@ Widget detailRow(IconData icon, String text) {
           text,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 15.0,
+            fontSize: 16.0,
             fontFamily: pfontFamily,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
           ),
         ),
       )

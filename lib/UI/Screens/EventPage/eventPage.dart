@@ -15,7 +15,6 @@ class EventPage extends StatefulWidget {
 
 class _EventPageState extends State<EventPage> {
   DBProvider dbProvider;
-  String _endpoint;
   int _eventId;
   String _tableName;
 
