@@ -1,4 +1,3 @@
-
 // Model for representing each details of each Event
 
 // class EventDetails {
@@ -58,27 +57,26 @@
 //   }
 // }
 
-
-
 class EventDetails {
   int id;
   String name;
   String icon;
-  int categoryId;
-  String category;
-  int eventTypeId;
-  String eventType;
+  String datetime;
+  int prizeMoney;
+  String venue;
   String about;
   String format;
   String rules;
-  String venue;
-  String datetime;
-  int entryFee;
-  int prizeMoney;
   int eventHead1Id;
   EventHead1 eventHead1;
   int eventHead2Id;
   EventHead1 eventHead2;
+
+  int categoryId;
+  String category;
+  int eventTypeId;
+  String eventType;
+  int entryFee;
   bool isTeam;
   int teamSize;
   int eventStatusId;
@@ -116,31 +114,20 @@ class EventDetails {
     id = json['id'];
     name = json['name'];
     icon = json['icon'];
-    categoryId = json['categoryId'];
-    category = json['category'];
-    eventTypeId = json['eventTypeId'];
-    eventType = json['eventType'];
     about = json['about'];
     format = json['format'];
     rules = json['rules'];
     venue = json['venue'];
     datetime = json['datetime'];
-    entryFee = json['entryFee'];
     prizeMoney = json['prizeMoney'];
-    eventHead1Id = json['eventHead1Id'];
-    eventHead1 = json['eventHead1'] != null
+    eventHead1Id = json.containsKey('eventHead1Id') ? json['eventHead1Id'] : 0;
+    eventHead1 = json.containsKey('eventHead1') && json['eventHead1'] != null 
         ? new EventHead1.fromJson(json['eventHead1'])
         : null;
-    eventHead2Id = json['eventHead2Id'];
-    eventHead2 = json['eventHead2'] != null
+    eventHead2Id = json.containsKey('eventHead2Id') ? json['eventHead2Id'] : 0;
+    eventHead2 = json.containsKey('eventHead2') && json['eventHead2'] != null
         ? new EventHead1.fromJson(json['eventHead2'])
         : null;
-    isTeam = json['isTeam'];
-    teamSize = json['teamSize'];
-    eventStatusId = json['eventStatusId'];
-    eventStatus = json['eventStatus'];
-    numberOfRounds = json['numberOfRounds'];
-    currentRound = json['currentRound'];
   }
 
   Map<String, dynamic> toJson() {
@@ -148,31 +135,12 @@ class EventDetails {
     data['id'] = this.id;
     data['name'] = this.name;
     data['icon'] = this.icon;
-    data['categoryId'] = this.categoryId;
-    data['category'] = this.category;
-    data['eventTypeId'] = this.eventTypeId;
-    data['eventType'] = this.eventType;
+    data['datetime'] = this.datetime;
+    data['prizeMoney'] = this.prizeMoney;
+    data['venue'] = this.venue;
     data['about'] = this.about;
     data['format'] = this.format;
     data['rules'] = this.rules;
-    data['venue'] = this.venue;
-    data['datetime'] = this.datetime;
-    data['entryFee'] = this.entryFee;
-    data['prizeMoney'] = this.prizeMoney;
-    data['eventHead1Id'] = this.eventHead1Id;
-    if (this.eventHead1 != null) {
-      data['eventHead1'] = this.eventHead1.toJson();
-    }
-    data['eventHead2Id'] = this.eventHead2Id;
-    if (this.eventHead2 != null) {
-      data['eventHead2'] = this.eventHead2.toJson();
-    }
-    data['isTeam'] = this.isTeam;
-    data['teamSize'] = this.teamSize;
-    data['eventStatusId'] = this.eventStatusId;
-    data['eventStatus'] = this.eventStatus;
-    data['numberOfRounds'] = this.numberOfRounds;
-    data['currentRound'] = this.currentRound;
     return data;
   }
 }
