@@ -17,6 +17,7 @@ class _ScheduleState extends State<Schedule> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          elevation: 1,
           backgroundColor: Colors.white,
           bottom: TabBar(
             indicatorSize: TabBarIndicatorSize.label,
@@ -40,14 +41,13 @@ class _ScheduleState extends State<Schedule> {
             ],
           ),
           title: Text(
-            'Timeline',
+            'Schedule',
             style: TextStyle(
                 fontSize: 19,
                 fontFamily: pfontFamily,
                 color: Color(0xff282849),
                 fontWeight: FontWeight.w600),
           ),
-          centerTitle: true,
         ),
         body: Container(
           child: TabBarView(
