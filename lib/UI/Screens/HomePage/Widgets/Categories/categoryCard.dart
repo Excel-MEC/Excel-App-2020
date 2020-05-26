@@ -76,7 +76,8 @@ class CategoryCard extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text('View'), 
+                  child:
+                      Text('View', style: TextStyle(fontFamily: pfontFamily)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),

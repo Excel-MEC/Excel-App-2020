@@ -6,6 +6,7 @@ import 'package:excelapp/Services/API/events_api.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Categories/categories.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Highlights/highlights.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/socialIcons.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -32,7 +33,8 @@ class _HomePageState extends State<HomePage> {
   // Method invoked when connection changes
   _onChange(ConnectivityResult result) {
     if (result == ConnectivityResult.wifi ||
-        result == ConnectivityResult.mobile) setState(() {});
+        result == ConnectivityResult.mobile)
+      setState(() {});
     else
       print("no Internet");
   }
@@ -47,17 +49,10 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               // Highlights
               Container(
-                child: Column(
+                  child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                    child: Text(
-                      "Highlights",
-                      style: headingStyle,
-                    ),
-                  ),
+                  SizedBox(height: 20),
                   FutureBuilder(
                     // TODO: provide highlights API when ready
                     future: EventsAPI.fetchHighlights(),
@@ -72,7 +67,9 @@ class _HomePageState extends State<HomePage> {
                 ],
               )),
               // Categories
-              Categories()
+              Categories(),
+              socialMediaIcons(),
+              SizedBox(height: 110)
             ],
           ),
         ),

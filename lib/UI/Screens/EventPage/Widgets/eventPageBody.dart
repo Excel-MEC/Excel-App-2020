@@ -101,7 +101,7 @@ class EventPageBodyState extends State<EventPageBody> {
                         style: TextStyle(
                           decoration: TextDecoration.none,
                           fontFamily: pfontFamily,
-                          fontSize: 30.0,
+                          fontSize: 26.0,
                           fontWeight: FontWeight.w800,
                           color: textColor,
                         ),

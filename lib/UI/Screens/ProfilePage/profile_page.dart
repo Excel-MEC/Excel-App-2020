@@ -109,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
 Widget cardBuilder(String name, bool check) {
   return Card(
     margin: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
-    elevation: 3,
+    elevation: 2,
     child: ListTile(
       title: Row(
         children: <Widget>[

@@ -3,6 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
 import './categoryCard.dart';
 
+final headingStyle = TextStyle(
+  fontWeight: FontWeight.w500,
+  fontSize: 24,
+  fontFamily: pfontFamily,
+  color: Colors.black87,
+);
+
 class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -11,7 +18,7 @@ class Categories extends StatelessWidget {
         // Heading
         Container(
           alignment: Alignment.centerLeft,
-          padding: EdgeInsets.symmetric(horizontal: 15,vertical: 20),
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: Text(
             "Categories",
             style: headingStyle,
@@ -24,11 +31,6 @@ class Categories extends StatelessWidget {
         CategoryCard(categoriesMap[2]),
         CategoryCard(categoriesMap[3]),
         CategoryCard(categoriesMap[4]),
-
-        // Extras
-        Container(
-          height: MediaQuery.of(context).size.height/4,
-        )
       ],
     );
   }
