@@ -1,7 +1,6 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/events_api.dart';
-import 'package:excelapp/Services/Database/Tables/events_table.dart';
 import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/eventPageBody.dart';

@@ -1,7 +1,3 @@
-import 'package:excelapp/Models/event_details.dart';
-import 'package:excelapp/Models/favourites_model.dart';
-import 'package:excelapp/Services/Database/db_provider.dart';
-import 'package:excelapp/UI/Components/LoadingUI/snackBar.dart';
 import 'package:flutter/material.dart';
 
 class LikeButton extends StatefulWidget {

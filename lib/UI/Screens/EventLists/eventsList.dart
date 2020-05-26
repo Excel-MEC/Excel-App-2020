@@ -13,7 +13,7 @@ class EventsList extends StatefulWidget {
 
   @override
   _EventsListState createState() => _EventsListState();
-} 
+}
 
 class _EventsListState extends State<EventsList> {
   DBProvider db;
@@ -26,25 +26,38 @@ class _EventsListState extends State<EventsList> {
     endpoint = APIConfig.getEndpoint(widget.category);
     tableName = widget.category;
     db = DBProvider();
-  } 
- 
-  Future<List<Event>> fetchEvents(String endpoint) async {
+  }
 
+  Future<List<Event>> fetchEvents(String endpoint) async {
     List<Event> result;
     var connectivityResult = await (Connectivity().checkConnectivity());
+    result = await db.getEvents(tableName);
 
-    if (connectivityResult == ConnectivityResult.wifi ||
-        connectivityResult == ConnectivityResult.mobile) {
-      print("\nfetching");
+    // No connetions available
+    if (connectivityResult == ConnectivityResult.none) {
+      print("all connections down");
+      return result;
+    }
+
+    // Database empty -- Fetch from API
+    if (result.isEmpty && connectivityResult != ConnectivityResult.none) {
+      print("\nfetching from api and updating database");
       result = await EventsAPI.fetchEvents(endpoint);
-      print("adding to $tableName table");
       await db.addEvents(result, tableName);
       print("done");
-    } else {
-      print("\nfrom $tableName table");
-      result = await db.getEvents(tableName);
-      print("done");
-    } 
+      return result;
+    }
+
+    // Database not empty -- Update database
+    if (result.isNotEmpty && connectivityResult != ConnectivityResult.none) {
+      print("Updating database");
+      EventsAPI.fetchEvents(endpoint).then((value) {
+        db.addEvents(value, tableName);
+        print("done");
+      }).catchError((e) => print("Not Updated : $e"));
+      return result;
+    }
+
     return result;
   }
 
