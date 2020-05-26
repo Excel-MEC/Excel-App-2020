@@ -50,14 +50,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                    child: Text(
-                      "Highlights",
-                      style: headingStyle,
-                    ),
-                  ),
+                  SizedBox(height: 20),
                   FutureBuilder(
                     // TODO: provide highlights API when ready
                     future: EventsAPI.fetchHighlights(),

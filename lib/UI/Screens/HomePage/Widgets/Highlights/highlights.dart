@@ -16,7 +16,6 @@ class HighLightsState extends State<HighLights> {
   int autoplayseconds = 5;
   var isLiked;
 
-  // TODO: Move to Constants
   var titleStyle = TextStyle(
     color: Colors.white,
     fontFamily: pfontFamily,
@@ -42,8 +41,8 @@ class HighLightsState extends State<HighLights> {
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       itemCount: highLightsMap.length,
-      height: MediaQuery.of(context).size.height/3,
       viewportFraction: 0.9,
+      aspectRatio: (3 / 2) / .9,
       enlargeCenterPage: true,
       autoPlay: true,
       autoPlayInterval: Duration(seconds: autoplayseconds),
