@@ -89,12 +89,17 @@ class DBProvider {
   }
 
   // Retrieve a single event details using id
-    Future<EventDetails> getEventDetails(String table,int id) async {
+    Future<List<EventDetails>> getEventDetails(String table,int id) async {
     final db = await database;
+    List<EventDetails> result = [];
     List<Map<String,dynamic>> res = await db.query(table,where: 'id = ?',whereArgs: [id]);
+    if(res.isEmpty) {
+      return [];
+    }
     Map<String,dynamic> event = res[0]; 
     EventDetails eventDetails = EventDetails.fromJson(event);
-    return eventDetails;
+    result.add(eventDetails);
+    return result;
   }  
 
 }

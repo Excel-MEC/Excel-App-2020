@@ -24,23 +24,36 @@ class _EventPageState extends State<EventPage> {
     dbProvider = DBProvider();
   }
 
-  // TODO: Network connectivity
-  Future<EventDetails> fetchEventDetails(int id) async {
-    EventDetails result;
+  Future<List<EventDetails>> fetchEventDetails(int id) async {
+    List<EventDetails> result;
     var connectivityResult = await (Connectivity().checkConnectivity());
+    result = await dbProvider.getEventDetails(_tableName, id);
 
-    if (connectivityResult == ConnectivityResult.wifi ||
-        connectivityResult == ConnectivityResult.mobile) {
-          print("Fetching details");
-          result = await EventsAPI.fetchEventDetails(id);
-          print("adding to $_tableName table");
-          await dbProvider.addEventDetails(result, _tableName);
-          print("done");
-        } else {
-          print("from $_tableName table");
-          result = await dbProvider.getEventDetails(_tableName, id);
-          print("done");
-        }
+    // No connetions available
+    if (connectivityResult == ConnectivityResult.none) {
+      print("all connections down");
+      return result;
+    }
+
+    // Database empty -- Fetch from API
+    if (result.isEmpty && connectivityResult != ConnectivityResult.none) {
+      print("\nfetching from api and updating database");
+      result.add(await EventsAPI.fetchEventDetails(id));
+      await dbProvider.addEventDetails(result[0], _tableName);
+      print("done");
+      return result;
+    }
+
+    // Database not empty -- Update database
+    if (result.isNotEmpty && connectivityResult != ConnectivityResult.none) {
+      print("Updating database");
+      EventsAPI.fetchEventDetails(id).then((value) {
+        dbProvider.addEventDetails(result[0], _tableName);
+        print("done");
+      }).catchError((e) => print("Not Updated : $e"));
+      return result;
+    }
+
     return result;
   }
 
@@ -51,9 +64,20 @@ class _EventPageState extends State<EventPage> {
         future: fetchEventDetails(_eventId),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return EventPageBody(eventDetails: snapshot.data);
-          }
-          else {
+            if (snapshot.data.isEmpty) {
+              return Center(
+                child: Text(
+                  "No Connection. Please retry",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.grey,
+                  ),
+                ),
+              );
+            }
+            return EventPageBody(eventDetails: snapshot.data[0]);
+          } else {
             return Center(child: CircularProgressIndicator());
           }
         },
