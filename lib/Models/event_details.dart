@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 // Model for representing each details of each Event
 
 // class EventDetails {
@@ -121,7 +122,7 @@ class EventDetails {
     datetime = json['datetime'];
     prizeMoney = json['prizeMoney'];
     eventHead1Id = json.containsKey('eventHead1Id') ? json['eventHead1Id'] : 0;
-    eventHead1 = json.containsKey('eventHead1') && json['eventHead1'] != null 
+    eventHead1 = json.containsKey('eventHead1') && json['eventHead1'] != null
         ? new EventHead1.fromJson(json['eventHead1'])
         : null;
     eventHead2Id = json.containsKey('eventHead2Id') ? json['eventHead2Id'] : 0;
@@ -167,5 +168,13 @@ class EventHead1 {
     data['email'] = this.email;
     data['phoneNumber'] = this.phoneNumber;
     return data;
+  }
+
+  String dateTimeToString(String dateTime) {
+    DateTime dateObject = DateTime.parse(dateTime);
+    String result = DateFormat('dd MMM yyyy').format(dateObject) +
+        ' | ' +
+        DateFormat.jm().format(dateObject);
+    return result;
   }
 }

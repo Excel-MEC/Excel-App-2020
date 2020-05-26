@@ -18,6 +18,7 @@ dependencies:
   shared_preferences: ^0.5.6+3
   cached_network_image: ^2.0.0
   connectivity: ^0.4.8+2
+  intl: ^0.16.1
 
   # UI
   searchable_dropdown:
