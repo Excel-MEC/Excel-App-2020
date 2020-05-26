@@ -53,7 +53,7 @@ class MoreDetailsState extends State<MoreDetails> {
                               decoration: TextDecoration.none,
                               fontFamily: pfontFamily,
                               height: 1.0,
-                              fontSize: 30.0,
+                              fontSize: 26.0,
                               fontWeight: FontWeight.w800,
                               color: Colors.white,
                             ),
@@ -146,7 +146,7 @@ class MoreDetailsState extends State<MoreDetails> {
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Text(
           txt.toString(),
-          style: TextStyle(color: primaryColor, fontSize: 17.0),
+          style: TextStyle(color: primaryColor, fontSize: 15.0, fontFamily: pfontFamily),
         ),
       ),
     );

@@ -31,11 +31,6 @@ class Categories extends StatelessWidget {
         CategoryCard(categoriesMap[2]),
         CategoryCard(categoriesMap[3]),
         CategoryCard(categoriesMap[4]),
-
-        // Extras
-        Container(
-          height: MediaQuery.of(context).size.height / 4,
-        )
       ],
     );
   }

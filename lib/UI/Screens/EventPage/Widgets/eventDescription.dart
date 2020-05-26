@@ -31,7 +31,7 @@ Widget detailRow(IconData icon, String text) {
     children: <Widget>[
       Icon(
         icon,
-        size: 25.0,
+        size: 23.0,
         color: Colors.white,
       ),
       SizedBox(width: 10.0),
@@ -40,7 +40,7 @@ Widget detailRow(IconData icon, String text) {
           text,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16.0,
+            fontSize: 15.0,
             fontFamily: pfontFamily,
             fontWeight: FontWeight.w500,
           ),

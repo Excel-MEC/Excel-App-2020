@@ -23,7 +23,8 @@ class ProfileTheme {
   );
   static var detailsTextStyle = TextStyle(
     color: primaryColor,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: FontWeight.w500,
+    fontFamily: pfontFamily
   );
 }
