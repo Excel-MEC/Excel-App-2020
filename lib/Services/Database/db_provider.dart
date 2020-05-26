@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Models/event_details.dart';
-import 'package:excelapp/Models/favourites_model.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/Tables/events_table.dart';
 import 'package:excelapp/Services/Database/Tables/user_table.dart';
