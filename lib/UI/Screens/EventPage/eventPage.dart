@@ -67,7 +67,7 @@ class _EventPageState extends State<EventPage> {
             if (snapshot.data.isEmpty) {
               return Center(
                 child: Text(
-                  "No Connection",
+                  "No Connection. Please retry",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 17,
