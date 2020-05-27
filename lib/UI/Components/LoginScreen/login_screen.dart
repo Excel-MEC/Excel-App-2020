@@ -3,6 +3,7 @@ import 'package:excelapp/Accounts/auth_service.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/profile_main.dart';
+import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -48,12 +49,46 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customappbar('Login'),
-      body: Center(
-        child: RaisedButton(
-          child: Text("Login"),
-          onPressed: () => authentication(context),
-        ),
+      // appBar: customappbar('Excel Accounts'),
+      body: Container(
+        color: primaryColor,
+        child: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Image(
+                image: AssetImage("assets/excel logo.png"),
+                fit: BoxFit.contain,
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              "Excel 2020 | Accounts",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            SizedBox(height: 40),
+            ButtonTheme(
+              minWidth: MediaQuery.of(context).size.width / 2,
+              child: RaisedButton(
+                color: Colors.white,
+                textColor: primaryColor,
+                child: Text("Login"),
+                onPressed: () => authentication(context),
+              ),
+            ),
+          ],
+        )
+            // child: RaisedButton(
+            //   child: Text("Login"),
+            //   onPressed: () => authentication(context),
+            // ),
+            ),
       ),
     );
   }
