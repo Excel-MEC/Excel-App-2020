@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import './bottom_navigation.dart';
 import './tab_navigator.dart';
@@ -112,12 +111,11 @@ Widget _buildFab(BuildContext context, bottonNavHidden) {
       child: FloatingActionButton(
         backgroundColor: Color(0xff252a50),
         onPressed: () {},
-        // tooltip: 'Increment',
-        child: CachedNetworkImage(
-            imageUrl:
-                'https://avatars1.githubusercontent.com/u/30120883?s=280&v=4',
-            color: Colors.white,
-            height: 35),
+        child: Image.asset(
+          'assets/excel logo.png',
+          color: Colors.white,
+          height: 35,
+        ),
         elevation: 2.0,
       ),
     ),

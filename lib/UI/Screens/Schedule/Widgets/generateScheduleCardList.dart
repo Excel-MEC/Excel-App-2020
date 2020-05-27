@@ -6,11 +6,9 @@ class TimeTableList extends StatelessWidget {
   final List<Map<String, String>> eventDetails;
 
   TimeTableList(this.eventDetails);
-  final GlobalKey _listKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    // addEventToList();
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -57,9 +55,6 @@ class EventState extends State<Event> {
   final int lineNumber;
   final int eventLength;
 
-  Size cardSize;
-  // GlobalKey _cardKey = GlobalKey();
-
   EventState(this._eventName, this._venue, this._time, this._imgurl,
       this.lineNumber, this.eventLength);
 
@@ -91,7 +86,7 @@ class EventState extends State<Event> {
                   SizedBox(height: 3),
                   Text(_venue),
                 ],
-              ), 
+              ),
             ),
           ),
         ),
