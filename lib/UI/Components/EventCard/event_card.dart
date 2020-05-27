@@ -2,18 +2,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shimmer/shimmer.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
   EventCard(this.event);
 
-  @override 
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => EventPage(event.id)));
-      }, 
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => EventPage(event.id)));
+      },
       child: Card(
         elevation: 5.0,
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -25,15 +26,22 @@ class EventCard extends StatelessWidget {
               padding: EdgeInsets.only(right: 12.0),
               child: CachedNetworkImage(
                 imageUrl: event.icon,
-                // TODO: Placeholder
-                placeholder: (context, url) => CircularProgressIndicator(),
+                placeholder: (context, url) {
+                  return Shimmer.fromColors(
+                    child: CircleAvatar(backgroundColor: Colors.white),
+                    baseColor: Colors.grey[300],
+                    highlightColor: Colors.grey[100],
+                  );
+                },
               ),
             ),
             title: Text(
               event.name,
             ),
             subtitle: Text(
-              event.datetime != null ? DateTimeConversion.dateTimeToString(event.datetime) : 'No date | No time',
+              event.datetime != null
+                  ? DateTimeConversion.dateTimeToString(event.datetime)
+                  : 'No date | No time',
             ),
             trailing: Icon(
               Icons.keyboard_arrow_right,
