@@ -12,7 +12,6 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // TODO: Replace hardcoded 1 with event.id , when API is ready
         Navigator.push(context, MaterialPageRoute(builder: (context) => EventPage(event.id)));
       }, 
       child: Card(
@@ -34,7 +33,7 @@ class EventCard extends StatelessWidget {
               event.name,
             ),
             subtitle: Text(
-              event.datetime != null ? event.datetime : 'No date | No time',
+              event.datetime != null ? DateTimeConversion.dateTimeToString(event.datetime) : 'No date | No time',
             ),
             trailing: Icon(
               Icons.keyboard_arrow_right,

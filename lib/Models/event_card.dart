@@ -1,6 +1,6 @@
+import 'package:intl/intl.dart';
 
 class Event {
-
   int id;
   String name;
   String icon;
@@ -35,5 +35,14 @@ class Event {
     data['datetime'] = this.datetime;
     return data;
   }
+}
 
+class DateTimeConversion {
+  static String dateTimeToString(String dateTime) {
+    DateTime dateObject = DateTime.parse(dateTime);
+    String result = DateFormat('dd MMM yyyy').format(dateObject) +
+        ' | ' +
+        DateFormat.jm().format(dateObject);
+    return result;
+  }
 }
