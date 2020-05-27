@@ -72,27 +72,27 @@ class EventState extends State<Event> {
           child: Container(
             margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
             child: ListTile(
-                dense: true,
-                title: Text(
-                  _eventName,
-                  style: TextStyle(
-                      fontFamily: pfontFamily,
-                      fontSize: 14.5,
-                      color: primaryColor),
+              dense: true,
+              title: Text(
+                _eventName,
+                style: TextStyle(
+                  fontSize: 16,
                 ),
-                leading: CachedNetworkImage(
-                  imageUrl: _imgurl,
-                  width: 40,
-                  height: 40,
-                ),
-                subtitle: Text(
-                  _venue + '\n' + _time,
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 11.0,
-                      decoration: TextDecoration.none,
-                      fontFamily: pfontFamily),
-                )),
+              ),
+              leading: CachedNetworkImage(
+                imageUrl: _imgurl,
+                width: 40,
+                height: 40,
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(_time),
+                  SizedBox(height: 3),
+                  Text(_venue),
+                ],
+              ), 
+            ),
           ),
         ),
       ],
