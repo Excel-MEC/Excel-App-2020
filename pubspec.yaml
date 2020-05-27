@@ -40,9 +40,9 @@ flutter:
   assets:
   - assets/BG 2.jpg
   - assets/excel logo.png
-  #  - assets/kryptos.jpg
-  #  - assets/lost.jpg
-
+  - assets/introScreen/page2.jpg
+  - assets/introScreen/page3.jpg
+  - assets/introScreen/page4.jpg
 
   fonts:
       - family: poppins

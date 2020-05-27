@@ -3,7 +3,6 @@ import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:excelapp/UI/Components/Navigation/customNavigation.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -48,10 +47,9 @@ class _SplashscreenState extends State<Splashscreen> {
             height: 100,
             child: Hero(
               tag: 'logo',
-              child: Image(
+              child: Image.asset(
+                'assets/excel logo.png',
                 color: primaryColor,
-                image: CachedNetworkImageProvider(
-                    'https://avatars1.githubusercontent.com/u/30120883?s=280&v=4'),
               ),
             ),
           ),

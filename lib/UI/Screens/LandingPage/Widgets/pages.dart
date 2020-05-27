@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:excelapp/UI/Screens/LandingPage/landingPage.dart';
-
 
 Widget introPage() {
   return Column(
@@ -15,11 +13,10 @@ Widget introPage() {
       SizedBox(height: 40),
       Hero(
         tag: 'logo',
-        child: Image(
+        child: Image.asset(
+          'assets/excel logo.png',
           height: 120,
           color: primaryColor,
-          image: CachedNetworkImageProvider(
-              'https://avatars1.githubusercontent.com/u/30120883?s=280&v=4'),
         ),
       ),
       SizedBox(height: 40),
@@ -47,9 +44,9 @@ Widget page(title, desc, img, context) {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         SizedBox(height: 20),
-        Image(
+        Image.asset(
+          img,
           width: MediaQuery.of(context).size.width,
-          image: CachedNetworkImageProvider(img),
         ),
         SizedBox(height: 20),
         Center(
@@ -80,10 +77,9 @@ Widget lastPage(context) {
     child: Column(
       children: <Widget>[
         SizedBox(height: 10),
-        Image(
+        Image.asset(
+          'assets/introScreen/page4.jpg',
           height: 180,
-          image: CachedNetworkImageProvider(
-              'https://enil.eu/wp-content/uploads/2014/03/letsget-started.gif'),
         ),
         SizedBox(height: 30),
         Text(
@@ -123,6 +119,3 @@ Widget lastPage(context) {
     ),
   );
 }
-
-
-
