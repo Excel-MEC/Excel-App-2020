@@ -14,21 +14,6 @@ class HighLights extends StatefulWidget {
 
 class HighLightsState extends State<HighLights> {
   int autoplayseconds = 5;
-  var isLiked;
-
-  var titleStyle = TextStyle(
-    color: Colors.white,
-    fontFamily: pfontFamily,
-    fontSize: 28,
-    fontWeight: FontWeight.w600,
-  );
-  var contentStyle = TextStyle(
-    color: Colors.white,
-    fontFamily: sfontFamily,
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-  );
-
   List<Highlights> highLightsMap;
 
   @override
