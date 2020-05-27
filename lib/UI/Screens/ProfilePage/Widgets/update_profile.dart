@@ -121,14 +121,14 @@ class _UpdateProfileState extends State<UpdateProfile> {
           primaryColor: primaryColor,
         ),
         child: Container(
-          padding: EdgeInsets.all(20),
-          margin: EdgeInsets.only(top: 30),
+          padding: EdgeInsets.fromLTRB(20,0,20,20),
           child: Form(
             key: _formKey,
             autovalidate: true,
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
+                  SizedBox(height: 30),
                   // Name
                   TextFormField(
                     initialValue: _name,
