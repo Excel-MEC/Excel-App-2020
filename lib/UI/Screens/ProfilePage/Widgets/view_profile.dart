@@ -1,3 +1,4 @@
+import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
@@ -11,12 +12,10 @@ class ViewProfile extends StatefulWidget {
 }
 
 class _ViewProfileState extends State<ViewProfile> {
-  DBProvider db;
 
   @override
   void initState() {
     super.initState();
-    db = DBProvider();
   }
 
   Future<dynamic> viewUserProfile() async {
@@ -25,8 +24,7 @@ class _ViewProfileState extends State<ViewProfile> {
         prefs.getBool('isProfileUpdated') == null) {
       return "Not Updated";
     } else {
-      int userId = prefs.getInt('userId');
-      User user = await db.getUser('User', userId);
+      User user = await AccountServices.viewProfile();
       return user;
     }
   }

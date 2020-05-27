@@ -16,7 +16,7 @@ class AccountServices {
       var response = await http.get(
         AccountConfig.url + 'profile/',
         headers: AccountConfig.getHeader(jwt),
-      );
+      ); 
 
       // Store User in DB
       Map<String, dynamic> responseData = json.decode(response.body);
@@ -29,6 +29,14 @@ class AccountServices {
 
       // Store user id in shared preference
       await prefs.setInt('userId', user.id);
+
+      // Check if user has updated profile
+      if(user.category == "Not Registered") {
+        await prefs.setBool('isProfileUpdated', false);
+      } else {
+        await prefs.setBool('isProfileUpdated', true);
+      }
+
     } catch (e) {
       print("Error: $e");
     }
