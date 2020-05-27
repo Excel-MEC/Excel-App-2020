@@ -19,7 +19,7 @@ dependencies:
   cached_network_image: ^2.0.0
   connectivity: ^0.4.8+2
   intl: ^0.16.1
-
+ 
   # UI
   searchable_dropdown:
   url_launcher: ^5.4.2
@@ -39,6 +39,7 @@ flutter:
 
   assets:
   - assets/BG 2.jpg
+  - assets/excel logo.png
   #  - assets/kryptos.jpg
   #  - assets/lost.jpg
 

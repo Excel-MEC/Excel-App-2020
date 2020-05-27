@@ -12,3 +12,11 @@ var gradientcolor1 = Color(0xf224234A);
 var gradientcolor2 = Color(0xb324234A);
 
 var timelineCardColor = Color(0xdd282849);
+
+
+// Heading in Home Page
+final headingStyle = TextStyle(
+  fontWeight: FontWeight.bold,
+  fontSize: 24,
+  color: primaryColor,
+);

@@ -11,14 +11,14 @@ Widget socialMediaIcons() {
         Text(
           'Stay in Touch !',
           style: TextStyle(
-            fontFamily: pfontFamily,
+            // fontFamily: pfontFamily,
             fontSize: 18.0,
             color: primaryColor,
             fontWeight: FontWeight.bold,
           ),
         ),
         SizedBox(
-          height: 10.0,
+          height: 15.0,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

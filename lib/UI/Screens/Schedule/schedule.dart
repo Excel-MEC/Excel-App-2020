@@ -17,17 +17,18 @@ class _ScheduleState extends State<Schedule> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          elevation: 1,
+          elevation: 4,
           backgroundColor: Colors.white,
           bottom: TabBar(
-            indicatorSize: TabBarIndicatorSize.label,
+            indicatorSize: TabBarIndicatorSize.tab,
             indicatorWeight: 2,
             indicatorColor: primaryColor,
             labelColor: primaryColor,
             labelStyle: TextStyle(
-                fontSize: 14,
-                fontFamily: pfontFamily,
-                fontWeight: FontWeight.w600),
+              fontSize: 14,
+              fontFamily: pfontFamily,
+              fontWeight: FontWeight.w600,
+            ),
             tabs: [
               Tab(
                 text: 'Day 1',
@@ -43,10 +44,10 @@ class _ScheduleState extends State<Schedule> {
           title: Text(
             'Schedule',
             style: TextStyle(
-                fontSize: 19,
-                fontFamily: pfontFamily,
-                color: Color(0xff282849),
-                fontWeight: FontWeight.w600),
+              fontSize: 20,
+              color: primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         body: Container(

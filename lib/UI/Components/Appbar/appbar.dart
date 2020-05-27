@@ -9,9 +9,8 @@ Widget customappbar(String titleText) {
       titleText,
       style: TextStyle(
         color: primaryColor,
-        fontSize: 19,
-        fontWeight: FontWeight.w600,
-        fontFamily: pfontFamily
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
       ),
     ),
     backgroundColor: Colors.white

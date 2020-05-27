@@ -49,27 +49,35 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               // Highlights
               Container(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 20),
-                  FutureBuilder(
-                    // TODO: provide highlights API when ready
-                    future: EventsAPI.fetchHighlights(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData)
-                        return HighLights(highLightsMap: snapshot.data);
-                      else {
-                        return Center(child: CircularProgressIndicator());
-                      }
-                    },
-                  ),
-                ],
-              )),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                      child: Text(
+                        "Highlights",
+                        style: headingStyle,
+                      ),
+                    ),
+                    FutureBuilder(
+                      future: EventsAPI.fetchHighlights(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData)
+                          return HighLights(highLightsMap: snapshot.data);
+                        else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
               // Categories
               Categories(),
               socialMediaIcons(),
-              SizedBox(height: 110)
+              SizedBox(height: MediaQuery.of(context).size.height / 6)
             ],
           ),
         ),

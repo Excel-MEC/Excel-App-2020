@@ -122,6 +122,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
         ),
         child: Container(
           padding: EdgeInsets.all(20),
+          margin: EdgeInsets.only(top: 30),
           child: Form(
             key: _formKey,
             autovalidate: true,
@@ -143,20 +144,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       }
                     },
                     decoration: InputDecoration(
-                      hintText: 'Name',
-                      isDense: true,
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      labelStyle: TextStyle(color: primaryColor),
-                      filled: true,
-                      fillColor: Color(0xffffffff),
+                      labelText: "Name",
                       icon: Icon(Icons.person),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: BorderSide(color: primaryColor)),
+                      contentPadding: EdgeInsets.zero,
                     ),
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 20),
                   // Mobile Number
                   TextFormField(
                     keyboardType: TextInputType.number,
@@ -175,41 +168,29 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       }
                     },
                     decoration: InputDecoration(
-                      hintText: 'Mobile No:',
-                      isDense: true,
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      labelStyle: TextStyle(color: primaryColor),
-                      filled: true,
-                      fillColor: Color(0xffffffff),
-                      icon: Icon(Icons.phone_android),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: BorderSide(color: primaryColor)),
+                      labelText: "Mobile",
+                      icon: Icon(Icons.phone),
+                      contentPadding: EdgeInsets.zero,
                     ),
                   ),
-                  SizedBox(height: 25),
+                  SizedBox(height: 30),
                   // Select Gender
                   Row(
                     children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          "Gender: ",
-                          style: TextStyle(fontFamily: pfontFamily),
-                        ),
-                      ),
+                      Text("Gender: "),
+                      SizedBox(width: 15),
                       Container(
-                        width: MediaQuery.of(context).size.width / 1.7,
+                        width: MediaQuery.of(context).size.width / 2,
                         decoration: BoxDecoration(
-                            border: Border.all(width: .5),
-                            borderRadius: BorderRadius.circular(5)),
+                          border: Border.all(width: 0.5),
+                          borderRadius: BorderRadius.circular(3),
+                        ),
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                         child: DropdownButton<String>(
                           isExpanded: true,
                           isDense: true,
-                          style: TextStyle(
-                              fontFamily: pfontFamily, color: primaryColor),
+                          style: TextStyle(color: primaryColor),
                           underline: Center(),
                           icon: Icon(Icons.keyboard_arrow_down),
                           value: _gender,
@@ -219,9 +200,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               child: Text(
                                 val,
                                 style: TextStyle(
-                                    fontFamily: pfontFamily,
-                                    color: primaryColor,
-                                    fontSize: 14),
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                ),
                               ),
                             );
                           }).toList(),
@@ -238,19 +219,15 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   // Select Category
                   Row(
                     children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          "Category: ",
-                          style: TextStyle(fontFamily: pfontFamily),
-                        ),
-                      ),
+                      Text("Category: "),
+                      SizedBox(width: 5),
                       Container(
-                        width: MediaQuery.of(context).size.width / 1.7,
+                        width: MediaQuery.of(context).size.width / 2,
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                         decoration: BoxDecoration(
-                          border: Border.all(width: .5),
-                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(width: 0.5),
+                          borderRadius: BorderRadius.circular(3),
                         ),
                         child: DropdownButton<String>(
                           value: _category,
@@ -266,9 +243,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               child: Text(
                                 val[0].toUpperCase() + val.substring(1),
                                 style: TextStyle(
-                                    fontFamily: pfontFamily,
-                                    fontSize: 14,
-                                    color: primaryColor),
+                                  fontSize: 14,
+                                  color: primaryColor,
+                                ),
                               ),
                             );
                           }).toList(),
@@ -290,16 +267,21 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 30),
                   // Select Institution
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       // Note - Professionals
-                      Text(
-                        "Note : Not applicable for professionals",
-                        style: TextStyle(
-                            fontFamily: pfontFamily, color: primaryColor),
+                      Row(
+                        children: <Widget>[
+                          Icon(Icons.lightbulb_outline, color: primaryColor),
+                          SizedBox(width: 10),
+                          Text(
+                            "Not applicable for professionals",
+                            style: TextStyle(color: primaryColor),
+                          ),
+                        ],
                       ),
                       categorySelected
                           ? Text(" ")
@@ -312,9 +294,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(width: .5)),
-                              margin: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                borderRadius: BorderRadius.circular(3),
+                                border: Border.all(width: 0.5),
+                              ),
                               child: SearchableDropdown.single(
                                 underline: Center(),
                                 // value: _institutionName,
@@ -327,15 +309,14 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                     child: Text(
                                       val.name.toString(),
                                       style: TextStyle(
-                                          color: primaryColor,
-                                          fontSize: 14,
-                                          fontFamily: pfontFamily),
+                                        color: Colors.black87,
+                                        fontSize: 14,
+                                      ),
                                     ),
                                   );
                                 }).toList(),
                                 hint: 'Select Institution',
-                                style: TextStyle(
-                                    fontFamily: pfontFamily, fontSize: 14),
+                                style: TextStyle(fontSize: 14),
                                 icon: Icon(Icons.keyboard_arrow_down),
                                 searchHint: 'Enter Institution Name',
                                 onChanged: (value) {
@@ -353,36 +334,33 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   ),
 
                   SizedBox(height: 30),
-                  RaisedButton(
-                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
+                  ButtonTheme(
+                    minWidth: MediaQuery.of(context).size.width / 3,
+                    buttonColor: primaryColor,
+                    child: RaisedButton(
+                      textColor: Colors.white,
+                      color: primaryColor,
+                      child: Text("Submit"),
+                      onPressed: () {
+                        _formKey.currentState.save();
+                        _formKey.currentState.validate()
+                            ? submitForm().then((value) {
+                                if (value == "Submitted") {
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CheckUserLoggedIn(),
+                                    ),
+                                    (Route<dynamic> route) => false,
+                                  );
+                                } else {
+                                  Scaffold.of(context)
+                                      .showSnackBar(snackBar(value));
+                                }
+                              }).catchError((e) => print(e))
+                            : print("Not valid");
+                      },
                     ),
-                    color: primaryColor,
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(
-                          fontFamily: pfontFamily, color: Colors.white),
-                    ),
-                    onPressed: () {
-                      _formKey.currentState.save();
-                      _formKey.currentState.validate()
-                          ? submitForm().then((value) {
-                              if (value == "Submitted") {
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CheckUserLoggedIn(),
-                                  ),
-                                  (Route<dynamic> route) => false,
-                                );
-                              } else {
-                                Scaffold.of(context)
-                                    .showSnackBar(snackBar(value));
-                              }
-                            }).catchError((e) => print(e))
-                          : print("Not valid");
-                    },
                   ),
                   SizedBox(height: 80)
                 ],

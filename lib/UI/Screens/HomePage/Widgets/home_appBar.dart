@@ -5,7 +5,7 @@ Widget homeAppBar() {
   return AppBar(
     leading: Icon(Icons.menu, color: primaryColor),
     backgroundColor: Colors.white,
-    elevation: 2,
+    elevation: 4,
     title: Text(
       'Excel 2020',
       style: TextStyle(
