@@ -160,7 +160,7 @@ class MoreDetailsState extends State<MoreDetails> {
             vertical: MediaQuery.of(context).size.height / 5),
         child: Center(
           child: Text(
-            "Net on cheyy Mwonuse!",
+            "Contacts",
             style: TextStyle(
               color: primaryColor,
               fontWeight: FontWeight.w600,
