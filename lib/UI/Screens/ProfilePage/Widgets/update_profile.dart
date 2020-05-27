@@ -177,9 +177,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   // Select Gender
                   Row(
                     children: <Widget>[
-                      Expanded(
-                        child: Text("Gender: "),
-                      ),
+                      Text("Gender: "),
+                      SizedBox(width: 15),
                       Container(
                         width: MediaQuery.of(context).size.width / 2,
                         decoration: BoxDecoration(
@@ -220,9 +219,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   // Select Category
                   Row(
                     children: <Widget>[
-                      Expanded(
-                        child: Text("Category: "),
-                      ),
+                      Text("Category: "),
+                      SizedBox(width: 5),
                       Container(
                         width: MediaQuery.of(context).size.width / 2,
                         padding:
