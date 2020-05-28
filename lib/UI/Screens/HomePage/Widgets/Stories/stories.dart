@@ -25,14 +25,14 @@ class StoriesState extends State<Stories> {
         children: <Widget>[SizedBox(width: 10)] +
             List.generate(
               storiesMapList.length,
-              (index) => storyPage(storiesMapList[index], index, context),
+              (index) => storyCircle(storiesMapList[index], index, context),
             ),
       ),
     );
   }
 }
 
-Widget storyPage(story, int selectedIndex, BuildContext context) {
+Widget storyCircle(story, int selectedIndex, BuildContext context) {
   return Container(
     margin: EdgeInsets.fromLTRB(5, 0, 5, 10),
     child: Column(
@@ -44,8 +44,9 @@ Widget storyPage(story, int selectedIndex, BuildContext context) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    FullPageView(storiesMapList: storiesMapList),
+                builder: (context) => FullPageView(
+                    storiesMapList: storiesMapList,
+                    selectedIndex: selectedIndex),
               ),
             ).then((_) => showBottomNav());
           },
