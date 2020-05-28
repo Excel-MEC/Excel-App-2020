@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
               ),
               // Categories
               Categories(),
-              socialMediaIcons(),
+              SocialIcons(),
               SizedBox(height: MediaQuery.of(context).size.height / 6)
             ],
           ),
