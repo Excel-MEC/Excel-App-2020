@@ -8,6 +8,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Categories/categories.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Highlights/highlights.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/socialIcons.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/Stories/stories.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -48,6 +49,7 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              Stories(),
               // Highlights
               Container(
                 child: Column(
