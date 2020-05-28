@@ -8,6 +8,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Categories/categories.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Highlights/highlights.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/socialIcons.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/Stories/stories.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -43,11 +44,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: homeAppBar(),
       body: Container(
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              Stories(),
               // Highlights
               Container(
                 child: Column(
@@ -72,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                             child: Shimmer.fromColors(
                               child: Container(
                                 color: Colors.white,
-                                height: MediaQuery.of(context).size.height/4,
+                                height: MediaQuery.of(context).size.height / 4,
                                 margin: EdgeInsets.symmetric(horizontal: 15),
                               ),
                               baseColor: Colors.grey[300],
@@ -87,7 +90,7 @@ class _HomePageState extends State<HomePage> {
               ),
               // Categories
               Categories(),
-              socialMediaIcons(),
+              SocialIcons(),
               SizedBox(height: MediaQuery.of(context).size.height / 6)
             ],
           ),
