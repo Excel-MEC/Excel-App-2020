@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: homeAppBar(),
       body: Container(
         child: SingleChildScrollView(
@@ -74,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                             child: Shimmer.fromColors(
                               child: Container(
                                 color: Colors.white,
-                                height: MediaQuery.of(context).size.height/4,
+                                height: MediaQuery.of(context).size.height / 4,
                                 margin: EdgeInsets.symmetric(horizontal: 15),
                               ),
                               baseColor: Colors.grey[300],
