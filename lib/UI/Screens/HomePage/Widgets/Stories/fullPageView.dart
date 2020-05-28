@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
 class FullPageView extends StatefulWidget {
@@ -27,7 +28,7 @@ class FullPageViewState extends State<FullPageView> {
     });
 
     _pageController.animateToPage(selectedIndex,
-        duration: Duration(milliseconds: 300), curve: Curves.bounceInOut);
+        duration: Duration(milliseconds: 300), curve: Curves.easeIn);
   }
 
   prevPage(index) {
@@ -36,7 +37,7 @@ class FullPageViewState extends State<FullPageView> {
       selectedIndex = index - 1;
     });
     _pageController.animateToPage(selectedIndex,
-        duration: Duration(milliseconds: 300), curve: Curves.bounceInOut);
+        duration: Duration(milliseconds: 300), curve: Curves.easeIn);
   }
 
   @override
@@ -46,6 +47,9 @@ class FullPageViewState extends State<FullPageView> {
       body: Stack(
         children: <Widget>[
           PageView(
+            onPageChanged: (page) {
+              selectedIndex = page;
+            },
             controller: _pageController,
             scrollDirection: Axis.horizontal,
             children: List.generate(
@@ -109,8 +113,11 @@ class FullPageViewState extends State<FullPageView> {
                       decoration: BoxDecoration(
                           color: index > selectedIndex
                               ? Colors.white
-                              : Colors.grey,
-                          borderRadius: BorderRadius.circular(20)),
+                              : Color(0xff999999),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(blurRadius: 2, color: primaryColor)
+                          ]),
                     ),
                   ),
                 ),
