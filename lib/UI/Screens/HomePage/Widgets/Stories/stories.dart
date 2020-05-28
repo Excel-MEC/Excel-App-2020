@@ -25,49 +25,58 @@ class StoriesState extends State<Stories> {
         children: <Widget>[SizedBox(width: 10)] +
             List.generate(
               storiesMapList.length,
-              (index) => storyCircle(storiesMapList[index], index, context),
+              (index) => StoryCircle(storiesMapList[index], index),
             ),
       ),
     );
   }
 }
 
-Widget storyCircle(story, int selectedIndex, BuildContext context) {
-  return Container(
-    margin: EdgeInsets.fromLTRB(5, 0, 5, 10),
-    child: Column(
-      children: <Widget>[
-        SizedBox(height: 7),
-        InkWell(
-          onTap: () {
-            hideBottomNav();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => FullPageView(
-                    storiesMapList: storiesMapList,
-                    selectedIndex: selectedIndex),
+class StoryCircle extends StatelessWidget {
+  final Map<String, dynamic> story;
+  final int selectedIndex;
+  StoryCircle(this.story, this.selectedIndex);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(5, 0, 5, 10),
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: 7),
+          InkWell(
+            onTap: () {
+              hideBottomNav();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FullPageView(
+                      storiesMapList: storiesMapList,
+                      selectedIndex: selectedIndex),
+                ),
+              ).then((_) => showBottomNav());
+            },
+            child: Hero(
+              tag: 'story' + selectedIndex.toString(),
+              child: CircleAvatar(
+                radius: 33,
+                backgroundColor: Colors.cyan,
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.white,
+                  backgroundImage: CachedNetworkImageProvider(story['image']),
+                ),
               ),
-            ).then((_) => showBottomNav());
-          },
-          child: CircleAvatar(
-            radius: 33,
-            backgroundColor: Colors.cyan,
-            child: CircleAvatar(
-              radius: 30,
-              backgroundColor: Colors.white,
-              backgroundImage: CachedNetworkImageProvider(story['image']),
             ),
           ),
-        ),
-        SizedBox(height: 5),
-        Text(
-          story['name'],
-          style: TextStyle(fontFamily: pfontFamily, fontSize: 13),
-        ),
-      ],
-    ),
-  );
+          SizedBox(height: 5),
+          Text(
+            story['name'],
+            style: TextStyle(fontFamily: pfontFamily, fontSize: 13),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 List<Map<String, dynamic>> storiesMapList = [
