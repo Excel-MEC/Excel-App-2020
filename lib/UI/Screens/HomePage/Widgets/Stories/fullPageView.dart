@@ -22,14 +22,19 @@ class FullPageViewState extends State<FullPageView> {
 
   nextPage(index) {
     if (index == storiesMapList.length - 1) Navigator.pop(context);
-    selectedIndex = index + 1;
+    setState(() {
+      selectedIndex = index + 1;
+    });
+
     _pageController.animateToPage(selectedIndex,
         duration: Duration(milliseconds: 300), curve: Curves.bounceInOut);
   }
 
   prevPage(index) {
     if (index == 0) return;
-    selectedIndex = index - 1;
+    setState(() {
+      selectedIndex = index - 1;
+    });
     _pageController.animateToPage(selectedIndex,
         duration: Duration(milliseconds: 300), curve: Curves.bounceInOut);
   }
@@ -38,51 +43,81 @@ class FullPageViewState extends State<FullPageView> {
   Widget build(BuildContext context) {
     _pageController = PageController(initialPage: selectedIndex);
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        scrollDirection: Axis.horizontal,
-        children: List.generate(
-          storiesMapList.length,
-          (index) => Stack(
-            children: <Widget>[
-              Scaffold(
-                body: Hero(
-                  tag: 'story' + selectedIndex.toString(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: CachedNetworkImageProvider(
-                          storiesMapList[index]['image'],
+      body: Stack(
+        children: <Widget>[
+          PageView(
+            controller: _pageController,
+            scrollDirection: Axis.horizontal,
+            children: List.generate(
+              storiesMapList.length,
+              (index) => Stack(
+                children: <Widget>[
+                  Scaffold(
+                    body: Hero(
+                      tag: 'story' + selectedIndex.toString(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: CachedNetworkImageProvider(
+                              storiesMapList[index]['image'],
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        prevPage(index);
-                      },
-                      child: Center(),
-                    ),
-                  ),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        nextPage(index);
-                      },
-                      child: Center(),
-                    ),
+                  // Overlay to detect taps for next page & previous page
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            prevPage(index);
+                          },
+                          child: Center(),
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 3,
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            nextPage(index);
+                          },
+                          child: Center(),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
+            ),
+          ),
+          // Status number indicator
+          Column(
+            children: <Widget>[
+              SafeArea(child: Center()),
+              Row(
+                children: List.generate(
+                  storiesMapList.length,
+                  (index) => Expanded(
+                    child: Container(
+                      margin: EdgeInsets.all(2),
+                      height: 2.5,
+                      decoration: BoxDecoration(
+                          color: index > selectedIndex
+                              ? Colors.white
+                              : Colors.grey,
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }
