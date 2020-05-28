@@ -2,7 +2,6 @@ import 'package:excelapp/Models/highlights_model.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Highlights/highlight_card.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:excelapp/UI/constants.dart';
 
 class HighLights extends StatefulWidget {
   final List<Highlights> highLightsMap;
@@ -27,7 +26,7 @@ class HighLightsState extends State<HighLights> {
     return CarouselSlider.builder(
       itemCount: highLightsMap.length,
       viewportFraction: 0.9,
-      aspectRatio: (3 / 2) / .9,
+      height: MediaQuery.of(context).size.height/3.5,
       enlargeCenterPage: true,
       autoPlay: true,
       autoPlayInterval: Duration(seconds: autoplayseconds),

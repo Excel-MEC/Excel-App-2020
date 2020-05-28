@@ -35,7 +35,6 @@ class EventPageBodyState extends State<EventPageBody> {
         children: <Widget>[
           //Background Image
           getBackgroundImage(
-            eventDetails,
             [
               Color.fromRGBO(0, 0, 0, 0),
               Color.fromRGBO(23, 18, 41, .8),

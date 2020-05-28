@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/home_appBar.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:excelapp/Services/API/events_api.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Categories/categories.dart';
@@ -67,7 +68,17 @@ class _HomePageState extends State<HomePage> {
                         if (snapshot.hasData)
                           return HighLights(highLightsMap: snapshot.data);
                         else {
-                          return Center(child: CircularProgressIndicator());
+                          return Container(
+                            child: Shimmer.fromColors(
+                              child: Container(
+                                color: Colors.white,
+                                height: MediaQuery.of(context).size.height/4,
+                                margin: EdgeInsets.symmetric(horizontal: 15),
+                              ),
+                              baseColor: Colors.grey[300],
+                              highlightColor: Colors.grey[100],
+                            ),
+                          );
                         }
                       },
                     ),

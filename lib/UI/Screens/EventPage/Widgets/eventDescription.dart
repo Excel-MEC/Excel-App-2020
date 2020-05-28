@@ -1,3 +1,4 @@
+import 'package:excelapp/Models/event_card.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/UI/constants.dart';
@@ -11,7 +12,7 @@ Widget getEventDetails(EventDetails eventDetails) {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           // Date and Time
-          detailRow(Icons.data_usage, eventDetails.datetime.toString()),
+          detailRow(Icons.data_usage, DateTimeConversion.dateTimeToString(eventDetails.datetime.toString())),
           SizedBox(height: 10.0),
           // Prize money
           detailRow(Icons.attach_money, eventDetails.prizeMoney.toString() + ' Rs'),

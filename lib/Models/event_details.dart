@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 
 class EventDetails {
   int id;
@@ -110,13 +109,5 @@ class EventHead1 {
     data['email'] = this.email;
     data['phoneNumber'] = this.phoneNumber;
     return data;
-  }
-
-  String dateTimeToString(String dateTime) {
-    DateTime dateObject = DateTime.parse(dateTime);
-    String result = DateFormat('dd MMM yyyy').format(dateObject) +
-        ' | ' +
-        DateFormat.jm().format(dateObject);
-    return result;
   }
 }
