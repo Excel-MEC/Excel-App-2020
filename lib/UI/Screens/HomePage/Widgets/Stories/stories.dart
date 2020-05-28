@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
+import 'package:excelapp/UI/Components/Navigation/customNavigation.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/Stories/fullPageView.dart';
 
 class Stories extends StatefulWidget {
   @override
@@ -22,8 +24,8 @@ class StoriesState extends State<Stories> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[SizedBox(width: 10)] +
             List.generate(
-              data.length,
-              (index) => storyPage(data[index], index, context),
+              storiesMapList.length,
+              (index) => storyPage(storiesMapList[index], index, context),
             ),
       ),
     );
@@ -37,7 +39,16 @@ Widget storyPage(story, int selectedIndex, BuildContext context) {
       children: <Widget>[
         SizedBox(height: 7),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            hideBottomNav();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    FullPageView(storiesMapList: storiesMapList),
+              ),
+            ).then((_) => showBottomNav());
+          },
           child: CircleAvatar(
             radius: 33,
             backgroundColor: Colors.cyan,
@@ -51,14 +62,14 @@ Widget storyPage(story, int selectedIndex, BuildContext context) {
         SizedBox(height: 5),
         Text(
           story['name'],
-          style: TextStyle(fontFamily: pfontFamily),
+          style: TextStyle(fontFamily: pfontFamily, fontSize: 13),
         ),
       ],
     ),
   );
 }
 
-var data = [
+List<Map<String, dynamic>> storiesMapList = [
   {
     'id': 0,
     'name': 'First',
