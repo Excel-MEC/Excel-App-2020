@@ -18,22 +18,25 @@ class StoriesState extends State<Stories> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[SizedBox(width: 10)] +
-            List.generate(
-              storiesMapList.length,
-              (index) => StoryCircle(storiesMapList[index], index),
-            ),
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[SizedBox(width: 10)] +
+              List.generate(
+                storiesMapList.length,
+                (index) => StoryCircle(storiesMapList, index),
+              ),
+        ),
       ),
     );
   }
 }
 
 class StoryCircle extends StatelessWidget {
-  final Map<String, dynamic> story;
+  final List<Map<String, dynamic>> story;
   final int selectedIndex;
   StoryCircle(this.story, this.selectedIndex);
   @override
@@ -51,26 +54,24 @@ class StoryCircle extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => FullPageView(
                       storiesMapList: storiesMapList,
-                      selectedIndex: selectedIndex),
+                      storyNumber: selectedIndex),
                 ),
               ).then((_) => showBottomNav());
             },
-            child: Hero(
-              tag: 'story' + selectedIndex.toString(),
+            child: CircleAvatar(
+              radius: 33,
+              backgroundColor: Colors.cyan,
               child: CircleAvatar(
-                radius: 33,
-                backgroundColor: Colors.cyan,
-                child: CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.white,
-                  backgroundImage: CachedNetworkImageProvider(story['image']),
-                ),
+                radius: 30,
+                backgroundColor: Colors.white,
+                backgroundImage: CachedNetworkImageProvider(
+                    story[selectedIndex]['images'][0]),
               ),
             ),
           ),
           SizedBox(height: 5),
           Text(
-            story['name'],
+            story[selectedIndex]['name'],
             style: TextStyle(fontFamily: pfontFamily, fontSize: 13),
           ),
         ],
@@ -79,35 +80,29 @@ class StoryCircle extends StatelessWidget {
   }
 }
 
-List<Map<String, dynamic>> storiesMapList = [
+var storiesMapList = [
   {
-    'id': 0,
     'name': 'First',
-    'image':
-        'https://images.pexels.com/photos/1156684/pexels-photo-1156684.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+    'images': [
+      'https://i.pinimg.com/originals/ba/f0/56/baf056ed17e25075de467541c4f9a745.jpg',
+      'https://i.pinimg.com/564x/bc/19/d3/bc19d39ffca6afd3d185f9ae00ceb549.jpg',
+      'https://i.pinimg.com/564x/7b/d2/d0/7bd2d013f07cdc5258aa11285eceeb5f.jpg'
+    ]
   },
   {
-    'id': 1,
     'name': 'Second',
-    'image':
-        'https://i.pinimg.com/originals/75/46/c5/7546c5153850a7c1b674e9deaea4a445.jpg'
+    'images': [
+      'https://i.pinimg.com/originals/b6/46/15/b64615c7838f17461b43955494206baf.jpg',
+      'https://i.pinimg.com/564x/11/e9/23/11e9237fea97d036bb4e7a65217e3303.jpg'
+    ]
   },
   {
-    'id': 2,
     'name': 'Third',
-    'image':
-        'https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-  },
-  {
-    'id': 3,
-    'name': 'Fourth',
-    'image':
-        'https://i.pinimg.com/originals/b6/46/15/b64615c7838f17461b43955494206baf.jpg'
-  },
-  {
-    'id': 4,
-    'name': 'Fifth',
-    'image':
-        'https://cdn.statically.io/img/www.itl.cat/pngfile/big/14-144281_cool-phone-backgrounds-dark-cool-phone-backgrounds.jpg'
+    'images': [
+      'https://images.unsplash.com/photo-1565378435089-7b0ff45a898e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=730&q=80',
+      'https://i.pinimg.com/originals/b6/46/15/b64615c7838f17461b43955494206baf.jpg',
+      'https://i.pinimg.com/564x/bc/19/d3/bc19d39ffca6afd3d185f9ae00ceb549.jpg',
+      'https://i.pinimg.com/564x/11/e9/23/11e9237fea97d036bb4e7a65217e3303.jpg'
+    ]
   }
 ];
