@@ -4,31 +4,35 @@ import 'package:flutter/material.dart';
 
 class FullPageView extends StatefulWidget {
   final List<Map<String, dynamic>> storiesMapList;
-  final int selectedIndex;
+  final int storyNumber;
 
   FullPageView(
-      {Key key, @required this.storiesMapList, @required this.selectedIndex})
+      {Key key, @required this.storiesMapList, @required this.storyNumber})
       : super(key: key);
   @override
   FullPageViewState createState() =>
-      FullPageViewState(storiesMapList, selectedIndex);
+      FullPageViewState(storiesMapList, storyNumber);
 }
 
 class FullPageViewState extends State<FullPageView> {
   final List<Map<String, dynamic>> storiesMapList;
-  int selectedIndex;
-  FullPageViewState(this.storiesMapList, this.selectedIndex);
+  int storyNumber;
 
+  FullPageViewState(this.storiesMapList, this.storyNumber);
+
+  List combinedList;
+  List listLengths;
+  int selectedIndex;
   PageController _pageController;
 
   nextPage(index) {
-    if (index == storiesMapList.length - 1) Navigator.pop(context);
+    if (index == combinedList.length - 1) Navigator.pop(context);
     setState(() {
       selectedIndex = index + 1;
     });
 
     _pageController.animateToPage(selectedIndex,
-        duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+        duration: Duration(milliseconds: 100), curve: Curves.easeIn);
   }
 
   prevPage(index) {
@@ -37,7 +41,15 @@ class FullPageViewState extends State<FullPageView> {
       selectedIndex = index - 1;
     });
     _pageController.animateToPage(selectedIndex,
-        duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+        duration: Duration(milliseconds: 100), curve: Curves.easeIn);
+  }
+
+  @override
+  void initState() {
+    combinedList = getStoryList(storiesMapList);
+    listLengths = getStoryLengths(storiesMapList);
+    selectedIndex = getInitialIndex(storyNumber, storiesMapList);
+    super.initState();
   }
 
   @override
@@ -48,24 +60,23 @@ class FullPageViewState extends State<FullPageView> {
         children: <Widget>[
           PageView(
             onPageChanged: (page) {
-              selectedIndex = page;
+              setState(() {
+                selectedIndex = page;
+              });
             },
             controller: _pageController,
             scrollDirection: Axis.horizontal,
             children: List.generate(
-              storiesMapList.length,
+              combinedList.length,
               (index) => Stack(
                 children: <Widget>[
                   Scaffold(
-                    body: Hero(
-                      tag: 'story' + selectedIndex.toString(),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider(
-                              storiesMapList[index]['image'],
-                            ),
+                    body: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: CachedNetworkImageProvider(
+                            combinedList[index],
                           ),
                         ),
                       ),
@@ -99,27 +110,61 @@ class FullPageViewState extends State<FullPageView> {
               ),
             ),
           ),
-          // Status number indicator
+          // The progress of story indicator
           Column(
             children: <Widget>[
-              SafeArea(child: Center()),
+              Container(
+                color: Colors.black,
+                child: SafeArea(
+                  child: Center(),
+                ),
+              ),
               Row(
                 children: List.generate(
-                  storiesMapList.length,
-                  (index) => Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(2),
-                      height: 2.5,
-                      decoration: BoxDecoration(
-                          color: index > selectedIndex
-                              ? Colors.white
-                              : Color(0xff999999),
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(blurRadius: 2, color: primaryColor)
-                          ]),
+                      numOfCompleted(listLengths, selectedIndex),
+                      (index) => Expanded(
+                        child: Container(
+                          margin: EdgeInsets.all(2),
+                          height: 2.5,
+                          decoration: BoxDecoration(
+                              color: Color(0xff444444),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(blurRadius: 2, color: primaryColor)
+                              ]),
+                        ),
+                      ),
+                    ) +
+                    List.generate(
+                      (getCurrentLength(listLengths, selectedIndex) -
+                          numOfCompleted(listLengths, selectedIndex)),
+                      (index) => Expanded(
+                        child: Container(
+                          margin: EdgeInsets.all(2),
+                          height: 2.5,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(blurRadius: 2, color: primaryColor)
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+              ),
+              SizedBox(height: 5),
+              // Story name
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  ' ' * 5 +
+                      getStoryName(listLengths, selectedIndex, storiesMapList),
+                  style: TextStyle(
+                      color: Colors.white,
+                      shadows: [Shadow(blurRadius: 10, color: Colors.black)],
+                      fontFamily: pfontFamily,
+                      fontSize: 16),
                 ),
               ),
             ],
@@ -128,4 +173,62 @@ class FullPageViewState extends State<FullPageView> {
       ),
     );
   }
+}
+
+List<String> getStoryList(List<Map<String, dynamic>> storiesMapList) {
+  List<String> imagesList = [];
+  for (int i = 0; i < storiesMapList.length; i++)
+    for (int j = 0; j < storiesMapList[i]['images'].length; j++)
+      imagesList.add(storiesMapList[i]['images'][j]);
+  return imagesList;
+}
+
+List<int> getStoryLengths(List<Map<String, dynamic>> storiesMapList) {
+  List<int> intList = [];
+  int count = 0;
+  for (int i = 0; i < storiesMapList.length; i++) {
+    count = count + storiesMapList[i]['images'].length;
+    intList.add(count);
+  }
+  return intList;
+}
+
+int getCurrentLength(listLengths, index) {
+  index = index + 1;
+  int val = listLengths[0];
+  for (int i = 0; i < listLengths.length; i++) {
+    val = i == 0 ? listLengths[0] : listLengths[i] - listLengths[i - 1];
+    if (listLengths[i] >= index) break;
+  }
+  return val;
+}
+
+numOfCompleted(listLengths, index) {
+  index = index + 1;
+  int val = 0;
+  for (int i = 0; i < listLengths.length; i++) {
+    if (listLengths[i] >= index) break;
+    val = listLengths[i];
+  }
+  return (index - val);
+}
+
+getInitialIndex(storyNumber, storiesMapList) {
+  int total = 0;
+  for (int i = 0; i < storyNumber; i++) {
+    total += storiesMapList[i]['images'].length;
+  }
+  return total;
+}
+
+String getStoryName(listLengths, index, storiesMapList) {
+  index = index + 1;
+  int temp = 0;
+  int val = 0;
+  for (int i = 0; i < listLengths.length; i++) {
+    if (listLengths[i] >= index) break;
+    if (temp != listLengths[i]) val += 1;
+    temp = listLengths[i];
+  }
+  return storiesMapList[val]['name'];
 }
