@@ -32,7 +32,7 @@ class FullPageViewState extends State<FullPageView> {
     });
 
     _pageController.animateToPage(selectedIndex,
-        duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+        duration: Duration(milliseconds: 100), curve: Curves.easeIn);
   }
 
   prevPage(index) {
@@ -41,7 +41,7 @@ class FullPageViewState extends State<FullPageView> {
       selectedIndex = index - 1;
     });
     _pageController.animateToPage(selectedIndex,
-        duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+        duration: Duration(milliseconds: 100), curve: Curves.easeIn);
   }
 
   @override
@@ -127,7 +127,7 @@ class FullPageViewState extends State<FullPageView> {
                           margin: EdgeInsets.all(2),
                           height: 2.5,
                           decoration: BoxDecoration(
-                              color: Colors.blue,
+                              color: Color(0xff444444),
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: [
                                 BoxShadow(blurRadius: 2, color: primaryColor)
@@ -143,7 +143,7 @@ class FullPageViewState extends State<FullPageView> {
                           margin: EdgeInsets.all(2),
                           height: 2.5,
                           decoration: BoxDecoration(
-                            color: Colors.red,
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(blurRadius: 2, color: primaryColor)

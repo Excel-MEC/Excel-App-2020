@@ -59,20 +59,24 @@ class StoryCircle extends StatelessWidget {
               ).then((_) => showBottomNav());
             },
             child: CircleAvatar(
-              radius: 33,
-              backgroundColor: Colors.cyan,
+              radius: 35,
+              backgroundColor: Color(0xffE1306C),
               child: CircleAvatar(
-                radius: 30,
                 backgroundColor: Colors.white,
-                backgroundImage: CachedNetworkImageProvider(
-                    story[selectedIndex]['images'][0]),
+                radius: 32,
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.white,
+                  backgroundImage: CachedNetworkImageProvider(
+                      story[selectedIndex]['images'][0]),
+                ),
               ),
             ),
           ),
           SizedBox(height: 5),
           Text(
             story[selectedIndex]['name'],
-            style: TextStyle(fontFamily: pfontFamily, fontSize: 13),
+            style: TextStyle(fontSize: 13),
           ),
         ],
       ),
@@ -92,20 +96,19 @@ var storiesMapList = [
   {
     'name': 'Second',
     'images': [
-      'https://i.pinimg.com/originals/b6/46/15/b64615c7838f17461b43955494206baf.jpg',
+      'https://i.pinimg.com/564x/da/67/c7/da67c74aefdd182a58d294bf253d5f65.jpg',
       'https://i.pinimg.com/564x/11/e9/23/11e9237fea97d036bb4e7a65217e3303.jpg'
     ]
   },
   {
     'name': 'Third',
     'images': [
-      'https://images.unsplash.com/photo-1565378435089-7b0ff45a898e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=730&q=80',
       'https://i.pinimg.com/originals/b6/46/15/b64615c7838f17461b43955494206baf.jpg',
       'https://i.pinimg.com/564x/bc/19/d3/bc19d39ffca6afd3d185f9ae00ceb549.jpg',
       'https://i.pinimg.com/564x/11/e9/23/11e9237fea97d036bb4e7a65217e3303.jpg'
     ]
   },
-    {
+  {
     'name': 'Fourth',
     'images': [
       'https://i.pinimg.com/originals/ba/f0/56/baf056ed17e25075de467541c4f9a745.jpg',
@@ -116,7 +119,7 @@ var storiesMapList = [
   {
     'name': 'Fifth',
     'images': [
-      'https://i.pinimg.com/originals/b6/46/15/b64615c7838f17461b43955494206baf.jpg',
+      'https://i.pinimg.com/564x/da/67/c7/da67c74aefdd182a58d294bf253d5f65.jpg',
       'https://i.pinimg.com/564x/11/e9/23/11e9237fea97d036bb4e7a65217e3303.jpg'
     ]
   },
