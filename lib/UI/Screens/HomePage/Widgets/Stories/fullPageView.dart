@@ -153,6 +153,20 @@ class FullPageViewState extends State<FullPageView> {
                       ),
                     ),
               ),
+              SizedBox(height: 5),
+              // Story name
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  ' ' * 5 +
+                      getStoryName(listLengths, selectedIndex, storiesMapList),
+                  style: TextStyle(
+                      color: Colors.white,
+                      shadows: [Shadow(blurRadius: 10, color: Colors.black)],
+                      fontFamily: pfontFamily,
+                      fontSize: 16),
+                ),
+              ),
             ],
           ),
         ],
@@ -205,4 +219,16 @@ getInitialIndex(storyNumber, storiesMapList) {
     total += storiesMapList[i]['images'].length;
   }
   return total;
+}
+
+String getStoryName(listLengths, index, storiesMapList) {
+  index = index + 1;
+  int temp = 0;
+  int val = 0;
+  for (int i = 0; i < listLengths.length; i++) {
+    if (listLengths[i] >= index) break;
+    if (temp != listLengths[i]) val += 1;
+    temp = listLengths[i];
+  }
+  return storiesMapList[val]['name'];
 }
