@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    // RegistrationAPI.fetchRegistrations();
+    RegistrationAPI.fetchRegisteredEvents();
     return Scaffold(
       appBar: customappbar('Profile'),
       body: Container(
