@@ -6,6 +6,7 @@ import 'moreDetailsPage.dart';
 import 'backgroundImage.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
+import 'package:excelapp/Services/API/registration_api.dart';
 
 class EventPageBody extends StatefulWidget {
   final EventDetails eventDetails;
@@ -159,8 +160,12 @@ class EventPageBodyState extends State<EventPageBody> {
                     height: 45.0,
                     child: RaisedButton(
                       onPressed: () {},
-                      child: Text('Register'),
-                      color: primaryColor,
+                      child: Text(isRegistered(eventDetails.id)
+                          ? 'Unregister'
+                          : 'Register'),
+                      color: isRegistered(eventDetails.id)
+                          ? Colors.red
+                          : primaryColor,
                       textColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
@@ -192,4 +197,9 @@ class EventPageBodyState extends State<EventPageBody> {
       ),
     );
   }
+}
+
+isRegistered(id) {
+  if (RegistrationStatus.instance.registrationIDs.contains(id)) return true;
+  return false;
 }
