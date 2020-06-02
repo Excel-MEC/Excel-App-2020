@@ -9,6 +9,8 @@ import 'package:excelapp/UI/Screens/ProfilePage/profile_main.dart';
 import 'package:excelapp/UI/Themes/profile_themes.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:excelapp/Services/API/registration_api.dart';
+import 'package:excelapp/UI/Screens/ProfilePage/Registration/registration.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -50,6 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    // RegistrationAPI.fetchRegistrations();
     return Scaffold(
       appBar: customappbar('Profile'),
       body: Container(
@@ -71,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         MaterialPageRoute(builder: (context) => ViewProfile()),
                       );
                     },
-                    child: cardBuilder('View Profile',true),
+                    child: cardBuilder('View Profile', true),
                   ),
                   // Update profile
                   GestureDetector(
@@ -82,19 +85,23 @@ class _ProfilePageState extends State<ProfilePage> {
                             builder: (context) => UpdateProfile(_user)),
                       );
                     },
-                    child: cardBuilder('Update Profile',_isProfileUpdated),
+                    child: cardBuilder('Update Profile', _isProfileUpdated),
                   ),
                   // Registered Events
                   GestureDetector(
                     onTap: () {
-                      // TODO: Navigate to registered events
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegisteredEvents()),
+                      );
                     },
-                    child: cardBuilder('Registered Events',true),
+                    child: cardBuilder('Registered Events', true),
                   ),
                   // Logout
                   GestureDetector(
                     onTap: () => logoutUser(context),
-                    child: cardBuilder('Logout',true),
+                    child: cardBuilder('Logout', true),
                   ),
                 ],
               ),
@@ -118,7 +125,9 @@ Widget cardBuilder(String name, bool check) {
             style: ProfileTheme.detailsTextStyle,
           ),
           SizedBox(width: 5),
-          check != true ? Icon(Icons.info_outline,color: Colors.green) : Container(),
+          check != true
+              ? Icon(Icons.info_outline, color: Colors.green)
+              : Container(),
         ],
       ),
       trailing: Icon(Icons.arrow_forward_ios, color: primaryColor),
