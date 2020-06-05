@@ -6,6 +6,7 @@ import 'moreDetailsPage.dart';
 import 'backgroundImage.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
+import 'package:excelapp/Services/API/registration_api.dart';
 
 class EventPageBody extends StatefulWidget {
   final EventDetails eventDetails;
@@ -17,10 +18,35 @@ class EventPageBody extends StatefulWidget {
 //Event Details
 class EventPageBodyState extends State<EventPageBody> {
   EventDetails eventDetails;
+  bool registered = false;
   @override
   void initState() {
     eventDetails = widget.eventDetails;
+    registered = isRegistered(eventDetails.id);
     super.initState();
+  }
+
+  void customAlert(content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        content: Text(
+          content,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: primaryColor,
+            fontSize: 20,
+            fontFamily: pfontFamily,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void refreshPage() {
+    setState(() {
+      registered = isRegistered(eventDetails.id);
+    });
   }
 
   @override
@@ -158,9 +184,17 @@ class EventPageBodyState extends State<EventPageBody> {
                     minWidth: deviceWidth / 2.3,
                     height: 45.0,
                     child: RaisedButton(
-                      onPressed: () {},
-                      child: Text('Register'),
-                      color: primaryColor,
+                      onPressed: () {
+                        if (!registered)
+                          RegistrationAPI.registerEvent(
+                              eventDetails.id, customAlert, refreshPage);
+                        else
+                          customAlert('Already Registered');
+                      },
+                      child: Text(registered ? 'Registered' : 'Register'),
+                      color: isRegistered(eventDetails.id)
+                          ? Color(0xff337733)
+                          : primaryColor,
                       textColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
@@ -192,4 +226,9 @@ class EventPageBodyState extends State<EventPageBody> {
       ),
     );
   }
+}
+
+isRegistered(id) {
+  if (RegistrationStatus.instance.registrationIDs.contains(id)) return true;
+  return false;
 }
