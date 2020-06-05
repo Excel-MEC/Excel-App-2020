@@ -49,7 +49,7 @@ class RegistrationAPI {
       for (int i = 0; i < data.length; i++) {
         RegistrationStatus.instance.registrationIDs.add(data[i]['id']);
       }
-      RegistrationStatus.instance.registeredStatus=1;
+      RegistrationStatus.instance.registeredStatus = 1;
     } catch (_) {
       RegistrationStatus.instance.registeredStatus = 2;
     }
@@ -78,11 +78,16 @@ class RegistrationAPI {
     return false;
   }
 
-
 // Rgisters event
 
   static Future registerEvent(int id, customAlert, refreshPage) async {
     refreshPage();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwt = prefs.getString('jwt');
+    if (jwt == null) {
+      customAlert('Not Logged In');
+      return;
+    }
     if (RegistrationStatus.instance.registeredStatus == 0) {
       customAlert('Check Net Connection');
       return;
@@ -91,11 +96,7 @@ class RegistrationAPI {
       customAlert('Already Registered');
       return;
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
-    if (jwt == null) {
-      customAlert('Not Logged In');
-    }
+
     try {
       var a = await http.post(
         APIConfig.baseUrl + '/registration',
