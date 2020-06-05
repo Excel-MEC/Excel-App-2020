@@ -31,6 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
     _user = widget.user;
     _isProfileUpdated = widget.isProfileUpdated;
     authService = AuthService();
+    RegistrationAPI.fetchRegisteredEvents();
   }
 
   logoutUser(BuildContext context) async {
@@ -52,7 +53,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    RegistrationAPI.fetchRegisteredEvents();
     return Scaffold(
       appBar: customappbar('Profile'),
       body: Container(

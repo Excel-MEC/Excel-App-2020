@@ -18,10 +18,26 @@ class EventPageBody extends StatefulWidget {
 //Event Details
 class EventPageBodyState extends State<EventPageBody> {
   EventDetails eventDetails;
+  bool registered = false;
   @override
   void initState() {
     eventDetails = widget.eventDetails;
+    registered = isRegistered(eventDetails.id);
     super.initState();
+  }
+
+  void customAlert(content) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => Container(
+              child: Text(content),
+            ));
+  }
+
+  void refreshPage() {
+    setState(() {
+      registered = isRegistered(eventDetails.id);
+    });
   }
 
   @override
@@ -159,12 +175,16 @@ class EventPageBodyState extends State<EventPageBody> {
                     minWidth: deviceWidth / 2.3,
                     height: 45.0,
                     child: RaisedButton(
-                      onPressed: () {},
-                      child: Text(isRegistered(eventDetails.id)
-                          ? 'Unregister'
-                          : 'Register'),
+                      onPressed: () {
+                        if (!registered)
+                          RegistrationAPI.registerEvent(
+                              eventDetails.id, customAlert, refreshPage);
+                        else
+                          customAlert('Already Registered');
+                      },
+                      child: Text(registered ? 'Registered' : 'Register'),
                       color: isRegistered(eventDetails.id)
-                          ? Colors.red
+                          ? Color(0xff337733)
                           : primaryColor,
                       textColor: Colors.white,
                       shape: RoundedRectangleBorder(
