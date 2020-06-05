@@ -28,10 +28,19 @@ class EventPageBodyState extends State<EventPageBody> {
 
   void customAlert(content) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) => Container(
-              child: Text(content),
-            ));
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        content: Text(
+          content,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: primaryColor,
+            fontSize: 20,
+            fontFamily: pfontFamily,
+          ),
+        ),
+      ),
+    );
   }
 
   void refreshPage() {

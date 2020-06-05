@@ -1,12 +1,9 @@
 import 'dart:convert';
 import 'package:excelapp/Models/event_card.dart';
-import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/material.dart';
-import 'package:excelapp/UI/Screens/EventPage/Widgets/eventPageBody.dart';
 
 class RegistrationStatus {
   static final RegistrationStatus instance = RegistrationStatus.internal();
@@ -106,6 +103,7 @@ class RegistrationAPI {
         },
         body: json.encode({"id": id}),
       );
+      print("Registration over with status code " + a.statusCode.toString());
       RegistrationStatus.instance.registrationIDs.add(id);
       refreshPage();
     } catch (_) {
