@@ -186,8 +186,8 @@ class EventPageBodyState extends State<EventPageBody> {
                     child: RaisedButton(
                       onPressed: () {
                         if (!registered)
-                          RegistrationAPI.registerEvent(
-                              eventDetails.id, customAlert, refreshPage);
+                          RegistrationAPI.registerEvent(eventDetails.id,
+                              customAlert, refreshPage, context);
                         else
                           customAlert('Already Registered');
                       },
