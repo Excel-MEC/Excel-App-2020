@@ -16,7 +16,6 @@ Widget introPage() {
         child: Image.asset(
           'assets/excel logo.png',
           height: 120,
-          color: primaryColor,
         ),
       ),
       SizedBox(height: 40),

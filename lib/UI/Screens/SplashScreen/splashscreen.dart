@@ -49,7 +49,6 @@ class _SplashscreenState extends State<Splashscreen> {
               tag: 'logo',
               child: Image.asset(
                 'assets/excel logo.png',
-                color: primaryColor,
               ),
             ),
           ),

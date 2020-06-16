@@ -1,3 +1,4 @@
+import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import './bottom_navigation.dart';
 import './tab_navigator.dart';
@@ -109,12 +110,11 @@ Widget _buildFab(BuildContext context, bottonNavHidden) {
     child: AnchoredOverlay(
       showOverlay: false,
       child: FloatingActionButton(
-        backgroundColor: Color(0xff252a50),
+        backgroundColor: primaryColor,
         onPressed: () {},
         child: Image.asset(
           'assets/excel logo.png',
-          color: Colors.white,
-          height: 35,
+          height: 37,
         ),
         elevation: 2.0,
       ),
