@@ -7,14 +7,17 @@ import 'dart:convert';
 class AuthService {
   Future<String> login() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // Get access token from Google
-    GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
     String accessToken;
-    await googleSignIn.signOut();
-    GoogleSignInAccount accountInfo = await googleSignIn.signIn();
-    GoogleSignInAuthentication googleKeys = await accountInfo.authentication;
-    accessToken = googleKeys.accessToken;
+    // Get access token from Google
+    try {
+      GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
+      await googleSignIn.signOut();
+      GoogleSignInAccount accountInfo = await googleSignIn.signIn();
+      GoogleSignInAuthentication googleKeys = await accountInfo.authentication;
+      accessToken = googleKeys.accessToken;
+    } catch (err) {
+      print("Error: $err");
+    }
 
     // Store access token locally
     print("Access Token : $accessToken");

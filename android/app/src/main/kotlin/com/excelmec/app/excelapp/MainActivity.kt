@@ -1,4 +1,4 @@
-package com.excelmec.app.excelapp
+package org.excelmec
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
