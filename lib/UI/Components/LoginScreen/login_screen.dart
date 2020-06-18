@@ -20,6 +20,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void authentication(BuildContext context) async {
+    final alertDialog = alertBox("Please Wait");
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => alertDialog,
+      barrierDismissible: false,
+    );
     // Logout and  then Login
     await authService.logout();
     String auth = await authService.login();
@@ -27,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (auth == 'success') {
       // Fetch User details and Update local database - User table
       await AccountServices.fetchUserDetails();
+      Navigator.of(context, rootNavigator: true).pop();
     } else {
       print("Authentication went wrong");
     }
