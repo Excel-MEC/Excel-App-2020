@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 
 class RegistrationStatus {
   static final RegistrationStatus instance = RegistrationStatus.internal();
@@ -74,27 +75,36 @@ class RegistrationAPI {
   }
 
 // Check if an event is registered
-  static isRegistered(id) {
-    if (RegistrationStatus.instance.registrationIDs.contains(id)) return true;
-    return false;
+  static isRegistered(id) async {
+    print('object');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwt = prefs.getString('jwt');
+    print("qwerty $jwt");
+    if (jwt == null)
+      return false;
+    else if (RegistrationStatus.instance.registrationIDs.contains(id))
+      return true;
+    else
+      return false;
   }
 
-// Rgisters event
+// Registers event
 
-  static Future registerEvent(int id, customAlert, refreshPage, context) async {
-    refreshPage();
+  static Future registerEvent(
+      {@required int id, @required refreshFunction, @required context}) async {
+    refreshFunction();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
     if (jwt == null) {
-      customAlert('Not Logged In');
+      alertDialog(text: 'Not Logged In', context: context);
       return;
     }
     if (RegistrationStatus.instance.registeredStatus == 0) {
-      customAlert('Cannot Connect');
+      alertDialog(text: 'Cannot Connect', context: context);
       return;
     }
-    if (isRegistered(id)) {
-      customAlert('Already Registered');
+    if (await isRegistered(id)) {
+      alertDialog(text: 'Already Registered', context: context);
       return;
     }
     // Shows Dialog to Confirm, proceeds if Proceed is clicked
@@ -123,9 +133,9 @@ class RegistrationAPI {
                   print("Registration over with status code " +
                       a.statusCode.toString());
                   RegistrationStatus.instance.registrationIDs.add(id);
-                  refreshPage();
+                  refreshFunction();
                 } catch (_) {
-                  customAlert('Registration Failed');
+                  alertDialog(text: 'Registration Failed', context: context);
                 }
                 // End of Registration
               },
