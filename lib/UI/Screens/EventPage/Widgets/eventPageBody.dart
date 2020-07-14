@@ -114,7 +114,7 @@ class EventPageBodyState extends State<EventPageBody> {
                     tag: 'LikeButton',
                     child: Padding(
                       padding: EdgeInsets.all(10.0),
-                      child: LikeButton(false),
+                      child: LikeButton(id: eventDetails.id),
                     ),
                   ),
                 ],
