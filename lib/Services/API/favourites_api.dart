@@ -29,8 +29,8 @@ class FavouritesAPI {
       return 'notLoggedIn';
     }
 
+    print('---Network request for Favourites---');
     var response = await fetchDataFromNet(jwt);
-    print('Doing network request');
     try {
       List data = json.decode(response.body);
       // Add event ID's

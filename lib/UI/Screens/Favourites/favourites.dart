@@ -6,10 +6,20 @@ import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/Services/API/favourites_api.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Components/EventCard/event_card.dart';
+import 'package:excelapp/UI/Screens/Favourites/Widgets/favouriteCard.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
-class FavouritesScreen extends StatelessWidget {
+class FavouritesScreen extends StatefulWidget {
+  @override
+  _FavouritesScreenState createState() => _FavouritesScreenState();
+}
+
+class _FavouritesScreenState extends State<FavouritesScreen> {
+  refreshPage() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +63,10 @@ class FavouritesScreen extends StatelessWidget {
             return ListView.builder(
               itemCount: list.length,
               itemBuilder: (BuildContext context, int index) {
-                return EventCard(list[index]);
+                return FavouriteCard(
+                  event: list[index],
+                  refreshFavourites: refreshPage,
+                );
               },
             );
           }
