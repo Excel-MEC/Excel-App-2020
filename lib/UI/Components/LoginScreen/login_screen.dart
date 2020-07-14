@@ -26,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
       builder: (BuildContext context) => alertDialog,
       barrierDismissible: false,
     );
-
     // Logout and  then Login
     await authService.logout();
     String auth = await authService.login();
