@@ -20,16 +20,17 @@ class FavouritesStatus {
 class FavouritesAPI {
   // Gets registrationID's of events
   static fetchFavourites() async {
-    if (FavouritesStatus.instance.favouritesStatus == 1)
-      return FavouritesStatus.instance.eventList;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
     if (jwt == null) {
-      FavouritesStatus.instance.favouritesStatus = -1;
+      FavouritesStatus.instance.favouritesStatus = 3;
       return 'notLoggedIn';
     }
+    if (FavouritesStatus.instance.favouritesStatus == 1)
+      return FavouritesStatus.instance.eventList;
 
-    print('---Network request for Favourites---');
+    print('---Network request to fetch Favourites---');
+    FavouritesStatus.instance.favouritesStatus = 1;
     var response = await fetchDataFromNet(jwt);
     try {
       List data = json.decode(response.body);
@@ -41,7 +42,6 @@ class FavouritesAPI {
       List<dynamic> responseData = json.decode(response.body);
       FavouritesStatus.instance.eventList =
           responseData.map<Event>((event) => Event.fromJson(event)).toList();
-      FavouritesStatus.instance.favouritesStatus = 1;
       return FavouritesStatus.instance.eventList;
     } catch (_) {
       FavouritesStatus.instance.favouritesStatus = 2;

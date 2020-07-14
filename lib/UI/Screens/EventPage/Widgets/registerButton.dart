@@ -16,7 +16,6 @@ class _RegisterButtonState extends State<RegisterButton> {
 
   void refreshIsRegistered() async {
     bool checkIfRegistered = await RegistrationAPI.isRegistered(widget.eventId);
-    print('Registartion response $checkIfRegistered');
     setState(() {
       registered = checkIfRegistered;
     });
