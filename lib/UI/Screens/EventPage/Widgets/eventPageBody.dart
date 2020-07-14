@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/eventDescription.dart';
+import 'package:excelapp/UI/Screens/EventPage/Widgets/registerButton.dart';
 import 'package:flutter/material.dart';
 import 'moreDetailsPage.dart';
 import 'backgroundImage.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
-import 'package:excelapp/Services/API/registration_api.dart';
 
 class EventPageBody extends StatefulWidget {
   final EventDetails eventDetails;
@@ -18,21 +18,11 @@ class EventPageBody extends StatefulWidget {
 //Event Details
 class EventPageBodyState extends State<EventPageBody> {
   EventDetails eventDetails;
-  bool registered = false;
+
   @override
   void initState() {
     eventDetails = widget.eventDetails;
-    refreshIsRegistered();
     super.initState();
-  }
-
-  void refreshIsRegistered() async {
-    bool checkIfRegistered =
-        await RegistrationAPI.isRegistered(eventDetails.id);
-    print('Registartion response $checkIfRegistered');
-    setState(() {
-      registered = checkIfRegistered;
-    });
   }
 
   @override
@@ -124,7 +114,7 @@ class EventPageBodyState extends State<EventPageBody> {
                     tag: 'LikeButton',
                     child: Padding(
                       padding: EdgeInsets.all(10.0),
-                      child: LikeButton(false),
+                      child: LikeButton(id: eventDetails.id),
                     ),
                   ),
                 ],
@@ -166,25 +156,7 @@ class EventPageBodyState extends State<EventPageBody> {
                     ),
                   ),
                   // Register
-                  ButtonTheme(
-                    minWidth: deviceWidth / 2.3,
-                    height: 45.0,
-                    child: RaisedButton(
-                      onPressed: () {
-                        RegistrationAPI.registerEvent(
-                          id: eventDetails.id,
-                          refreshFunction: refreshIsRegistered,
-                          context: context,
-                        );
-                      },
-                      child: Text(registered ? 'Registered' : 'Register'),
-                      color: registered ? Color(0xff337733) : primaryColor,
-                      textColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                  ),
+                  RegisterButton(eventId: eventDetails.id)
                 ],
               ),
               // For Hero Widget
