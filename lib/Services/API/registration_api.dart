@@ -88,68 +88,41 @@ class RegistrationAPI {
       return false;
   }
 
-// Registers event
-
-  static Future registerEvent(
-      {@required int id, @required refreshFunction, @required context}) async {
-    refreshFunction();
+// Recheck if registration possible
+  static Future preRegister({@required int id, @required context}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
     if (jwt == null) {
-      alertDialog(text: 'Not Logged In', context: context);
-      return;
+      return 'Not Logged In';
     }
     if (RegistrationStatus.instance.registeredStatus == 0) {
-      alertDialog(text: 'Cannot Connect', context: context);
-      return;
+      return 'Cannot Connect';
     }
     if (await isRegistered(id)) {
-      alertDialog(text: 'Already Registered', context: context);
-      return;
+      return 'Already Registered';
     }
-    // Shows Dialog to Confirm, proceeds if Proceed is clicked
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Are you sure you want to register ?'),
-          content: Text("This cannot be undone."),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("Proceed"),
-              // When Proceed is clicked
-              onPressed: () async {
-                Navigator.of(context).pop();
-                // Registers
-                try {
-                  var a = await http.post(
-                    APIConfig.baseUrl + '/registration',
-                    headers: {
-                      HttpHeaders.authorizationHeader: "Bearer " + jwt,
-                      "Content-Type": "application/json"
-                    },
-                    body: json.encode({"id": id}),
-                  );
-                  print("Registration over with status code " +
-                      a.statusCode.toString());
-                  RegistrationStatus.instance.registrationIDs.add(id);
-                  refreshFunction();
-                } catch (_) {
-                  alertDialog(text: 'Registration Failed', context: context);
-                }
-                // End of Registration
-              },
-            ),
-            FlatButton(
-              child: Text("Cancel"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+    return "proceed";
   }
-  // End of registerEvent
+
+// Registers event
+  static Future registerEvent(
+      {@required int id, @required refreshFunction, @required context}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwt = prefs.getString('jwt');
+    try {
+      var a = await http.post(
+        APIConfig.baseUrl + '/registration',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer " + jwt,
+          "Content-Type": "application/json"
+        },
+        body: json.encode({"id": id}),
+      );
+      print("Registration over with status code " + a.statusCode.toString());
+      RegistrationStatus.instance.registrationIDs.add(id);
+      refreshFunction();
+    } catch (_) {
+      alertDialog(text: 'Registration Failed', context: context);
+    }
+  }
 }
