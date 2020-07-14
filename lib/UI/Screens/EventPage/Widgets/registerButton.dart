@@ -26,8 +26,8 @@ class _RegisterButtonState extends State<RegisterButton> {
     setState(() {
       isLoading = true;
     });
-    String response =
-        await RegistrationAPI.preRegister(id: widget.eventId, context: context);
+    String response = await RegistrationAPI.preRegistration(
+        id: widget.eventId, context: context);
     if (response == "proceed") {
       // Show confirmation dialog
       await showDialog(

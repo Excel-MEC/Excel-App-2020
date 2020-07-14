@@ -25,24 +25,7 @@ class RegistrationAPI {
       RegistrationStatus.instance.registeredStatus = -1;
       return;
     }
-    // Fetches data from net & retries if fails
-    Future fetchDataFromNet() async {
-      http.Response res;
-      try {
-        res = await http.get(
-          APIConfig.baseUrl + '/registration',
-          headers: {HttpHeaders.authorizationHeader: "Bearer " + jwt},
-        );
-        return res;
-      } catch (_) {
-        await Future.delayed(Duration(milliseconds: 2000), () async {
-          res = await fetchDataFromNet();
-        });
-        return res;
-      }
-    }
-
-    var response = await fetchDataFromNet();
+    var response = await fetchDataFromNet(jwt);
     try {
       List data = json.decode(response.body);
       RegistrationStatus.instance.registrationIDs = {};
@@ -76,10 +59,8 @@ class RegistrationAPI {
 
 // Check if an event is registered
   static isRegistered(id) async {
-    print('object');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
-    print("qwerty $jwt");
     if (jwt == null)
       return false;
     else if (RegistrationStatus.instance.registrationIDs.contains(id))
@@ -89,7 +70,7 @@ class RegistrationAPI {
   }
 
 // Recheck if registration possible
-  static Future preRegister({@required int id, @required context}) async {
+  static Future preRegistration({@required int id, @required context}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
     if (jwt == null) {
@@ -124,5 +105,22 @@ class RegistrationAPI {
     } catch (_) {
       alertDialog(text: 'Registration Failed', context: context);
     }
+  }
+}
+
+// Fetches data from net & retries if fails
+Future fetchDataFromNet(jwt) async {
+  http.Response res;
+  try {
+    res = await http.get(
+      APIConfig.baseUrl + '/registration',
+      headers: {HttpHeaders.authorizationHeader: "Bearer " + jwt},
+    );
+    return res;
+  } catch (_) {
+    await Future.delayed(Duration(milliseconds: 2000), () async {
+      res = await fetchDataFromNet(jwt);
+    });
+    return res;
   }
 }
