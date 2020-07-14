@@ -65,10 +65,10 @@ class FavouritesAPI {
   static Future deleteFavourite(int id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
-    if (jwt == null) return "notLoggedin";
+    if (jwt == null) return "Log in to remove favourite events";
     if (FavouritesStatus.instance.favouritesStatus == 0)
-      return "networkNotaAailable";
-    if (!await isFavourited(id)) return "existing";
+      return 'Network not available';
+    if (!await isFavourited(id)) return "Already Unfavourited";
     try {
       var a = await http.delete(
         APIConfig.baseUrl + '/bookmark/' + id.toString(),
@@ -82,7 +82,7 @@ class FavouritesAPI {
       FavouritesStatus.instance.favouritesIDs.remove(id);
       return "deleted";
     } catch (_) {
-      return "error";
+      return "An error occured";
     }
   }
 
@@ -91,11 +91,10 @@ class FavouritesAPI {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
     if (jwt == null)
-      return "notLoggedin";
+      return "Log in to add favourite events";
     else if (FavouritesStatus.instance.favouritesStatus == 0)
-      return "networkNotaAailable";
-    else if (await isFavourited(id)) return "existing";
-
+      return "Network not Aailable";
+    else if (await isFavourited(id)) return "Already in Favourites";
     try {
       var a = await http.post(
         APIConfig.baseUrl + '/bookmark',
@@ -110,7 +109,7 @@ class FavouritesAPI {
       FavouritesStatus.instance.favouritesIDs.add(id);
       return "added";
     } catch (_) {
-      return "error";
+      return "An error occured";
     }
   }
   // End of registerEvent

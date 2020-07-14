@@ -19,15 +19,7 @@ class _LikeButton extends State<LikeButton> {
 
   handleError(response) {
     print(response);
-    if (response == "notLoggedin")
-      alertDialog(text: 'Log in to favourite events', context: context);
-    else if (response == "networkNotaAailable")
-      alertDialog(text: 'Network not available', context: context);
-    else if (response == "existing")
-      alertDialog(text: 'Network not available', context: context);
-    else if (response == "error")
-      alertDialog(text: 'An error occured', context: context);
-    else if (response == "added")
+    if (response == "added")
       setState(() {
         likeState = true;
       });
@@ -35,6 +27,8 @@ class _LikeButton extends State<LikeButton> {
       setState(() {
         likeState = false;
       });
+    else
+      alertDialog(text: response, context: context);
   }
 
   addToFavourites() async {

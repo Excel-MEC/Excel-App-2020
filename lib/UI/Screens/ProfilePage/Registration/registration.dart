@@ -1,4 +1,3 @@
-import 'package:connectivity/connectivity.dart';
 import 'package:excelapp/Services/API/registration_api.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_card.dart';

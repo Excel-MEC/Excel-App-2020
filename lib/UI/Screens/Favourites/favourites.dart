@@ -1,11 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:excelapp/Models/event_card.dart';
-import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/Services/API/favourites_api.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
-import 'package:excelapp/UI/Components/EventCard/event_card.dart';
 import 'package:excelapp/UI/Screens/Favourites/Widgets/favouriteCard.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
