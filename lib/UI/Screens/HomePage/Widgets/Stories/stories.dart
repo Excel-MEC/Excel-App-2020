@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/Stories/pageTransition.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:excelapp/UI/Components/Navigation/customNavigation.dart';
@@ -51,24 +52,25 @@ class StoryCircle extends StatelessWidget {
               hideBottomNav();
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => FullPageView(
+                ScaleRoute(
+                  page: FullPageView(
                       storiesMapList: storiesMapList,
                       storyNumber: selectedIndex),
                 ),
               ).then((_) => showBottomNav());
             },
             child: CircleAvatar(
-              radius: 35,
-              backgroundColor: Color(0xffE1306C),
+              radius: 31,
+              backgroundColor: Color(0xffcc306C),
               child: CircleAvatar(
                 backgroundColor: Colors.white,
-                radius: 32,
+                radius: 29,
                 child: CircleAvatar(
-                  radius: 30,
+                  radius: 27,
                   backgroundColor: Colors.white,
                   backgroundImage: CachedNetworkImageProvider(
-                      story[selectedIndex]['images'][0]),
+                    story[selectedIndex]['images'][0],
+                  ),
                 ),
               ),
             ),
