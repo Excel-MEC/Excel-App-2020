@@ -3,21 +3,20 @@ import 'package:flutter/material.dart';
 
 Widget homeAppBar() {
   return AppBar(
-    leading: Icon(Icons.menu, color: primaryColor),
     backgroundColor: Colors.white,
     elevation: 0,
     title: Text(
       'Excel 2020',
       style: TextStyle(
-        color: primaryColor,
-        fontSize: 20, 
-        fontWeight: FontWeight.bold,
-        fontFamily: pfontFamily
-      ),
+          color: primaryColor,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          fontFamily: pfontFamily),
     ),
     actions: <Widget>[
       Icon(Icons.notifications, color: primaryColor),
       SizedBox(width: 10)
     ],
+    iconTheme: IconThemeData(color: primaryColor),
   );
 }
