@@ -17,7 +17,6 @@ class UpdateProfile extends StatefulWidget {
 
 class _UpdateProfileState extends State<UpdateProfile> {
   bool categorySelected;
-  bool genderSelected = false;
   List<Institution> institutions = [];
 
   // Form Fields
@@ -76,7 +75,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
       builder: (BuildContext context) => alertDialog,
       barrierDismissible: false,
     );
-    if (!genderSelected) {
+    if (_gender == null) {
       Navigator.of(context, rootNavigator: true).pop();
       return "Gender is not selected";
     }
@@ -145,6 +144,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       if (value.isEmpty) {
                         return "Please enter your name";
                       }
+                      return null;
                     },
                     decoration: InputDecoration(
                       labelText: "Name",
@@ -155,6 +155,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   SizedBox(height: 20),
                   // Mobile Number
                   TextFormField(
+                    initialValue: _mobile,
                     keyboardType: TextInputType.number,
                     style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
                     onSaved: (String value) {
@@ -169,6 +170,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       if (value.length > 10) {
                         return "Invalid Mobile number";
                       }
+                      return null;
                     },
                     decoration: InputDecoration(
                       labelText: "Mobile",
@@ -196,8 +198,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           style: TextStyle(color: primaryColor),
                           underline: Center(),
                           icon: Icon(Icons.keyboard_arrow_down),
-                          hint:
-                              Text(genderSelected ? _gender : "Select Gender"),
+                          hint: Text(_gender ?? "Select Gender"),
                           items: _genders.map<DropdownMenuItem<String>>((val) {
                             return DropdownMenuItem<String>(
                               value: val,
@@ -212,7 +213,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           }).toList(),
                           onChanged: (String value) {
                             setState(() {
-                              genderSelected = true;
                               _gender = value;
                             });
                           },
@@ -241,7 +241,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           icon: Icon(Icons.keyboard_arrow_down),
                           underline: Center(),
                           hint: Text(
-                              categorySelected ? _category : "Select Category"),
+                            categorySelected ? _category : "Select Category",
+                          ),
                           items:
                               _categories.map<DropdownMenuItem<String>>((val) {
                             return DropdownMenuItem<String>(
