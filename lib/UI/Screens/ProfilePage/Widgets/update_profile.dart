@@ -17,6 +17,7 @@ class UpdateProfile extends StatefulWidget {
 
 class _UpdateProfileState extends State<UpdateProfile> {
   bool categorySelected;
+  bool genderSelected = false;
   List<Institution> institutions = [];
 
   // Form Fields
@@ -75,7 +76,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
       builder: (BuildContext context) => alertDialog,
       barrierDismissible: false,
     );
-
+    if (!genderSelected) {
+      Navigator.of(context, rootNavigator: true).pop();
+      return "Gender is not selected";
+    }
     // get institutionId only if category is school or professional
     if (_category != "professional") {
       _institutionId = await getInstitutionId(_institutionName);
@@ -121,10 +125,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
           primaryColor: primaryColor,
         ),
         child: Container(
-          padding: EdgeInsets.fromLTRB(20,0,20,20),
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: Form(
             key: _formKey,
-            autovalidate: true,
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -182,7 +185,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       Container(
                         width: MediaQuery.of(context).size.width / 2,
                         decoration: BoxDecoration(
-                          border: Border.all(width: 0.5),
+                          border: Border.all(color: Colors.black12),
                           borderRadius: BorderRadius.circular(3),
                         ),
                         padding:
@@ -193,7 +196,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           style: TextStyle(color: primaryColor),
                           underline: Center(),
                           icon: Icon(Icons.keyboard_arrow_down),
-                          value: _gender,
+                          hint:
+                              Text(genderSelected ? _gender : "Select Gender"),
                           items: _genders.map<DropdownMenuItem<String>>((val) {
                             return DropdownMenuItem<String>(
                               value: val,
@@ -208,6 +212,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           }).toList(),
                           onChanged: (String value) {
                             setState(() {
+                              genderSelected = true;
                               _gender = value;
                             });
                           },
@@ -224,18 +229,19 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       Container(
                         width: MediaQuery.of(context).size.width / 2,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 7),
                         decoration: BoxDecoration(
-                          border: Border.all(width: 0.5),
+                          border: Border.all(color: Colors.black12),
                           borderRadius: BorderRadius.circular(3),
                         ),
                         child: DropdownButton<String>(
-                          value: _category,
                           isExpanded: true,
                           isDense: true,
+                          style: TextStyle(color: primaryColor),
                           icon: Icon(Icons.keyboard_arrow_down),
                           underline: Center(),
-                          hint: Text("Select Category"),
+                          hint: Text(
+                              categorySelected ? _category : "Select Category"),
                           items:
                               _categories.map<DropdownMenuItem<String>>((val) {
                             return DropdownMenuItem<String>(
@@ -273,33 +279,31 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       // Note - Professionals
-                      Row(
-                        children: <Widget>[
-                          Icon(Icons.lightbulb_outline, color: primaryColor),
-                          SizedBox(width: 10),
-                          Text(
-                            "Not applicable for professionals",
-                            style: TextStyle(color: primaryColor),
-                          ),
-                        ],
-                      ),
                       categorySelected
-                          ? Text(" ")
-                          : Text(
-                              "\nSelect category first\n",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
+                          ? Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.lightbulb_outline,
+                                  color: primaryColor,
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  "Not applicable for professionals",
+                                  style: TextStyle(color: primaryColor),
+                                ),
+                              ],
+                            )
+                          : Center(),
+                      SizedBox(height: 15),
+                      categorySelected
+                          ? Container(
+                              margin: EdgeInsets.symmetric(horizontal: 5),
                               decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black12),
                                 borderRadius: BorderRadius.circular(3),
-                                border: Border.all(width: 0.5),
                               ),
                               child: SearchableDropdown.single(
                                 underline: Center(),
-                                // value: _institutionName,
                                 readOnly: !categorySelected ||
                                     _category == "professional",
                                 items: institutions
@@ -326,14 +330,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 },
                                 isExpanded: true,
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
+                            )
+                          : Center(),
                     ],
                   ),
-
-                  SizedBox(height: 30),
+                  SizedBox(height: categorySelected ? 25 : 90),
+                  // Submit button
                   ButtonTheme(
                     minWidth: MediaQuery.of(context).size.width / 3,
                     buttonColor: primaryColor,
