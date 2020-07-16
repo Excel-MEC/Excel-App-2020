@@ -8,17 +8,17 @@ class NotificationsPage extends StatelessWidget {
     return Scaffold(
       appBar: customappbar("Notifications"),
       body: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        padding: EdgeInsets.fromLTRB(0, 10, 0, 100),
         child: Column(
-          children: <Widget>[SizedBox(height: 5)] +
-              List.generate(
-                notificationData.length,
-                (index) => NotificationCard(
-                  title: notificationData[index]['title'],
-                  time: notificationData[index]['time'],
-                  description: notificationData[index]['content'],
-                ),
-              ) +
-              [SizedBox(height: 95)],
+          children: List.generate(
+            notificationData.length,
+            (index) => NotificationCard(
+              title: notificationData[index]['title'],
+              time: notificationData[index]['time'],
+              description: notificationData[index]['content'],
+            ),
+          ),
         ),
       ),
     );
