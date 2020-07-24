@@ -145,7 +145,8 @@ class MoreDetailsState extends State<MoreDetails> {
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Text(
           txt.toString(),
-          style: TextStyle(color: primaryColor, fontSize: 15.0, fontFamily: pfontFamily),
+          style: TextStyle(
+              color: primaryColor, fontSize: 15.0, fontFamily: pfontFamily),
         ),
       ),
     );
@@ -171,31 +172,33 @@ class MoreDetailsState extends State<MoreDetails> {
     );
   }
 
-  Widget contactDetails(EventHead1 eventHead1, EventHead1 eventHead2) {
-    List<Widget> finDetails = [];
+  Widget contactDetails(var eventHead1, var eventHead2) {
+    //TODO : Add contacts section
+    return Text("Coming Soon");
+    // List<Widget> finDetails = [];
 
-    // Contact 1
-    finDetails.add(SizedBox(height: 10));
-    finDetails.add(contactDetailRow(Icons.person, eventHead1.name.toString()));
-    finDetails.add(contactDetailRow(Icons.email,eventHead1.email.toString()));
-    finDetails
-        .add(contactDetailRow(Icons.phone, eventHead1.phoneNumber.toString()));
+    // // Contact 1
+    // finDetails.add(SizedBox(height: 10));
+    // finDetails.add(contactDetailRow(Icons.person, eventHead1.name.toString()));
+    // finDetails.add(contactDetailRow(Icons.email,eventHead1.email.toString()));
+    // finDetails
+    //     .add(contactDetailRow(Icons.phone, eventHead1.phoneNumber.toString()));
 
-    // Contact 2
-    finDetails.add(SizedBox(height: 25));
-    finDetails.add(contactDetailRow(Icons.person, eventHead2.name.toString()));
-    finDetails.add(contactDetailRow(Icons.email,eventHead2.email.toString()));
-    finDetails
-        .add(contactDetailRow(Icons.phone, eventHead2.phoneNumber.toString()));
+    // // Contact 2
+    // finDetails.add(SizedBox(height: 25));
+    // finDetails.add(contactDetailRow(Icons.person, eventHead2.name.toString()));
+    // finDetails.add(contactDetailRow(Icons.email,eventHead2.email.toString()));
+    // finDetails
+    //     .add(contactDetailRow(Icons.phone, eventHead2.phoneNumber.toString()));
 
-    return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        child: Column(
-          children: finDetails,
-        ),
-      ),
-    );
+    // return SingleChildScrollView(
+    //   child: Container(
+    //     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+    //     child: Column(
+    //       children: finDetails,
+    //     ),
+    //   ),
+    // );
   }
 
   Widget contactDetailRow(var icon, String text) {
