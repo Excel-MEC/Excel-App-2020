@@ -156,7 +156,9 @@ class EventPageBodyState extends State<EventPageBody> {
                     ),
                   ),
                   // Register
-                  RegisterButton(eventId: eventDetails.id)
+                  eventDetails.needRegistration == 1
+                      ? RegisterButton(eventId: eventDetails.id)
+                      : SizedBox(width: deviceWidth / 2.3)
                 ],
               ),
               // For Hero Widget
