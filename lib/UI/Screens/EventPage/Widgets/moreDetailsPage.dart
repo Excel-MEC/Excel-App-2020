@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/backgroundImage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/eventDescription.dart';
@@ -118,11 +120,10 @@ class MoreDetailsState extends State<MoreDetails> {
                                 details(eventDetails.about),
                                 details(eventDetails.format),
                                 details(eventDetails.rules),
-                                eventDetails.eventHead1 != null &&
-                                        eventDetails.eventHead2 != null
-                                    ? contactDetails(eventDetails.eventHead1,
-                                        eventDetails.eventHead2)
-                                    : offlineContacts()
+                                contactDetails(
+                                  eventDetails.eventHead1,
+                                  eventDetails.eventHead2,
+                                )
                               ],
                             ),
                           ),
@@ -152,53 +153,31 @@ class MoreDetailsState extends State<MoreDetails> {
     );
   }
 
-  // Easter egg
-  Widget offlineContacts() {
+  Widget contactDetails(String e1, String e2) {
+    Map<String, dynamic> eventHead1 = jsonDecode(e1);
+    Map<String, dynamic> eventHead2 = jsonDecode(e2);
+    List<Widget> finDetails = [];
+
+    // Contact 1
+    finDetails.add(SizedBox(height: 10));
+    finDetails.add(contactDetailRow(Icons.person, eventHead1["name"]));
+    finDetails.add(contactDetailRow(Icons.email, eventHead1["email"]));
+    finDetails.add(contactDetailRow(Icons.phone, eventHead1["phoneNumber"]));
+
+    // Contact 2
+    finDetails.add(SizedBox(height: 25));
+    finDetails.add(contactDetailRow(Icons.person, eventHead2["name"]));
+    finDetails.add(contactDetailRow(Icons.email, eventHead2["email"]));
+    finDetails.add(contactDetailRow(Icons.phone, eventHead2["phoneNumber"]));
+
     return SingleChildScrollView(
       child: Container(
-        margin: EdgeInsets.symmetric(
-            vertical: MediaQuery.of(context).size.height / 5),
-        child: Center(
-          child: Text(
-            "Contacts",
-            style: TextStyle(
-              color: primaryColor,
-              fontWeight: FontWeight.w600,
-              fontSize: 20,
-            ),
-          ),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        child: Column(
+          children: finDetails,
         ),
       ),
     );
-  }
-
-  Widget contactDetails(var eventHead1, var eventHead2) {
-    //TODO : Add contacts section
-    return Text("Coming Soon");
-    // List<Widget> finDetails = [];
-
-    // // Contact 1
-    // finDetails.add(SizedBox(height: 10));
-    // finDetails.add(contactDetailRow(Icons.person, eventHead1.name.toString()));
-    // finDetails.add(contactDetailRow(Icons.email,eventHead1.email.toString()));
-    // finDetails
-    //     .add(contactDetailRow(Icons.phone, eventHead1.phoneNumber.toString()));
-
-    // // Contact 2
-    // finDetails.add(SizedBox(height: 25));
-    // finDetails.add(contactDetailRow(Icons.person, eventHead2.name.toString()));
-    // finDetails.add(contactDetailRow(Icons.email,eventHead2.email.toString()));
-    // finDetails
-    //     .add(contactDetailRow(Icons.phone, eventHead2.phoneNumber.toString()));
-
-    // return SingleChildScrollView(
-    //   child: Container(
-    //     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-    //     child: Column(
-    //       children: finDetails,
-    //     ),
-    //   ),
-    // );
   }
 
   Widget contactDetailRow(var icon, String text) {
@@ -215,7 +194,7 @@ class MoreDetailsState extends State<MoreDetails> {
           SizedBox(width: 15),
           Expanded(
             child: Text(
-              text,
+              text ?? "",
               style: TextStyle(
                 color: primaryColor,
                 fontSize: 17.0,
