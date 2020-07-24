@@ -20,15 +20,14 @@ class EventDetails {
   String eventHead1;
   int eventHead2Id;
   String eventHead2;
-
-  bool isTeam;
+  int isTeam;
   int teamSize;
   int eventStatusId;
   String eventStatus;
   int numberOfRounds;
   int currentRound;
-  bool needRegistration;
-  List rounds;
+  int needRegistration;
+  String rounds;
 
   EventDetails({
     this.id,
@@ -76,22 +75,21 @@ class EventDetails {
     datetime = json['datetime'];
     entryFee = json['entryFee'];
     prizeMoney = json['prizeMoney'];
-    eventHead1Id = json.containsKey('eventHead1Id') ? json['eventHead1Id'] : 0;
-    eventHead1 = json.containsKey('eventHead1') && json['eventHead1'] != null
-        ? jsonEncode(json['eventHead1'])
-        : null;
-    eventHead2Id = json.containsKey('eventHead2Id') ? json['eventHead2Id'] : 0;
-    eventHead2 = json.containsKey('eventHead2') && json['eventHead2'] != null
-        ? jsonEncode(json['eventHead2'])
-        : null;
-    isTeam = json['isTeam'];
+    eventHead1Id = json['eventHead1Id'];
+    eventHead1 = jsonEncode(json['eventHead1']);
+    eventHead2Id = json['eventHead2Id'];
+    eventHead2 = jsonEncode(json['eventHead2']);
+    isTeam = (json['isTeam'] == true || json['isTeam'] == 1) ? 1 : 0;
     teamSize = json['teamSize'];
     eventStatusId = json['eventStatusId'];
     eventStatus = json['eventStatus'];
     numberOfRounds = json['numberOfRounds'];
     currentRound = json['currentRound'];
-    needRegistration = json['needRegistration'];
-    rounds = json['rounds'];
+    needRegistration =
+        (json['needRegistration'] == true || json['needRegistration'] == 1)
+            ? 1
+            : 0;
+    rounds = jsonEncode(json['rounds']);
   }
 
   Map<String, dynamic> toJson() {
@@ -99,13 +97,42 @@ class EventDetails {
     data['id'] = this.id;
     data['name'] = this.name;
     data['icon'] = this.icon;
-    data['datetime'] = this.datetime;
-    data['prizeMoney'] = this.prizeMoney;
-    data['venue'] = this.venue;
+    data['categoryId'] = this.categoryId;
+    data['category'] = this.category;
+    data['eventTypeId'] = this.eventTypeId;
+    data['eventType'] = this.eventType;
     data['about'] = this.about;
     data['format'] = this.format;
     data['rules'] = this.rules;
+    data['venue'] = this.venue;
+    data['day'] = this.day;
+    data['datetime'] = this.datetime;
+    // data['entryFee]'] = this.entryFee;
+    data['prizeMoney'] = this.prizeMoney;
+    data['eventHead1Id'] = this.eventHead1Id;
+    data['eventHead1'] = this.eventHead1;
+    data['eventHead2Id'] = this.eventHead2Id;
+    data['eventHead2'] = this.eventHead2;
+    data['isTeam'] = this.isTeam;
+    data['teamSize'] = this.teamSize;
+    data['eventStatusId'] = this.eventStatusId;
+    data['eventStatus'] = this.eventStatus;
+    data['numberOfRounds'] = this.numberOfRounds;
+    data['currentRound'] = this.currentRound;
+    data['needRegistration'] = this.needRegistration;
+    data['rounds'] = this.rounds;
     return data;
+
+    //     data['id'] = this.id;
+    // data['name'] = this.name;
+    // data['icon'] = this.icon;
+    // data['datetime'] = this.datetime;
+    // data['prizeMoney'] = this.prizeMoney;
+    // data['venue'] = this.venue;
+    // data['about'] = this.about;
+    // data['format'] = this.format;
+    // data['rules'] = this.rules;
+    // return data;
   }
 }
 
