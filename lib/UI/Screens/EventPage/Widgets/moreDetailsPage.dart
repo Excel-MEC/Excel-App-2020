@@ -145,7 +145,7 @@ class MoreDetailsState extends State<MoreDetails> {
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Text(
-          txt.toString(),
+          txt ?? "",
           style: TextStyle(
               color: primaryColor, fontSize: 15.0, fontFamily: pfontFamily),
         ),
@@ -154,8 +154,8 @@ class MoreDetailsState extends State<MoreDetails> {
   }
 
   Widget contactDetails(String e1, String e2) {
-    Map<String, dynamic> eventHead1 = jsonDecode(e1);
-    Map<String, dynamic> eventHead2 = jsonDecode(e2);
+    Map<String, dynamic> eventHead1 = json.decode(e1);
+    Map<String, dynamic> eventHead2 = json.decode(e2);
     List<Widget> finDetails = [];
 
     // Contact 1
@@ -188,7 +188,7 @@ class MoreDetailsState extends State<MoreDetails> {
         children: <Widget>[
           Icon(
             icon,
-            size: 20.0,
+            size: 17.0,
             color: primaryColor,
           ),
           SizedBox(width: 15),
@@ -197,7 +197,7 @@ class MoreDetailsState extends State<MoreDetails> {
               text ?? "",
               style: TextStyle(
                 color: primaryColor,
-                fontSize: 17.0,
+                fontSize: 15.0,
                 decoration: TextDecoration.none,
                 fontFamily: 'Quicksand-Light',
               ),

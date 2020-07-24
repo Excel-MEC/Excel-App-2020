@@ -59,37 +59,37 @@ class EventDetails {
     this.rounds,
   });
 
-  EventDetails.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    icon = json['icon'];
-    categoryId = json['categoryId'];
-    category = json['category'];
-    eventTypeId = json['eventTypeId'];
-    eventType = json['eventType'];
-    about = json['about'];
-    format = json['format'];
-    rules = json['rules'];
-    venue = json['venue'];
-    day = json['day'];
-    datetime = json['datetime'];
-    entryFee = json['entryFee'];
-    prizeMoney = json['prizeMoney'];
-    eventHead1Id = json['eventHead1Id'];
-    eventHead1 = jsonEncode(json['eventHead1']);
-    eventHead2Id = json['eventHead2Id'];
-    eventHead2 = jsonEncode(json['eventHead2']);
-    isTeam = (json['isTeam'] == true || json['isTeam'] == 1) ? 1 : 0;
-    teamSize = json['teamSize'];
-    eventStatusId = json['eventStatusId'];
-    eventStatus = json['eventStatus'];
-    numberOfRounds = json['numberOfRounds'];
-    currentRound = json['currentRound'];
+  EventDetails.fromJson(Map<String, dynamic> data) {
+    id = data['id'];
+    name = data['name'];
+    icon = data['icon'];
+    categoryId = data['categoryId'];
+    category = data['category'];
+    eventTypeId = data['eventTypeId'];
+    eventType = data['eventType'];
+    about = data['about'];
+    format = data['format'];
+    rules = data['rules'];
+    venue = data['venue'];
+    day = data['day'];
+    datetime = data['datetime'];
+    entryFee = data['entryFee'];
+    prizeMoney = data['prizeMoney'];
+    eventHead1Id = data['eventHead1Id'];
+    eventHead1 = data['eventHead1'];
+    eventHead2Id = data['eventHead2Id'];
+    eventHead2 = data['eventHead2'];
+    isTeam = (data['isTeam'] == true || data['isTeam'] == 1) ? 1 : 0;
+    teamSize = data['teamSize'];
+    eventStatusId = data['eventStatusId'];
+    eventStatus = data['eventStatus'];
+    numberOfRounds = data['numberOfRounds'];
+    currentRound = data['currentRound'];
     needRegistration =
-        (json['needRegistration'] == true || json['needRegistration'] == 1)
+        (data['needRegistration'] == true || data['needRegistration'] == 1)
             ? 1
             : 0;
-    rounds = jsonEncode(json['rounds']);
+    rounds = data['rounds'];
   }
 
   Map<String, dynamic> toJson() {
