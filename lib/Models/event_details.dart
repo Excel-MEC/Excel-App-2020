@@ -122,16 +122,5 @@ class EventDetails {
     data['needRegistration'] = this.needRegistration;
     data['rounds'] = this.rounds;
     return data;
-
-    //     data['id'] = this.id;
-    // data['name'] = this.name;
-    // data['icon'] = this.icon;
-    // data['datetime'] = this.datetime;
-    // data['prizeMoney'] = this.prizeMoney;
-    // data['venue'] = this.venue;
-    // data['about'] = this.about;
-    // data['format'] = this.format;
-    // data['rules'] = this.rules;
-    // return data;
   }
 }

@@ -45,17 +45,4 @@ class DBEventsTable {
         ")";
     return table;
   }
-  //     String table = "CREATE TABLE $tableName ("
-  //     "id INTEGER PRIMARY KEY,"
-  //     "name TEXT,"
-  //     "icon TEXT,"
-  //     "datetime TEXT,"
-  //     "prizeMoney INTEGER,"
-  //     "venue TEXT,"
-  //     "about TEXT,"
-  //     "format TEXT,"
-  //     "rules TEXT"
-  //     ")";
-  //     return table;
-  // }
 }
