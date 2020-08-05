@@ -2,18 +2,11 @@ import 'dart:convert';
 import 'package:excelapp/Models/schedule_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:excelapp/Services/API/api_config.dart';
-import 'dart:io';
-import 'package:hive/hive.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:excelapp/Services/Database/hive_operations.dart';
 
 fetchScheduleFromStorage() async {
   print("|| Storage Fetch for Schedule ||");
-  Directory dir = await getApplicationDocumentsDirectory();
-  await dir.create(recursive: true); // make sure it exists
-  Hive.init(join(dir.path, 'hiveDB'));
-  Box box = await Hive.openBox("excel");
-  var scheduleData = box.get("schedule");
+  var scheduleData = await HiveDB().retrieveData(valueName: "schedule");
   if (scheduleData == null) return;
   return scheduleJSONtoModel(scheduleData);
 }
@@ -32,12 +25,7 @@ fetchAndStoreScheduleFromNet() async {
       else if (i["day"] == 3) scheduleData["day3"] = i["events"];
     }
 
-    // Store data with Hive
-    Directory dir = await getApplicationDocumentsDirectory();
-    await dir.create(recursive: true); // make sure it exists
-    Hive.init(join(dir.path, 'hiveDB'));
-    Box box = await Hive.openBox("excel");
-    await box.put("schedule", scheduleData);
+    await HiveDB().storeData(valueName: "schedule", value: scheduleData);
     print("|| Schedule updated in DB ||");
 
     return scheduleJSONtoModel(scheduleData);
