@@ -10,19 +10,26 @@ class Schedule extends StatefulWidget {
 }
 
 class _ScheduleState extends State<Schedule> {
+  bool dataLoaded = false;
   StreamController<dynamic> estream;
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   fetchfromNet() async {
-    var dataFromNet = await fetchScheduleFromNet();
-    estream.add(dataFromNet);
+    var dataFromNet = await fetchAndStoreScheduleFromNet();
+    if (!dataLoaded || dataFromNet != "error") {
+      estream.add(dataFromNet);
+      dataLoaded = true;
+    }
     _refreshController.refreshCompleted();
   }
 
   initialisePage() async {
     var datafromStorage = await fetchScheduleFromStorage();
-    if (datafromStorage != null) estream.add(datafromStorage);
+    if (datafromStorage != null) {
+      estream.add(datafromStorage);
+      dataLoaded = true;
+    }
     await fetchfromNet();
   }
 
@@ -45,7 +52,7 @@ class _ScheduleState extends State<Schedule> {
           builder: (context, snapshot) {
             if (snapshot.data == "error")
               return Center(
-                child: Text("An error occured, pull down to refresh"),
+                child: Text("Couldn't connect, pull down to refresh"),
               );
             if (snapshot.hasData)
               return SchedulePage(scheduleData: snapshot.data);

@@ -118,7 +118,7 @@ Widget lineAndDot(lineNumber, noOfEvents) {
         height: lineNumber != 0
             ? lineNumber == noOfEvents ? rowHeight / 2 : rowHeight
             : rowHeight / 2,
-        color: primaryColor,
+        color: noOfEvents == 0 ? Colors.transparent : primaryColor,
       ),
       Container(
         margin: EdgeInsets.only(left: left - circleRadius, top: 38),

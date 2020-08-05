@@ -8,7 +8,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 fetchScheduleFromStorage() async {
-  print("- Fetching from storage: Schedule -");
+  print("|| Storage Fetch for Schedule ||");
   Directory dir = await getApplicationDocumentsDirectory();
   await dir.create(recursive: true); // make sure it exists
   Hive.init(join(dir.path, 'hiveDB'));
@@ -18,8 +18,8 @@ fetchScheduleFromStorage() async {
   return scheduleJSONtoModel(scheduleData);
 }
 
-fetchScheduleFromNet() async {
-  print("- Fetching from net: Schedule -");
+fetchAndStoreScheduleFromNet() async {
+  print("|| Network Fetch for Schedule ||");
   try {
     var response = await http.get(APIConfig.baseUrl + "/schedule");
     List responseData = json.decode(response.body);
@@ -38,6 +38,7 @@ fetchScheduleFromNet() async {
     Hive.init(join(dir.path, 'hiveDB'));
     Box box = await Hive.openBox("excel");
     await box.put("schedule", scheduleData);
+    print("|| Schedule updated in DB ||");
 
     return scheduleJSONtoModel(scheduleData);
   } catch (_) {
