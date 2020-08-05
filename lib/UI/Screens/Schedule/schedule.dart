@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:excelapp/UI/Screens/Schedule/Widgets/schedulePage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -19,7 +20,16 @@ class _ScheduleState extends State<Schedule> {
     print("Fetching");
     try {
       var response = await http.get(APIConfig.baseUrl + "/schedule");
-      estream.add(response.body);
+      var responseData = json.decode(response.body);
+      var scheduleData = {"day1": [], "day2": [], "day3": []};
+      for (var i in responseData) {
+        if (i["day"] == 1)
+          scheduleData["day1"] = i["events"];
+        else if (i["day"] == 2)
+          scheduleData["day2"] = i["events"];
+        else if (i["day"] == 3) scheduleData["day3"] = i["events"];
+      }
+      estream.add(scheduleData);
     } catch (_) {
       estream.add("error");
     }
@@ -47,7 +57,8 @@ class _ScheduleState extends State<Schedule> {
               return Center(
                 child: Text("An error occured, pull down to refresh"),
               );
-            if (snapshot.hasData) return SchedulePage();
+            if (snapshot.hasData)
+              return SchedulePage(scheduleData: snapshot.data);
             return Center(
               child: CircularProgressIndicator(),
             );

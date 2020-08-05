@@ -3,12 +3,13 @@ import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
 class TimeTableList extends StatelessWidget {
-  final List<Map<String, String>> eventDetails;
+  final eventDetails;
 
   TimeTableList(this.eventDetails);
 
   @override
   Widget build(BuildContext context) {
+    print(eventDetails);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -17,9 +18,9 @@ class TimeTableList extends StatelessWidget {
             eventDetails.length,
             (i) => Event(
                 eventDetails[i]['name'],
-                eventDetails[i]['venue'],
-                eventDetails[i]['time'],
-                eventDetails[i]['image'],
+                eventDetails[i]['round'],
+                eventDetails[i]['datetime'],
+                eventDetails[i]['icon'],
                 i,
                 eventDetails.length),
           ) +

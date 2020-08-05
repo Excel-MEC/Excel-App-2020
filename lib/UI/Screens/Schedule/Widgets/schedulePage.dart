@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Screens/Schedule/Widgets/generateScheduleCardList.dart';
 
 class SchedulePage extends StatelessWidget {
+  final scheduleData;
+  SchedulePage({@required this.scheduleData});
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -60,10 +62,10 @@ class SchedulePage extends StatelessWidget {
   Widget schedule(dayNumber) {
     Widget returnWidget;
     if (dayNumber == 1)
-      returnWidget = TimeTableList(sampleDataDay1);
+      returnWidget = TimeTableList(scheduleData["day1"]);
     else if (dayNumber == 2)
-      returnWidget = TimeTableList(sampleDataDay2);
-    else if (dayNumber == 3) returnWidget = TimeTableList(sampleDataDay3);
+      returnWidget = TimeTableList(scheduleData["day2"]);
+    else if (dayNumber == 3) returnWidget = TimeTableList(scheduleData["day3"]);
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: returnWidget,
