@@ -1,6 +1,5 @@
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
-import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +11,6 @@ class ViewProfile extends StatefulWidget {
 }
 
 class _ViewProfileState extends State<ViewProfile> {
-
   @override
   void initState() {
     super.initState();
@@ -89,7 +87,7 @@ Widget viewProfileBody(User userData, context) {
 
 Widget details(String field, String value, var icon) {
   return ListTile(
-    leading: Icon(icon,color: primaryColor),
+    leading: Icon(icon, color: primaryColor),
     title: Text(
       field,
       style: TextStyle(

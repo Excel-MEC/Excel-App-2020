@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:excelapp/Services/API/schedule_api.dart';
 import 'package:excelapp/UI/Screens/Schedule/Widgets/schedulePage.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:excelapp/Services/API/api_config.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Schedule extends StatefulWidget {

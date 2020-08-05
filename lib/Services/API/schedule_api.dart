@@ -13,7 +13,7 @@ fetchScheduleFromStorage() async {
   await dir.create(recursive: true); // make sure it exists
   Hive.init(join(dir.path, 'hiveDB'));
   Box box = await Hive.openBox("excel");
-  Map<String, dynamic> scheduleData = box.get("schedule");
+  var scheduleData = box.get("schedule");
   if (scheduleData == null) return;
   return scheduleJSONtoModel(scheduleData);
 }

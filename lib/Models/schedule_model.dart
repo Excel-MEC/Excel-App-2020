@@ -22,7 +22,7 @@ class ScheduleModel {
       this.day,
       this.datetime});
 
-  ScheduleModel.fromJson(Map<String, dynamic> json) {
+  ScheduleModel.fromJson(json) {
     id = json['id'];
     name = json['name'];
     icon = json['icon'];

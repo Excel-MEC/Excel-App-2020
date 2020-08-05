@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Models/user_model.dart';

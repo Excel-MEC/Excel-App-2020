@@ -66,7 +66,7 @@ class EventState extends State<Event> {
             child: ListTile(
               dense: true,
               title: Text(
-                eventSchedule.name,
+                eventSchedule.name ?? "",
                 style: TextStyle(
                   fontSize: 16,
                 ),
@@ -79,11 +79,13 @@ class EventState extends State<Event> {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(eventSchedule.round),
+                  Text(eventSchedule.round ?? ""),
                   SizedBox(height: 3),
                   Text(
                     ScheduleDateTimeConversion.dateTimeToString(
-                        eventSchedule.datetime),
+                          eventSchedule.datetime,
+                        ) ??
+                        "",
                   ),
                 ],
               ),
