@@ -19,6 +19,16 @@ class TimeTableList extends StatelessWidget {
             (i) => Event(eventDetails[i], i, eventDetails.length),
           ) +
           [
+            eventDetails.isEmpty
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 50),
+                    child: Center(
+                        child: Text(
+                      "No Events",
+                      style: TextStyle(fontSize: 15, color: Colors.grey),
+                    )),
+                  )
+                : Center(),
             SizedBox(
               height: 90,
             )
@@ -69,9 +79,12 @@ class EventState extends State<Event> {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(eventSchedule.datetime),
-                  SizedBox(height: 3),
                   Text(eventSchedule.round),
+                  SizedBox(height: 3),
+                  Text(
+                    ScheduleDateTimeConversion.dateTimeToString(
+                        eventSchedule.datetime),
+                  ),
                 ],
               ),
             ),

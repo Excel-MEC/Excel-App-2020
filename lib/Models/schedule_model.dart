@@ -49,12 +49,10 @@ class ScheduleModel {
   }
 }
 
-class DateTimeConversion {
+class ScheduleDateTimeConversion {
   static String dateTimeToString(String dateTime) {
     DateTime dateObject = DateTime.parse(dateTime);
-    String result = DateFormat('dd MMM yyyy').format(dateObject) +
-        ' | ' +
-        DateFormat.jm().format(dateObject);
+    String result = DateFormat.jm().format(dateObject);
     return result;
   }
 }
