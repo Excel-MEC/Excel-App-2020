@@ -37,23 +37,12 @@ class TimeTableList extends StatelessWidget {
   }
 }
 
-class Event extends StatefulWidget {
+class Event extends StatelessWidget {
   final ScheduleModel eventSchedule;
   final int lineNumber;
   final int eventLength;
 
   Event(this.eventSchedule, this.lineNumber, this.eventLength);
-  @override
-  EventState createState() =>
-      EventState(this.eventSchedule, this.lineNumber, this.eventLength);
-}
-
-class EventState extends State<Event> {
-  final ScheduleModel eventSchedule;
-  final int lineNumber;
-  final int eventLength;
-
-  EventState(this.eventSchedule, this.lineNumber, this.eventLength);
 
   @override
   Widget build(BuildContext context) {
