@@ -1,0 +1,46 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:excelapp/Services/API/api_config.dart';
+import 'dart:io';
+import 'package:hive/hive.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+
+fetchScheduleFromStorage() async {
+  print("- Fetching from storage: Schedule -");
+  Directory dir = await getApplicationDocumentsDirectory();
+  await dir.create(recursive: true); // make sure it exists
+  Hive.init(join(dir.path, 'hiveDB'));
+  Box box = await Hive.openBox("excel");
+  var scheduleData = box.get("schedule");
+  return scheduleData;
+}
+
+fetchScheduleFromNet() async {
+  print("- Fetching from net: Schedule -");
+  try {
+    var response = await http.get(APIConfig.baseUrl + "/schedule");
+    var responseData = json.decode(response.body);
+    var scheduleData = {"day1": [], "day2": [], "day3": []};
+    for (var i in responseData) {
+      if (i["day"] == 1)
+        scheduleData["day1"] = i["events"];
+      else if (i["day"] == 2)
+        scheduleData["day2"] = i["events"];
+      else if (i["day"] == 3) scheduleData["day3"] = i["events"];
+    }
+
+    // Store data with Hive
+    Directory dir = await getApplicationDocumentsDirectory();
+    await dir.create(recursive: true); // make sure it exists
+    Hive.init(join(dir.path, 'hiveDB'));
+    Box box = await Hive.openBox("excel");
+    // var a = box.get("abc");
+    box.put("schedule", scheduleData);
+    // var b = box.get("abc");
+
+    return (scheduleData);
+  } catch (_) {
+    return ("error");
+  }
+}

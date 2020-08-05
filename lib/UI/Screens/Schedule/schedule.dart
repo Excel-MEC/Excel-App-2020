@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:excelapp/Services/API/schedule_api.dart';
 import 'package:excelapp/UI/Screens/Schedule/Widgets/schedulePage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -16,30 +17,22 @@ class _ScheduleState extends State<Schedule> {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
-  fetchSchedule() async {
-    print("Fetching");
-    try {
-      var response = await http.get(APIConfig.baseUrl + "/schedule");
-      var responseData = json.decode(response.body);
-      var scheduleData = {"day1": [], "day2": [], "day3": []};
-      for (var i in responseData) {
-        if (i["day"] == 1)
-          scheduleData["day1"] = i["events"];
-        else if (i["day"] == 2)
-          scheduleData["day2"] = i["events"];
-        else if (i["day"] == 3) scheduleData["day3"] = i["events"];
-      }
-      estream.add(scheduleData);
-    } catch (_) {
-      estream.add("error");
-    }
+  fetchfromNet() async {
+    var dataFromWeb = await fetchScheduleFromNet();
+    estream.add(dataFromWeb);
+  }
+
+  initialisePage() async {
+    var datafromStorage = await fetchScheduleFromStorage();
+    if (datafromStorage != null) estream.add(datafromStorage);
+    await fetchfromNet();
     _refreshController.refreshCompleted();
   }
 
   @override
   void initState() {
     estream = StreamController<dynamic>();
-    fetchSchedule();
+    initialisePage();
     super.initState();
   }
 
@@ -48,7 +41,7 @@ class _ScheduleState extends State<Schedule> {
     return Scaffold(
       body: SmartRefresher(
         enablePullDown: true,
-        onRefresh: fetchSchedule,
+        onRefresh: fetchfromNet,
         controller: _refreshController,
         child: StreamBuilder(
           stream: estream.stream,

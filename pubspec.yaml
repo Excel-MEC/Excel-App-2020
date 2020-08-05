@@ -19,6 +19,7 @@ dependencies:
   connectivity: ^0.4.8+2
   intl: ^0.16.1
   google_sign_in: ^4.5.1
+  hive: ^1.4.2
  
   # UI
   shimmer: ^1.1.1 
