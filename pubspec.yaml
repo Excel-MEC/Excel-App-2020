@@ -19,6 +19,7 @@ dependencies:
   connectivity: ^0.4.8+2
   intl: ^0.16.1
   google_sign_in: ^4.5.1
+  hive: ^1.4.2
  
   # UI
   shimmer: ^1.1.1 
@@ -27,6 +28,7 @@ dependencies:
   carousel_slider: ^1.4.1
   introduction_screen: ^1.0.8
   font_awesome_flutter: ^8.4.0
+  pull_to_refresh: ^1.6.1
 
 
 dev_dependencies:

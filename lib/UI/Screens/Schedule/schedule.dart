@@ -1,6 +1,8 @@
-import 'package:excelapp/UI/constants.dart';
+import 'dart:async';
+import 'package:excelapp/Services/API/schedule_api.dart';
+import 'package:excelapp/UI/Screens/Schedule/Widgets/schedulePage.dart';
 import 'package:flutter/material.dart';
-import 'package:excelapp/UI/Screens/Schedule/Widgets/generateScheduleCardList.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Schedule extends StatefulWidget {
   @override
@@ -8,174 +10,58 @@ class Schedule extends StatefulWidget {
 }
 
 class _ScheduleState extends State<Schedule> {
-  List<Map<String, String>> timeTableData = sampleDataDay1;
+  bool dataLoaded = false;
+  StreamController<dynamic> estream;
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  fetchfromNet() async {
+    var dataFromNet = await fetchAndStoreScheduleFromNet();
+    if (!dataLoaded || dataFromNet != "error") {
+      estream.add(dataFromNet);
+      dataLoaded = true;
+    }
+    _refreshController.refreshCompleted();
+  }
+
+  initialisePage() async {
+    var datafromStorage = await fetchScheduleFromStorage();
+    if (datafromStorage != null) {
+      estream.add(datafromStorage);
+      dataLoaded = true;
+    }
+    await fetchfromNet();
+  }
+
+  @override
+  void initState() {
+    estream = StreamController<dynamic>();
+    initialisePage();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 3,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 4,
-          backgroundColor: Colors.white,
-          bottom: TabBar(
-            indicatorSize: TabBarIndicatorSize.tab,
-            indicatorWeight: 2,
-            indicatorColor: primaryColor,
-            labelColor: primaryColor,
-            labelStyle: TextStyle(
-              fontSize: 14,
-              fontFamily: pfontFamily,
-              fontWeight: FontWeight.w600,
-            ),
-            tabs: [
-              Tab(
-                text: 'Day 1',
-              ),
-              Tab(
-                text: 'Day 2',
-              ),
-              Tab(
-                text: 'Day 3',
-              ),
-            ],
-          ),
-          title: Text(
-            'Schedule',
-            style: TextStyle(
-              fontSize: 20,
-              color: primaryColor,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        body: Container(
-          child: TabBarView(
-            children: [
-              schedule(1),
-              schedule(2),
-              schedule(3),
-            ],
-          ),
+    return Scaffold(
+      body: SmartRefresher(
+        enablePullDown: true,
+        onRefresh: fetchfromNet,
+        controller: _refreshController,
+        child: StreamBuilder(
+          stream: estream.stream,
+          builder: (context, snapshot) {
+            if (snapshot.data == "error")
+              return Center(
+                child: Text("Couldn't connect, pull down to refresh"),
+              );
+            if (snapshot.hasData)
+              return SchedulePage(scheduleData: snapshot.data);
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ),
       ),
     );
   }
-
-  Widget schedule(dayNumber) {
-    Widget returnWidget;
-    if (dayNumber == 1)
-      returnWidget = TimeTableList(sampleDataDay1);
-    else if (dayNumber == 2)
-      returnWidget = TimeTableList(sampleDataDay2);
-    else if (dayNumber == 3) returnWidget = TimeTableList(sampleDataDay3);
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: returnWidget,
-    );
-  }
 }
-
-List<Map<String, String>> sampleDataDay1 = [
-  {
-    'name': 'Robosoccer Day 1',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
-  },
-  {
-    'name': 'Khoj',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'http://storage.excelmec.org/excel-2019/event-icons/algorithm.png'
-  },
-  {
-    'name': 'Reverse Coding',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
-  },
-  {
-    'name': 'Next Event',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
-  },
-  {
-    'name': 'Robosoccer Day 1',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
-  },
-  {
-    'name': 'Khoj',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'https://wallpapercave.com/wp/pZPTMMO.jpg'
-  },
-  {
-    'name': 'Robosoccer Day 1',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
-  },
-  {
-    'name': 'Khoj',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'https://wallpapercave.com/wp/pZPTMMO.jpg'
-  },
-];
-List<Map<String, String>> sampleDataDay2 = [
-  {
-    'name': 'Day 2 Soccer',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
-  },
-  {
-    'name': 'Khoj Day 2',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'http://storage.excelmec.org/excel-2019/event-icons/algorithm.png'
-  },
-  {
-    'name': 'Reverse Coding',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
-  },
-  {
-    'name': 'Next Event',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
-  },
-];
-List<Map<String, String>> sampleDataDay3 = [
-  {
-    'name': 'Robosoccer Day3',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
-  },
-  {
-    'name': 'Khoj',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'https://wallpapercave.com/wp/pZPTMMO.jpg'
-  },
-  {
-    'name': 'Reverse Coding',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
-  },
-  {
-    'name': 'Next Event',
-    'time': '10AM - 4PM',
-    'venue': 'Amphitheatre',
-    'image': 'http://storage.excelmec.org/excel-2019/event-icons/debug.png'
-  },
-];

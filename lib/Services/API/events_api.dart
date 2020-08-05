@@ -6,8 +6,6 @@ import 'package:excelapp/Services/API/api_config.dart';
 import 'package:http/http.dart' as http;
 
 class EventsAPI {
-
-
   static Future<List<Highlights>> fetchHighlights() async {
     var response;
     try {
@@ -16,15 +14,16 @@ class EventsAPI {
       print("Error $e");
     }
     List<dynamic> responseData = json.decode(response.body);
-    return responseData.map<Highlights>((highlight) => Highlights.fromJson(highlight)).toList();
+    return responseData
+        .map<Highlights>((highlight) => Highlights.fromJson(highlight))
+        .toList();
   }
-
-
 
   static Future<List<Event>> fetchEvents(String endpoint) async {
     var response;
     try {
-      response = await http.get(APIConfig.baseUrl + '/events/type' + '/$endpoint');
+      response =
+          await http.get(APIConfig.baseUrl + '/events/type' + '/$endpoint');
     } catch (e) {
       print("Error $e");
     }
@@ -32,17 +31,17 @@ class EventsAPI {
     return responseData.map<Event>((event) => Event.fromJson(event)).toList();
   }
 
-  
-
   static Future<EventDetails> fetchEventDetails(int id) async {
     var response;
     try {
-      response =
-          await http.get(APIConfig.baseUrl + '/events/${id.toString()}');
+      response = await http.get(APIConfig.baseUrl + '/events/${id.toString()}');
     } catch (e) {
       print("Error $e");
     }
     Map<String, dynamic> responseData = json.decode(response.body);
+    responseData["eventHead1"] = json.encode(responseData["eventHead1"]);
+    responseData["eventHead2"] = json.encode(responseData["eventHead2"]);
+    responseData["rounds"] = json.encode(responseData["rounds"]);
     EventDetails event = EventDetails.fromJson(responseData);
     return event;
   }

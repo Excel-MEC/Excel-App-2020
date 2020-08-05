@@ -15,7 +15,7 @@ class DBProvider {
 
   // Database object
   Database _db;
-  Future<Database> get database async { 
+  Future<Database> get database async {
     if (_db != null) return _db;
 
     _db = await initDB();
@@ -48,18 +48,19 @@ class DBProvider {
   // Add User to User table
   addUser(User user, String table) async {
     final db = await database;
-    await db.insert(table, user.toJson(),conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.insert(table, user.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  // Retrieve user 
+  // Retrieve user
   Future<User> getUser(String table, int id) async {
     final db = await database;
-    List<Map<String,dynamic>> res = await db.query(table, where: 'id = ?', whereArgs: [id]);
-    Map<String,dynamic> user = res[0];
+    List<Map<String, dynamic>> res =
+        await db.query(table, where: 'id = ?', whereArgs: [id]);
+    Map<String, dynamic> user = res[0];
     User userDetails = User.fromJson(user);
     return userDetails;
   }
-
 
   // Add multiple records(events) to table
   addEvents(List<Event> events, String table) async {
@@ -68,9 +69,9 @@ class DBProvider {
     for (var event in events) {
       batch.insert(
         table,
-        event.toJson(), 
+        event.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace,
-      ); 
+      );
     }
     await batch.commit(noResult: true);
   }
@@ -83,23 +84,25 @@ class DBProvider {
   }
 
   // add single event details to table
-  addEventDetails(EventDetails eventDetails,String table) async {
+  addEventDetails(EventDetails eventDetails, String table) async {
     final db = await database;
-    await db.insert(table, eventDetails.toJson(),conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.insert(table, eventDetails.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   // Retrieve a single event details using id
-    Future<List<EventDetails>> getEventDetails(String table,int id) async {
+  Future<List<EventDetails>> getEventDetails(String table, int id) async {
     final db = await database;
     List<EventDetails> result = [];
-    List<Map<String,dynamic>> res = await db.query(table,where: 'id = ?',whereArgs: [id]);
-    if(res.isEmpty) {
+    List<Map<String, dynamic>> res =
+        await db.query(table, where: 'id = ?', whereArgs: [id]);
+    // print(json.decode(res[0]["eventHead1"]));
+    if (res.isEmpty) {
       return [];
     }
-    Map<String,dynamic> event = res[0]; 
+    Map<String, dynamic> event = res[0];
     EventDetails eventDetails = EventDetails.fromJson(event);
     result.add(eventDetails);
     return result;
-  }  
-
+  }
 }
