@@ -18,15 +18,15 @@ class _ScheduleState extends State<Schedule> {
       RefreshController(initialRefresh: false);
 
   fetchfromNet() async {
-    var dataFromWeb = await fetchScheduleFromNet();
-    estream.add(dataFromWeb);
+    var dataFromNet = await fetchScheduleFromNet();
+    estream.add(dataFromNet);
+    _refreshController.refreshCompleted();
   }
 
   initialisePage() async {
     var datafromStorage = await fetchScheduleFromStorage();
     if (datafromStorage != null) estream.add(datafromStorage);
     await fetchfromNet();
-    _refreshController.refreshCompleted();
   }
 
   @override

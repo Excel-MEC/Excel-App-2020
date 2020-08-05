@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:excelapp/Models/schedule_model.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -9,20 +10,13 @@ class TimeTableList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(eventDetails);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[Padding(padding: EdgeInsets.all(8))] +
           List.generate(
             eventDetails.length,
-            (i) => Event(
-                eventDetails[i]['name'],
-                eventDetails[i]['round'],
-                eventDetails[i]['datetime'],
-                eventDetails[i]['icon'],
-                i,
-                eventDetails.length),
+            (i) => Event(eventDetails[i], i, eventDetails.length),
           ) +
           [
             SizedBox(
@@ -34,30 +28,22 @@ class TimeTableList extends StatelessWidget {
 }
 
 class Event extends StatefulWidget {
-  final String _eventName;
-  final String _venue;
-  final String _time;
-  final String _imgurl;
+  final ScheduleModel eventSchedule;
   final int lineNumber;
   final int eventLength;
 
-  Event(this._eventName, this._venue, this._time, this._imgurl, this.lineNumber,
-      this.eventLength);
+  Event(this.eventSchedule, this.lineNumber, this.eventLength);
   @override
-  EventState createState() => EventState(this._eventName, this._venue,
-      this._time, this._imgurl, this.lineNumber, this.eventLength);
+  EventState createState() =>
+      EventState(this.eventSchedule, this.lineNumber, this.eventLength);
 }
 
 class EventState extends State<Event> {
-  final String _eventName;
-  final String _venue;
-  final String _time;
-  final String _imgurl;
+  final ScheduleModel eventSchedule;
   final int lineNumber;
   final int eventLength;
 
-  EventState(this._eventName, this._venue, this._time, this._imgurl,
-      this.lineNumber, this.eventLength);
+  EventState(this.eventSchedule, this.lineNumber, this.eventLength);
 
   @override
   Widget build(BuildContext context) {
@@ -70,22 +56,22 @@ class EventState extends State<Event> {
             child: ListTile(
               dense: true,
               title: Text(
-                _eventName,
+                eventSchedule.name,
                 style: TextStyle(
                   fontSize: 16,
                 ),
               ),
               leading: CachedNetworkImage(
-                imageUrl: _imgurl,
+                imageUrl: eventSchedule.icon,
                 width: 40,
                 height: 40,
               ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(_time),
+                  Text(eventSchedule.datetime),
                   SizedBox(height: 3),
-                  Text(_venue),
+                  Text(eventSchedule.round),
                 ],
               ),
             ),
