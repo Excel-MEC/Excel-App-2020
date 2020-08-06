@@ -21,7 +21,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   // Form Fields
   final _formKey = GlobalKey<FormState>();
-  int _id;
+  // int _id;
   String _name;
   String _mobile;
   String _category;
@@ -40,7 +40,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   // Initialize form fields
   initialiseUserDetails(User user) {
-    _id = user.id;
+    // _id = user.id;
     _name = user.name;
     _mobile = user.mobileNumber;
     _category = user.category != "Not Registered" ? user.category : "college";

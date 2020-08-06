@@ -23,7 +23,7 @@ class SchedulePage extends StatelessWidget {
                 pinned: true,
                 snap: true,
                 bottom: new TabBar(
-                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorSize: TabBarIndicatorSize.tab,
                   indicatorWeight: 1,
                   indicatorColor: primaryColor,
                   labelColor: primaryColor,

@@ -17,7 +17,7 @@ class TimeTableList extends StatelessWidget {
       children: <Widget>[Padding(padding: EdgeInsets.all(8))] +
           List.generate(
             eventDetails.length,
-            (i) => Event(eventDetails[i], i, eventDetails.length),
+            (i) => ScheduleEvent(eventDetails[i], i, eventDetails.length),
           ) +
           [
             eventDetails.isEmpty
@@ -38,12 +38,12 @@ class TimeTableList extends StatelessWidget {
   }
 }
 
-class Event extends StatelessWidget {
+class ScheduleEvent extends StatelessWidget {
   final ScheduleModel eventSchedule;
   final int lineNumber;
   final int eventLength;
 
-  Event(this.eventSchedule, this.lineNumber, this.eventLength);
+  ScheduleEvent(this.eventSchedule, this.lineNumber, this.eventLength);
 
   @override
   Widget build(BuildContext context) {

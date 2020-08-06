@@ -16,7 +16,7 @@ class AccountServices {
       var response = await http.get(
         AccountConfig.url + 'profile/',
         headers: AccountConfig.getHeader(jwt),
-      ); 
+      );
 
       // Store User in DB
       Map<String, dynamic> responseData = json.decode(response.body);
@@ -31,12 +31,11 @@ class AccountServices {
       await prefs.setInt('userId', user.id);
 
       // Check if user has updated profile
-      if(user.category == "Not Registered") {
+      if (user.category == "Not Registered") {
         await prefs.setBool('isProfileUpdated', false);
       } else {
         await prefs.setBool('isProfileUpdated', true);
       }
-
     } catch (e) {
       print("Error: $e");
     }
@@ -45,18 +44,18 @@ class AccountServices {
   }
 
   // View user profile
-  static Future<User> viewProfile() async {
+  static viewProfile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
     User user;
-    
+
     try {
       print("fetching user details");
       var response = await http.get(
         AccountConfig.url + 'profile/view',
         headers: AccountConfig.getHeader(jwt),
       );
-      Map<String,dynamic> responseData = json.decode(response.body);
+      Map<String, dynamic> responseData = json.decode(response.body);
       user = User.fromJson(responseData);
       print("adding to database");
       DBProvider dbProvider = DBProvider();
@@ -66,10 +65,10 @@ class AccountServices {
     } catch (e) {
       print("Error : $e");
     }
-  } 
+  }
 
   // Fetch list of institutions
-  static Future<List<Institution>> fetchInstitutions(String category) async {
+  static fetchInstitutions(String category) async {
     if (category == "professional") {
       return [];
     }
@@ -110,7 +109,7 @@ class AccountServices {
       print("Error: $e");
     }
 
-    // Update shared preferences 
+    // Update shared preferences
     prefs.setBool('isProfileUpdated', true);
     // Update user database
     try {
@@ -119,13 +118,12 @@ class AccountServices {
         AccountConfig.url + 'profile/view',
         headers: AccountConfig.getHeader(jwt),
       );
-      Map<String,dynamic> responseData = json.decode(response.body);
+      Map<String, dynamic> responseData = json.decode(response.body);
       user = User.fromJson(responseData);
       print("adding to database");
       DBProvider dbProvider = DBProvider();
       await dbProvider.addUser(user, 'User');
       print("done");
-
     } catch (e) {
       print("Error : $e");
     }
