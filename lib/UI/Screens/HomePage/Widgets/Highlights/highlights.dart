@@ -57,9 +57,31 @@ class _HighlightsSectionState extends State<HighlightsSection> {
           StreamBuilder(
             stream: estream.stream,
             builder: (context, snapshot) {
+              // Handle When no data
               if (snapshot.data == "error")
-                return Center(
-                  child: Text("Failed to fetch Highlights"),
+                return Container(
+                  color: Color(0xffeeeeee),
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+                  child: Center(
+                    child: Column(
+                      children: <Widget>[
+                        Text("Failed to fetch Highlights"),
+                        SizedBox(height: 20),
+                        RaisedButton(
+                          color: primaryColor,
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                          onPressed: () {
+                            fetchfromNet();
+                          },
+                          child: Text("Retry"),
+                        )
+                      ],
+                    ),
+                  ),
                 );
               if (snapshot.hasData)
                 return HighlightsBody(highLightsMap: snapshot.data);
