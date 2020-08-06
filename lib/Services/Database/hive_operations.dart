@@ -8,7 +8,7 @@ class HiveDB {
     Directory dir = await getApplicationDocumentsDirectory();
     await dir.create(recursive: true); // make sure it exists
     Hive.init(join(dir.path, 'hiveDB'));
-    Box box = await Hive.openBox("excel");
+    Box box = await Hive.openBox(valueName);
     var data = box.get(valueName);
     return data;
   }
@@ -17,7 +17,7 @@ class HiveDB {
     Directory dir = await getApplicationDocumentsDirectory();
     await dir.create(recursive: true); // make sure it exists
     Hive.init(join(dir.path, 'hiveDB'));
-    Box box = await Hive.openBox("excel");
+    Box box = await Hive.openBox(valueName);
     await box.put(valueName, value);
   }
 }
