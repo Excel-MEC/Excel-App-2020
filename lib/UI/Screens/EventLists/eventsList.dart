@@ -19,6 +19,7 @@ class _EventsListState extends State<EventsList> {
   DBProvider db;
   String endpoint;
   String tableName;
+  Future<List<Event>> eventList;
 
   @override
   void initState() {
@@ -26,6 +27,7 @@ class _EventsListState extends State<EventsList> {
     endpoint = APIConfig.getEndpoint(widget.category);
     tableName = widget.category;
     db = DBProvider();
+    eventList = fetchEvents(endpoint);
   }
 
   Future<List<Event>> fetchEvents(String endpoint) async {
@@ -41,7 +43,7 @@ class _EventsListState extends State<EventsList> {
 
     // Database empty -- Fetch from API
     if (result.isEmpty && connectivityResult != ConnectivityResult.none) {
-      print("\nfetching from api and updating database");
+      print("\nFetching from api and updating database:Event List");
       result = await EventsAPI.fetchEvents(endpoint);
       await db.addEvents(result, tableName);
       print("done");
@@ -50,7 +52,7 @@ class _EventsListState extends State<EventsList> {
 
     // Database not empty -- Update database
     if (result.isNotEmpty && connectivityResult != ConnectivityResult.none) {
-      print("Updating database");
+      print("Updating database: Event List");
       EventsAPI.fetchEvents(endpoint).then((value) {
         db.addEvents(value, tableName);
         print("done");
@@ -70,7 +72,7 @@ class _EventsListState extends State<EventsList> {
           SizedBox(height: 20),
           Expanded(
             child: FutureBuilder(
-              future: fetchEvents(endpoint),
+              future: eventList,
               builder: (context, snapshot) {
                 List<Event> list = snapshot.data;
                 if (snapshot.hasData) {
