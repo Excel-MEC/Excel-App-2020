@@ -1,11 +1,13 @@
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
+import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
 import 'package:excelapp/UI/Components/LoadingUI/snackBar.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/profile_main.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class UpdateProfile extends StatefulWidget {
@@ -21,13 +23,14 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   // Form Fields
   final _formKey = GlobalKey<FormState>();
-  int _id;
+  // int _id;
   String _name;
   String _mobile;
   String _category;
   int _institutionId;
   String _institutionName;
   String _gender = 'Male';
+  bool _institutionSelected = false;
   List<String> _categories = <String>['college', 'school', 'professional'];
   List<String> _genders = <String>['Male', 'Female', 'Other'];
 
@@ -40,7 +43,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   // Initialize form fields
   initialiseUserDetails(User user) {
-    _id = user.id;
+    // _id = user.id;
     _name = user.name;
     _mobile = user.mobileNumber;
     _category = user.category != "Not Registered" ? user.category : "college";
@@ -50,35 +53,45 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   // Fetch institutions based on category
   getInstitutions(BuildContext context, String category) async {
-    final alertDialog = alertBox("Fetching Institutions");
+    final loadingDialog = alertBox("Fetching Institutions");
     showDialog(
       context: context,
-      builder: (BuildContext context) => alertDialog,
+      builder: (BuildContext context) => loadingDialog,
       barrierDismissible: false,
     );
 
-    List<Institution> res = await AccountServices.fetchInstitutions(category);
-    setState(() {
-      institutions.clear();
-      institutions.addAll(res);
-      categorySelected = true;
-    });
-    Navigator.of(context, rootNavigator: true).pop();
+    try {
+      List<Institution> res = await AccountServices.fetchInstitutions(category);
+
+      setState(() {
+        institutions.clear();
+        institutions.addAll(res);
+        categorySelected = true;
+      });
+      Navigator.of(context, rootNavigator: true).pop();
+    } catch (_) {
+      Navigator.of(context, rootNavigator: true).pop();
+      alertDialog(
+        text: "Failed to fetch institutions\nTry again",
+        context: context,
+      );
+    }
   }
 
   // Submit Form
-  Future<String> submitForm() async {
+  Future submitForm() async {
     setState(() {});
-    final alertDialog = alertBox("Submitting Form");
+    final loadingDialog = alertBox("Submitting Form");
     showDialog(
       context: context,
-      builder: (BuildContext context) => alertDialog,
+      builder: (BuildContext context) => loadingDialog,
       barrierDismissible: false,
     );
     if (_gender == null) {
       Navigator.of(context, rootNavigator: true).pop();
-      return "Gender is not selected";
+      return "Gender not selected";
     }
+
     // get institutionId only if category is school or professional
     if (_category != "professional") {
       _institutionId = await getInstitutionId(_institutionName);
@@ -87,7 +100,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
       Navigator.of(context, rootNavigator: true).pop();
       return "One or more fields are invalid!";
     }
-
+    if (_category != "professional" && !_institutionSelected) {
+      Navigator.of(context, rootNavigator: true).pop();
+      return "Select institution";
+    }
     Map<String, dynamic> userInfo = {
       "name": _name,
       "institutionId": _institutionId,
@@ -96,11 +112,13 @@ class _UpdateProfileState extends State<UpdateProfile> {
       "mobileNumber": _mobile,
       "category": _category
     };
-
     var res = await AccountServices.updateProfile(userInfo);
-    print(res);
     Navigator.of(context, rootNavigator: true).pop();
-    return "Submitted";
+    if (res == "error")
+      alertDialog(text: "Something went wrong", context: context);
+    else {
+      return "Submitted";
+    }
   }
 
   // Method to get institution Id
@@ -155,8 +173,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   SizedBox(height: 20),
                   // Mobile Number
                   TextFormField(
-                    initialValue: _mobile,
+                    initialValue: _mobile == "Not Registered" ? "" : _mobile,
                     keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                    ],
                     style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
                     onSaved: (String value) {
                       setState(() {
@@ -279,24 +300,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      // Note - Professionals
-                      categorySelected
-                          ? Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.lightbulb_outline,
-                                  color: primaryColor,
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  "Not applicable for professionals",
-                                  style: TextStyle(color: primaryColor),
-                                ),
-                              ],
-                            )
-                          : Center(),
-                      SizedBox(height: 15),
-                      categorySelected
+                      categorySelected && _category != "professional"
                           ? Container(
                               margin: EdgeInsets.symmetric(horizontal: 5),
                               decoration: BoxDecoration(
@@ -320,11 +324,13 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                     ),
                                   );
                                 }).toList(),
+                                displayClearIcon: false,
                                 hint: 'Select Institution',
                                 style: TextStyle(fontSize: 14),
                                 icon: Icon(Icons.keyboard_arrow_down),
                                 searchHint: 'Enter Institution Name',
                                 onChanged: (value) {
+                                  _institutionSelected = true;
                                   setState(() {
                                     _institutionName = value;
                                   });

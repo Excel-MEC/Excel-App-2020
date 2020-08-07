@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/schedule_model.dart';
+import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class TimeTableList extends StatelessWidget {
       children: <Widget>[Padding(padding: EdgeInsets.all(8))] +
           List.generate(
             eventDetails.length,
-            (i) => Event(eventDetails[i], i, eventDetails.length),
+            (i) => ScheduleEvent(eventDetails[i], i, eventDetails.length),
           ) +
           [
             eventDetails.isEmpty
@@ -37,23 +38,12 @@ class TimeTableList extends StatelessWidget {
   }
 }
 
-class Event extends StatefulWidget {
+class ScheduleEvent extends StatelessWidget {
   final ScheduleModel eventSchedule;
   final int lineNumber;
   final int eventLength;
 
-  Event(this.eventSchedule, this.lineNumber, this.eventLength);
-  @override
-  EventState createState() =>
-      EventState(this.eventSchedule, this.lineNumber, this.eventLength);
-}
-
-class EventState extends State<Event> {
-  final ScheduleModel eventSchedule;
-  final int lineNumber;
-  final int eventLength;
-
-  EventState(this.eventSchedule, this.lineNumber, this.eventLength);
+  ScheduleEvent(this.eventSchedule, this.lineNumber, this.eventLength);
 
   @override
   Widget build(BuildContext context) {
@@ -61,33 +51,43 @@ class EventState extends State<Event> {
       children: <Widget>[
         lineAndDot(lineNumber, eventLength),
         Expanded(
-          child: Container(
-            margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-            child: ListTile(
-              dense: true,
-              title: Text(
-                eventSchedule.name ?? "",
-                style: TextStyle(
-                  fontSize: 16,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EventPage(eventSchedule.id),
                 ),
-              ),
-              leading: CachedNetworkImage(
-                imageUrl: eventSchedule.icon,
-                width: 40,
-                height: 40,
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(eventSchedule.round ?? ""),
-                  SizedBox(height: 3),
-                  Text(
-                    ScheduleDateTimeConversion.dateTimeToString(
-                          eventSchedule.datetime,
-                        ) ??
-                        "",
+              );
+            },
+            child: Container(
+              margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+              child: ListTile(
+                dense: true,
+                title: Text(
+                  eventSchedule.name ?? "",
+                  style: TextStyle(
+                    fontSize: 16,
                   ),
-                ],
+                ),
+                leading: CachedNetworkImage(
+                  imageUrl: eventSchedule.icon,
+                  width: 40,
+                  height: 40,
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(eventSchedule.round ?? ""),
+                    SizedBox(height: 3),
+                    Text(
+                      ScheduleDateTimeConversion.dateTimeToString(
+                            eventSchedule.datetime,
+                          ) ??
+                          "",
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

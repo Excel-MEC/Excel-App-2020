@@ -1,5 +1,6 @@
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Accounts/auth_service.dart';
+import 'package:excelapp/Services/API/favourites_api.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/profile_main.dart';
 import 'package:excelapp/UI/constants.dart';
@@ -33,6 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
     if (auth == 'success') {
       // Fetch User details and Update local database - User table
       await AccountServices.fetchUserDetails();
+      // Refresh fvourites
+      FavouritesStatus.instance.favouritesStatus = 3;
       Navigator.of(context, rootNavigator: true).pop();
     } else {
       print("Authentication went wrong");

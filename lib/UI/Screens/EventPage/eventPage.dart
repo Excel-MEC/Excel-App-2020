@@ -17,12 +17,14 @@ class _EventPageState extends State<EventPage> {
   DBProvider dbProvider;
   int _eventId;
   String _tableName = "EventDetails";
+  Future<List<EventDetails>> eventDetail;
 
   @override
   void initState() {
     super.initState();
     _eventId = widget.eventId;
     dbProvider = DBProvider();
+    eventDetail = fetchEventDetails(_eventId);
   }
 
   Future<List<EventDetails>> fetchEventDetails(int id) async {
@@ -62,7 +64,7 @@ class _EventPageState extends State<EventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: fetchEventDetails(_eventId),
+        future: eventDetail,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.isEmpty) {

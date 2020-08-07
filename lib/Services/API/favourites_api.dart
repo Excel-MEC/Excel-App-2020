@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:excelapp/Models/event_card.dart';
+import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -9,16 +10,25 @@ import 'package:flutter/material.dart';
 class FavouritesStatus {
   static final FavouritesStatus instance = FavouritesStatus.internal();
   FavouritesStatus.internal();
-  // 0 if data not retreived, 1 if data retrieved, 2 if error, 3 if refresh needed
+  // 0 if data not retreived, 1 if data retrieved, 2 if error, 3 if refresh needed, 4 if fetching already
   int favouritesStatus = 0;
   // Stores favourited event ID's
   Set<int> favouritesIDs = {};
   // Event list
   List<Event> eventList = [];
+
+  removeEventFromMemory(int id) {
+    for (int i = 0; i < eventList.length; i++) {
+      if (eventList[i].id == id) {
+        eventList.removeAt(i);
+        break;
+      }
+    }
+  }
 }
 
 class FavouritesAPI {
-  // Gets registrationID's of events
+  // Gets ID's of favourited events
   static fetchFavourites() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
@@ -26,12 +36,19 @@ class FavouritesAPI {
       FavouritesStatus.instance.favouritesStatus = 3;
       return 'notLoggedIn';
     }
+
+    // Return already fetched Data if loaded.
     if (FavouritesStatus.instance.favouritesStatus == 1)
       return FavouritesStatus.instance.eventList;
 
-    print('---Network request to fetch Favourites---');
-    FavouritesStatus.instance.favouritesStatus = 1;
+    // Returns if already fetching
+    if (FavouritesStatus.instance.favouritesStatus == 4) return;
+
+    FavouritesStatus.instance.favouritesStatus = 4;
     var response = await fetchDataFromNet(jwt);
+    print('--- Favourites: Network request ---');
+    FavouritesStatus.instance.favouritesStatus = 1;
+
     try {
       List data = json.decode(response.body);
       // Add event ID's
@@ -62,7 +79,7 @@ class FavouritesAPI {
   }
 
 // Deletes an event from favourites
-  static Future deleteFavourite(int id) async {
+  static Future deleteFavourite({int id}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
     if (jwt == null) return "Log in to remove favourite events";
@@ -80,6 +97,8 @@ class FavouritesAPI {
       print("Removing from favourites attempted with status code " +
           a.statusCode.toString());
       FavouritesStatus.instance.favouritesIDs.remove(id);
+      FavouritesStatus.instance.removeEventFromMemory(id);
+      // Can instead use FavouritesStatus.instance.favouritesStatus = 3;
       return "deleted";
     } catch (_) {
       return "An error occured";
@@ -87,7 +106,9 @@ class FavouritesAPI {
   }
 
 // Add event to favourites
-  static Future addEventToFavourites({@required int id}) async {
+  static Future addEventToFavourites(
+      {@required EventDetails eventDetails}) async {
+    int id = eventDetails.id;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
     if (jwt == null)
@@ -107,12 +128,17 @@ class FavouritesAPI {
       print("Adding to favourites attempted with status code " +
           a.statusCode.toString());
       FavouritesStatus.instance.favouritesIDs.add(id);
+      // Converts event details model to event model to add to favourites
+      Event eventDetailsToEvent = Event.fromJson(eventDetails.toJson());
+      FavouritesStatus.instance.eventList.add(eventDetailsToEvent);
+      // Can instead use FavouritesStatus.instance.favouritesStatus = 3;
       return "added";
     } catch (_) {
       return "An error occured";
     }
   }
   // End of registerEvent
+
 }
 
 Future fetchDataFromNet(jwt) async {

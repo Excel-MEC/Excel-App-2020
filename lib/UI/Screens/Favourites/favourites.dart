@@ -25,13 +25,17 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
           // If no data
           if (!snapshot.hasData)
             return Center(
-              child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(primaryColor),
+              child: Text(
+                "Could not fetch favourites",
+                style: TextStyle(color: Colors.black54),
               ),
             );
           if (snapshot.data == "notLoggedIn")
             return Center(
-              child: Text('Not Logged In'),
+              child: Text(
+                'Not Logged In',
+                style: TextStyle(color: Colors.black54),
+              ),
             );
           // When favourites is empty
           if (snapshot.data.isEmpty) {

@@ -8,46 +8,41 @@ class SchedulePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      initialIndex: 0,
       length: 3,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 4,
-          backgroundColor: Colors.white,
-          bottom: TabBar(
-            indicatorSize: TabBarIndicatorSize.tab,
-            indicatorWeight: 2,
-            indicatorColor: primaryColor,
-            labelColor: primaryColor,
-            labelStyle: TextStyle(
-              fontSize: 14,
-              fontFamily: pfontFamily,
-              fontWeight: FontWeight.w600,
-            ),
-            tabs: [
-              Tab(
-                text: 'Day 1',
+      child: new Scaffold(
+        body: new NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              new SliverAppBar(
+                title: Text(
+                  "Schedule",
+                  style: TextStyle(color: primaryColor),
+                ),
+                backgroundColor: Colors.white,
+                floating: true,
+                pinned: true,
+                snap: true,
+                bottom: new TabBar(
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorWeight: 1,
+                  indicatorColor: primaryColor,
+                  labelColor: primaryColor,
+                  tabs: [
+                    Tab(
+                      text: 'Day 1',
+                    ),
+                    Tab(
+                      text: 'Day 2',
+                    ),
+                    Tab(
+                      text: 'Day 3',
+                    ),
+                  ],
+                ),
               ),
-              Tab(
-                text: 'Day 2',
-              ),
-              Tab(
-                text: 'Day 3',
-              ),
-            ],
-          ),
-          title: Text(
-            'Schedule',
-            style: TextStyle(
-              fontSize: 20,
-              color: primaryColor,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        body: Container(
-          child: TabBarView(
+            ];
+          },
+          body: new TabBarView(
             children: [
               schedule(1),
               schedule(2),

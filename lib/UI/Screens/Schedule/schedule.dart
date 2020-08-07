@@ -55,7 +55,7 @@ class _ScheduleState extends State<Schedule> {
                 child: Text("Couldn't connect, pull down to refresh"),
               );
             if (snapshot.hasData)
-              return SchedulePage(scheduleData: snapshot.data);
+              return new SchedulePage(scheduleData: snapshot.data);
             return Center(
               child: CircularProgressIndicator(),
             );

@@ -1,4 +1,3 @@
-
 class Highlights {
   int id;
   String name;
@@ -6,7 +5,7 @@ class Highlights {
 
   Highlights({this.id, this.name, this.image});
 
-  Highlights.fromJson(Map<String, dynamic> json) {
+  Highlights.fromJson(json) {
     id = json['id'];
     name = json['name'];
     image = json['image'];
