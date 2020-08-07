@@ -28,7 +28,7 @@ class FavouritesStatus {
 }
 
 class FavouritesAPI {
-  // Gets registrationID's of events
+  // Gets ID's of favourited events
   static fetchFavourites() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
@@ -40,8 +40,9 @@ class FavouritesAPI {
       return FavouritesStatus.instance.eventList;
 
     print('---Network request to fetch Favourites---');
-    FavouritesStatus.instance.favouritesStatus = 1;
     var response = await fetchDataFromNet(jwt);
+    FavouritesStatus.instance.favouritesStatus = 1;
+
     try {
       List data = json.decode(response.body);
       // Add event ID's
