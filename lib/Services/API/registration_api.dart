@@ -25,8 +25,8 @@ class RegistrationAPI {
       RegistrationStatus.instance.registeredStatus = -1;
       return;
     }
-    print('---Network request to fetch Registrations---');
     var response = await fetchDataFromNet(jwt);
+    print('--- Registrations: Network Fetch ---');
     try {
       List data = json.decode(response.body);
       RegistrationStatus.instance.registrationIDs = {};

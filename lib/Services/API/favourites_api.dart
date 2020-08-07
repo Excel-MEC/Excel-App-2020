@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class FavouritesStatus {
   static final FavouritesStatus instance = FavouritesStatus.internal();
   FavouritesStatus.internal();
-  // 0 if data not retreived, 1 if data retrieved, 2 if error, 3 if refresh needed
+  // 0 if data not retreived, 1 if data retrieved, 2 if error, 3 if refresh needed, 4 if fetching already
   int favouritesStatus = 0;
   // Stores favourited event ID's
   Set<int> favouritesIDs = {};
@@ -36,11 +36,17 @@ class FavouritesAPI {
       FavouritesStatus.instance.favouritesStatus = 3;
       return 'notLoggedIn';
     }
+
+    // Return already fetched Data if loaded.
     if (FavouritesStatus.instance.favouritesStatus == 1)
       return FavouritesStatus.instance.eventList;
 
-    print('---Network request to fetch Favourites---');
+    // Returns if already fetching
+    if (FavouritesStatus.instance.favouritesStatus == 4) return;
+
+    FavouritesStatus.instance.favouritesStatus = 4;
     var response = await fetchDataFromNet(jwt);
+    print('--- Favourites: Network request ---');
     FavouritesStatus.instance.favouritesStatus = 1;
 
     try {

@@ -22,7 +22,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
       body: FutureBuilder(
         future: FavouritesAPI.fetchFavourites(),
         builder: (context, snapshot) {
-          print(snapshot.data);
           // If no data
           if (!snapshot.hasData)
             return Center(

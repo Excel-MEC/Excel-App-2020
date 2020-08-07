@@ -5,14 +5,14 @@ import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
 
 fetchScheduleFromStorage() async {
-  print("|| Storage Fetch for Schedule ||");
+  print("-    Schedule: Storage Fetch    -");
   var scheduleData = await HiveDB().retrieveData(valueName: "schedule");
   if (scheduleData == null) return;
   return scheduleJSONtoModel(scheduleData);
 }
 
 fetchAndStoreScheduleFromNet() async {
-  print("|| Network Fetch for Schedule ||");
+  print("-    Schedule: Network Fetch    -");
   try {
     var response = await http.get(APIConfig.baseUrl + "/schedule");
     List responseData = json.decode(response.body);
@@ -25,8 +25,8 @@ fetchAndStoreScheduleFromNet() async {
       else if (i["day"] == 3) scheduleData["day3"] = i["events"];
     }
 
+    // Updates in DB
     await HiveDB().storeData(valueName: "schedule", value: scheduleData);
-    print("|| Schedule updated in DB ||");
 
     return scheduleJSONtoModel(scheduleData);
   } catch (_) {

@@ -16,7 +16,6 @@ class _HighlightsSectionState extends State<HighlightsSection> {
 
   fetchfromNet() async {
     var dataFromNet = await fetchAndStoreHighlightsFromNet();
-    print("Net $dataFromNet");
     if (!dataLoaded || dataFromNet != "error") {
       estream.add(dataFromNet);
       dataLoaded = true;
@@ -25,7 +24,6 @@ class _HighlightsSectionState extends State<HighlightsSection> {
 
   initialisePage() async {
     var datafromStorage = await fetchHighlightsFromStorage();
-    print("Storage $datafromStorage");
     if (datafromStorage != null) {
       estream.add(datafromStorage);
       dataLoaded = true;
