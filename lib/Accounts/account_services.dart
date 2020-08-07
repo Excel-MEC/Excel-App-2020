@@ -88,7 +88,7 @@ class AccountServices {
           .map<Institution>((institution) => Institution.fromJson(institution))
           .toList();
     } catch (e) {
-      print("Error: $e");
+      return "error";
     }
   }
 
@@ -106,7 +106,7 @@ class AccountServices {
       );
       print(response.body);
     } catch (e) {
-      print("Error: $e");
+      return "error";
     }
 
     // Update shared preferences
