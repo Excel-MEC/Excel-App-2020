@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Models/event_details.dart';
-import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/Tables/events_table.dart';
 import 'package:excelapp/Services/Database/Tables/user_table.dart';
 import 'package:path/path.dart';
@@ -45,22 +44,23 @@ class DBProvider {
     db.close();
   }
 
-  // Add User to User table
-  addUser(User user, String table) async {
-    final db = await database;
-    await db.insert(table, user.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
-  }
+  // // Add User to User table
+  // addUser(User user, String table) async {
+  //   print(user.toJson());
+  //   final db = await database;
+  //   await db.insert(table, user.toJson(),
+  //       conflictAlgorithm: ConflictAlgorithm.replace);
+  // }
 
-  // Retrieve user
-  Future<User> getUser(String table, int id) async {
-    final db = await database;
-    List<Map<String, dynamic>> res =
-        await db.query(table, where: 'id = ?', whereArgs: [id]);
-    Map<String, dynamic> user = res[0];
-    User userDetails = User.fromJson(user);
-    return userDetails;
-  }
+  // // Retrieve user
+  // Future<User> getUser(String table, int id) async {
+  //   final db = await database;
+  //   List<Map<String, dynamic>> res =
+  //       await db.query(table, where: 'id = ?', whereArgs: [id]);
+  //   Map<String, dynamic> user = res[0];
+  //   User userDetails = User.fromJson(user);
+  //   return userDetails;
+  // }
 
   // Add multiple records(events) to table
   addEvents(List<Event> events, String table) async {

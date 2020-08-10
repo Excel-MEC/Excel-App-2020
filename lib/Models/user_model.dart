@@ -29,7 +29,7 @@ class User {
     this.isPaid,
   });
 
-  User.fromJson(Map<String, dynamic> json) {
+  User.fromJson(json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
@@ -46,7 +46,7 @@ class User {
     category = json['category'] != null ? json['category'] : 'Not Registered';
     referrerAmbassadorId = json['referrerAmbassadorId'];
     referrer = json['referrer'];
-    isPaid = (json['isPaid'] == true || json['isPaid'] == 1);
+    isPaid = (json['isPaid'] == true || json['isPaid'] == 1) ? true : false;
   }
 
   Map<String, dynamic> toJson() {
@@ -62,7 +62,7 @@ class User {
     data['mobileNumber'] = this.mobileNumber;
     data['referrerAmbassadorId'] = this.referrerAmbassadorId;
     data['referrer'] = this.referrer;
-    data['isPaid'] = this.isPaid ? 1 : 0;
+    data['isPaid'] = this.isPaid;
     return data;
   }
 }

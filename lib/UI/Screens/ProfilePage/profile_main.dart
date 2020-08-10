@@ -1,5 +1,6 @@
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/db_provider.dart';
+import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:excelapp/UI/Components/LoginScreen/login_screen.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -27,10 +28,9 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
       return 'login';
     } else {
       // Fetch user details from database
-      int userId = prefs.getInt('userId');
       isProfileUpdated = prefs.getBool('isProfileUpdated') ?? false;
-      User user = await db.getUser('User', userId);
-      return user;
+      var user = await HiveDB().retrieveData(valueName: "user");
+      return User.fromJson(user);
     }
   }
 
@@ -44,7 +44,7 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
             if (snapshot.data == 'login') {
               return LoginScreen();
             } else {
-              return ProfilePage(snapshot.data,isProfileUpdated);
+              return ProfilePage(snapshot.data, isProfileUpdated);
             }
           } else {
             return Center(child: CircularProgressIndicator());
