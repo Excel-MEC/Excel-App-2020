@@ -1,4 +1,3 @@
-
 class User {
   int id;
   String name;
@@ -10,18 +9,25 @@ class User {
   String gender;
   String mobileNumber;
   String category;
+  int referrerAmbassadorId;
+  String referrer;
+  bool isPaid;
 
-  User(
-      {this.id,
-      this.name,
-      this.email,
-      this.picture,
-      this.qrCodeUrl,
-      this.institutionId,
-      this.institutionName,
-      this.gender,
-      this.mobileNumber,
-      this.category});
+  User({
+    this.id,
+    this.name,
+    this.email,
+    this.picture,
+    this.qrCodeUrl,
+    this.institutionId,
+    this.institutionName,
+    this.gender,
+    this.mobileNumber,
+    this.category,
+    this.referrerAmbassadorId,
+    this.referrer,
+    this.isPaid,
+  });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -29,11 +35,18 @@ class User {
     email = json['email'];
     picture = json['picture'];
     qrCodeUrl = json['qrCodeUrl'];
-    institutionId = json.containsKey('institutionId') ? json['institutionId'] : 0;
-    institutionName = json.containsKey('institutionName') ? json['institutionName'] : 'Not Registered'; 
+    institutionId =
+        json.containsKey('institutionId') ? json['institutionId'] : 0;
+    institutionName = json.containsKey('institutionName')
+        ? json['institutionName']
+        : 'Not Registered';
     gender = json['gender'] != null ? json['gender'] : 'Not Registered';
-    mobileNumber = json['mobileNumber'] != null ? json['mobileNumber'] : 'Not Registered';
+    mobileNumber =
+        json['mobileNumber'] != null ? json['mobileNumber'] : 'Not Registered';
     category = json['category'] != null ? json['category'] : 'Not Registered';
+    referrerAmbassadorId = json['referrerAmbassadorId'];
+    referrer = json['referrer'];
+    isPaid = (json['isPaid'] == true || json['isPaid'] == 1);
   }
 
   Map<String, dynamic> toJson() {
@@ -47,27 +60,27 @@ class User {
     data['institutionName'] = this.institutionName;
     data['gender'] = this.gender;
     data['mobileNumber'] = this.mobileNumber;
-    data['category'] = this.category;
+    data['referrerAmbassadorId'] = this.referrerAmbassadorId;
+    data['referrer'] = this.referrer;
+    data['isPaid'] = this.isPaid ? 1 : 0;
     return data;
   }
 }
-
 
 class Institution {
   int id;
   String name;
 
-  Institution({this.id,this.name});
+  Institution({this.id, this.name});
 
-  Institution.fromJson(Map<String,dynamic> json) {
+  Institution.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }
   Map<String, dynamic> toJson() {
-    final Map<String,dynamic> data = new Map<String,dynamic>();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
     return data;
   }
-  
 }
