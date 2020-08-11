@@ -1,6 +1,6 @@
 import 'package:excelapp/Services/API/campus_ambassador.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
-import 'package:excelapp/UI/Screens/CampusAmbassador/ambassadorPage.dart';
+import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/ambassadorPage.dart';
 import 'package:excelapp/UI/Screens/CampusAmbassador/joinProgram.dart';
 import 'package:flutter/material.dart';
 
