@@ -1,4 +1,5 @@
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
+import 'package:excelapp/UI/Screens/CampusAmbassador/campusAmbassadorMain.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -67,6 +68,19 @@ class CustomDrawer extends StatelessWidget {
                   },
                 ),
                 DrawerOption(
+                  text: "Campus Ambassador",
+                  icon: Icons.center_focus_weak,
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CampusAmbassador(),
+                      ),
+                    );
+                  },
+                ),
+                DrawerOption(
                   text: "Excel Website",
                   icon: Icons.dvr,
                   onPressed: () {
@@ -109,13 +123,15 @@ class DrawerOption extends StatelessWidget {
               size: 17,
             ),
             SizedBox(width: 13),
-            Text(
-              text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xaa000000),
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
+            Expanded(
+              child: Text(
+                text,
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Color(0xaa000000),
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ),
           ],

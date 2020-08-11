@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class User {
   int id;
   String name;
@@ -45,7 +47,7 @@ class User {
         json['mobileNumber'] != null ? json['mobileNumber'] : 'Not Registered';
     category = json['category'] != null ? json['category'] : 'Not Registered';
     referrerAmbassadorId = json['referrerAmbassadorId'];
-    referrer = json['referrer'];
+    referrer = jsonEncode(json['referrer']);
     isPaid = (json['isPaid'] == true || json['isPaid'] == 1) ? true : false;
   }
 
