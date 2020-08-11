@@ -4,9 +4,22 @@ import 'package:excelapp/UI/Screens/CampusAmbassador/campusAmbassadorMAin.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
-class JoinAmbassadorProgram extends StatelessWidget {
+class JoinAmbassadorProgram extends StatefulWidget {
+  @override
+  _JoinAmbassadorProgramState createState() => _JoinAmbassadorProgramState();
+}
+
+class _JoinAmbassadorProgramState extends State<JoinAmbassadorProgram> {
+  bool loading = false;
+
   joinProgram(context) async {
+    setState(() {
+      loading = true;
+    });
     var reponse = await joinAmbassadorProgram();
+    setState(() {
+      loading = false;
+    });
     if (reponse == "error") {
       alertDialog(text: "An Error Occured", context: context);
       return;
@@ -35,19 +48,21 @@ class JoinAmbassadorProgram extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 70),
-          RaisedButton(
-            color: primaryColor,
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: Text(
-              "Join Program",
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              joinProgram(context);
-            },
-          ),
+          loading
+              ? CircularProgressIndicator()
+              : RaisedButton(
+                  color: primaryColor,
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Text(
+                    "Join Program",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    joinProgram(context);
+                  },
+                ),
         ],
       ),
     );

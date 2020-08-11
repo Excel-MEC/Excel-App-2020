@@ -10,17 +10,17 @@ class ProfileTheme {
     color: primaryColor,
   );
   static var nameStyle = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 20.0,
+    fontWeight: FontWeight.w500,
+    fontSize: 18.0,
     color: primaryColor,
   );
   static var buttonTextStyle = TextStyle(
     color: Colors.white,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
   );
   static var detailsTextStyle = TextStyle(
     color: primaryColor,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: FontWeight.w600,
   );
 }

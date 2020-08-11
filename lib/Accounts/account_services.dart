@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:http/http.dart' as http;
@@ -125,5 +126,26 @@ class AccountServices {
       print("Error : $e");
     }
     return "done";
+  }
+
+// Used to add referal code to account(Only possible once for an account)
+  static addReferalCode(referalCode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwt = prefs.getString('jwt');
+    try {
+      var response = await http.post(
+        AccountConfig.url + 'Ambassador/referral',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer " + jwt,
+          "Content-Type": "application/json"
+        },
+        body: json.encode({"referralCode": referalCode}),
+      );
+      print(response.body);
+      print("Referal Status code: " + response.statusCode.toString());
+    } catch (e) {
+      print("Error $e");
+      return "error";
+    }
   }
 }
