@@ -20,7 +20,9 @@ class _CampusAmbassadorState extends State<CampusAmbassador> {
   }
 
 // Check snapshot.data["ambassador"]["id"] is null or not to see if user is an ambassador or not
-// Full data structure can be found in AmbassadorPage()
+// Professionals can't join ambassadors program
+// snapshot.data["category"] == "professional" can be used to check if person is professional or not
+// Full structure of data can be found in AmbassadorPage()
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,18 @@ class _CampusAmbassadorState extends State<CampusAmbassador> {
           if (snapshot.data == "notLoggedIn") return Text("Not logged in");
           // If error
           if (snapshot.data == "error") return errorPage();
-          // If not yet joined
+          // If professional
+          if (true)
+            // snapshot.data["category"] == "professional")
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                "\n\n\nOnly school or college students can be campus ambassadors\n\nIf you are a student, update your profile in the profiles section",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Color(0xaa000000), fontSize: 16),
+              ),
+            );
+          // If ambassador not an ambassador
           if (snapshot.data["ambassador"]["id"] == null)
             return JoinAmbassadorProgram();
           // Ambassador page
