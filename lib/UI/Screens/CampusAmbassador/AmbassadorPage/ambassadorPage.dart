@@ -54,45 +54,71 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 50),
+            SizedBox(height: 30),
             Text(
-              "Hey " + ambassadorData["name"].split(" ")[0] + ",",
+              "Hello " + ambassadorData["name"].split(" ")[0] + ",",
               style: TextStyle(fontSize: 25, color: primaryColor),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 50),
+            Image.asset("assets/refer.png", height: 150),
+            SizedBox(height: 30),
             Text(
-              "You can refer others to Excel !",
-              style: TextStyle(color: Color(0xaa000000)),
-              textAlign: TextAlign.center,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 30, horizontal: 50),
-              height: 2,
-              color: Colors.black12,
-            ),
-            Text(
-              "Your referal code is",
+              "Share this code to other users\n to add them as referals",
               textAlign: TextAlign.center,
               style: TextStyle(color: Color(0xaa000000)),
             ),
             SizedBox(height: 5),
-            Text(
-              ambassadorData["ambassador"]["id"].toString(),
-              style: TextStyle(fontSize: 35, color: primaryColor),
-              textAlign: TextAlign.center,
-            ),
+            // Row with referal code
             Container(
               margin: EdgeInsets.symmetric(vertical: 30, horizontal: 50),
-              height: 2,
-              color: Colors.black12,
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 20,
+                    color: Colors.grey,
+                    spreadRadius: -5,
+                  )
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(width: 30),
+                  Text(
+                    ambassadorData["ambassador"]["id"].toString(),
+                    style: TextStyle(fontSize: 37, color: primaryColor),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(width: 10),
+                  IconButton(
+                    icon: Icon(
+                      Icons.content_copy,
+                      size: 30,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {
+                      print("object");
+                    },
+                  )
+                ],
+              ),
             ),
+
+            // Refered users section
             FutureBuilder(
               future: referalList,
               builder: (context, snapshot) {
                 if (!snapshot.hasData)
-                  return Center(
-                    child: CircularProgressIndicator(),
+                  return Column(
+                    children: [
+                      SizedBox(height: 30),
+                      Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ],
                   );
                 if (snapshot.data == "error") return referalError();
                 return ReferedUsers(referedUsers: snapshot.data);

@@ -1,3 +1,4 @@
+import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
 // Sample data
@@ -14,32 +15,64 @@ class ReferedUsers extends StatelessWidget {
   ReferedUsers({this.referedUsers});
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 10,
+            spreadRadius: 10,
+            color: Colors.white,
+          )
+        ],
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: <Widget>[
+              SizedBox(height: 10),
+              Icon(
+                referedUsers.isEmpty ? Icons.info_outline : Icons.stars,
+                color: referedUsers.isEmpty ? Colors.grey : Colors.red,
+                size: 30,
+              ),
+              SizedBox(height: 15),
               Text(
                 referedUsers.isEmpty
-                    ? "No refered users"
-                    : "Your referals:\n\n",
+                    ? "No Refered Users"
+                    : "Your Have " +
+                        referedUsers.length.toString() +
+                        " Referals:",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 15, color: Color(0xaa000000)),
-              )
+              ),
+              SizedBox(height: 20),
+              referedUsers.isEmpty ? Container() : line(),
             ] +
             List.generate(
               referedUsers.length,
-              (index) => Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(referedUsers[index]["name"]),
-                  Text(referedUsers[index]["email"]),
-                  Text(referedUsers[index]["isPaid"]
-                      ? "Is"
-                      : "Is not" + " a paid user\n\n"),
-                ],
+              (index) => Padding(
+                padding: EdgeInsets.symmetric(vertical: 5),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: primaryColor,
+                    child: Text(
+                      (index + 1).toString(),
+                    ),
+                  ),
+                  title: Text(referedUsers[index]["name"]),
+                  subtitle: Text(referedUsers[index]["email"]),
+                ),
               ),
             ),
       ),
     );
   }
+}
+
+Widget line() {
+  return Container(
+    margin: EdgeInsets.symmetric(vertical: 3, horizontal: 20),
+    height: 1,
+    color: Colors.grey,
+  );
 }

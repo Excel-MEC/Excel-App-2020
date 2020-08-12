@@ -41,8 +41,7 @@ class _CampusAmbassadorState extends State<CampusAmbassador> {
           // If error
           if (snapshot.data == "error") return errorPage();
           // If professional
-          if (true)
-            // snapshot.data["category"] == "professional")
+          if (snapshot.data["category"] == "professional")
             return Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(

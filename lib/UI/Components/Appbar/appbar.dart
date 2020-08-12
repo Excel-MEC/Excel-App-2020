@@ -3,16 +3,14 @@ import 'package:excelapp/UI/constants.dart';
 
 Widget customappbar(String titleText) {
   return AppBar(
-    elevation: 4,
-    iconTheme: IconThemeData(color: primaryColor),
-    title: Text(
-      titleText,
-      style: TextStyle(
-        color: primaryColor,
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
+      elevation: 4,
+      iconTheme: IconThemeData(color: primaryColor),
+      title: Text(
+        titleText,
+        style: TextStyle(
+          color: primaryColor,
+          fontSize: 20,
+        ),
       ),
-    ),
-    backgroundColor: Colors.white
-  );
+      backgroundColor: Colors.white);
 }
