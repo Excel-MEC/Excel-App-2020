@@ -10,12 +10,11 @@ fetchAmbassadorDetails() async {
   if (jwt == null) return "notLoggedIn";
   try {
     var response = await http.get(
-      AccountConfig.url + 'Ambassador',
+      AccountConfig.url + 'Profile',
       headers: {HttpHeaders.authorizationHeader: "Bearer " + jwt},
     );
     print(response.body);
     print(response.statusCode);
-    if (response.statusCode == 500) return "joinProgram";
     return jsonDecode(response.body);
   } catch (e) {
     print("Error $e");

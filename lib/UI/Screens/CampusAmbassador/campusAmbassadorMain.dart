@@ -19,6 +19,9 @@ class _CampusAmbassadorState extends State<CampusAmbassador> {
     super.initState();
   }
 
+// Check snapshot.data["ambassador"]["id"] is null or not to see if user is an ambassador or not
+// Full data structure can be found in AmbassadorPage()
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +39,8 @@ class _CampusAmbassadorState extends State<CampusAmbassador> {
           // If error
           if (snapshot.data == "error") return errorPage();
           // If not yet joined
-          if (snapshot.data == "joinProgram") return JoinAmbassadorProgram();
+          if (snapshot.data["ambassador"]["id"] == null)
+            return JoinAmbassadorProgram();
           // Ambassador page
           return AmbassadorPage(snapshot.data);
         },

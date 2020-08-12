@@ -21,19 +21,31 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
     super.initState();
   }
 
-  // Sample data
-  // {id: 123,
-  // ambassadorId: 456,
-  // name: your name,
-  // email: example@gmail.com,
-  // institutionId: 456,
-  // institutionName: Government Model Engineering College, Cochin,
-  // gender: Male,
-  // mobileNumber: 1234567890,
-  // category: college,
-  // freeMembership: 0,
-  // paidMembership: 0
-  // }
+// Sample Data
+// var ambassadorData = {
+//   "id": 123,
+//   "name": "Name",
+//   "email": "email@gmail.com",
+//   "role": "User,Admin",
+//   "picture":
+//       "url.png",
+//   "qrCodeUrl":
+//       "url.png",
+//   "institutionId": 456,
+//   "gender": "Male",
+//   "mobileNumber": "1234567890",
+//   "category": "college",
+//   "ambassador": {
+//     "id": 123456,
+//     "userId": 123456,
+//     "referredUsers": null,
+//     "freeMembership": 4,
+//     "paidMembership": 0
+//   },
+//   "referrerAmbassadorId": null,
+//   "referrer": null,
+//   "isPaid": false
+// };
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +78,7 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
             ),
             SizedBox(height: 5),
             Text(
-              ambassadorData["ambassadorId"].toString(),
+              ambassadorData["ambassador"]["id"].toString(),
               style: TextStyle(fontSize: 35, color: primaryColor),
               textAlign: TextAlign.center,
             ),
