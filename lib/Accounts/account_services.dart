@@ -105,6 +105,7 @@ class AccountServices {
       );
       print(response.body);
     } catch (e) {
+      print("Error $e");
       return "error";
     }
 
@@ -141,6 +142,7 @@ class AccountServices {
         },
         body: json.encode({"referralCode": referalCode}),
       );
+      if (response.statusCode == 500) return "error";
       print(response.body);
       print("Referal Status code: " + response.statusCode.toString());
     } catch (e) {

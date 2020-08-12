@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
-import 'package:excelapp/UI/Components/LoginScreen/login_screen.dart';
+import 'package:excelapp/UI/Screens/ProfilePage/profile_main.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -24,18 +23,33 @@ class _AddReferalState extends State<AddReferal> {
       loading = true;
     });
     var response = await AccountServices.addReferalCode(referal);
+    // If we get error
+    if (response == "error") {
+      alertDialog(
+        text: "Something went wrong. Try again",
+        context: context,
+      );
+      setState(() {
+        loading = false;
+      });
+      return;
+    }
     print(response);
     // Check response & validate
-    // if(response!="success") return
+    // if(response!="success") show error
+    var refetchDetails = await AccountServices.fetchUserDetails();
+
     setState(() {
       loading = false;
     });
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => LoginScreen(),
-      ),
-    );
+    if (refetchDetails == "success")
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CheckUserLoggedIn(),
+        ),
+      );
+    // else show error
   }
 
   @override
@@ -76,7 +90,7 @@ class _AddReferalState extends State<AddReferal> {
 
 Widget referedBy(referer) {
   var refererData = jsonDecode(jsonDecode(referer));
-  print(refererData);
+  if (refererData == null) return Container();
   return Container(
     color: Color(0x11000000),
     margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),

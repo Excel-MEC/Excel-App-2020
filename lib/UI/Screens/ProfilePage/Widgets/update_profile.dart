@@ -112,6 +112,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
       "mobileNumber": _mobile,
       "category": _category
     };
+    print(userInfo);
     var res = await AccountServices.updateProfile(userInfo);
     Navigator.of(context, rootNavigator: true).pop();
     if (res == "error")

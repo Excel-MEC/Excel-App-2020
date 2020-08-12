@@ -54,6 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.user.referrerAmbassadorId);
     return Scaffold(
       appBar: customappbar('Profile'),
       body: Container(
@@ -65,7 +66,8 @@ class _ProfilePageState extends State<ProfilePage> {
               child: QrCode(_user.picture, _user.qrCodeUrl, _user.name),
             ),
             // Adding Referal if not present
-            widget.user.referrerAmbassadorId == null
+            (widget.user.referrerAmbassadorId == null ||
+                    widget.user.referrerAmbassadorId == 0)
                 ? AddReferal()
                 : referedBy(widget.user.referrer),
             // User Details
