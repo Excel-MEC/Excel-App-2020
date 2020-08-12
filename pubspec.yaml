@@ -51,7 +51,8 @@ flutter:
   - assets/introScreen/page2.jpg
   - assets/introScreen/page3.jpg
   - assets/introScreen/page4.jpg
-  - assets/refer.png
+  - assets/campusAmbassador/refer.png
+  - assets/campusAmbassador/higher.png
 
   fonts:
       - family: poppins

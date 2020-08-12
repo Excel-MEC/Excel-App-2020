@@ -32,11 +32,14 @@ class _JoinAmbassadorProgramState extends State<JoinAmbassadorProgram> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
-          SizedBox(height: 70),
+          SizedBox(height: 10),
+          Image.asset("assets/campusAmbassador/higher.png"),
+          SizedBox(height: 10),
           Text(
             "You are not an Excel campus ambassador yet !",
             style: TextStyle(fontSize: 22, color: Color(0xaa000000)),
@@ -47,7 +50,7 @@ class _JoinAmbassadorProgramState extends State<JoinAmbassadorProgram> {
             "Become a campus ambassador, refer friends and enjoy the benefits",
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 70),
+          SizedBox(height: 25),
           loading
               ? CircularProgressIndicator()
               : RaisedButton(

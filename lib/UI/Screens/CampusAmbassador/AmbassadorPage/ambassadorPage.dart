@@ -60,7 +60,7 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
               style: TextStyle(fontSize: 25, color: primaryColor),
               textAlign: TextAlign.center,
             ),
-            Image.asset("assets/refer.png", height: 150),
+            Image.asset("assets/campusAmbassador/refer.png", height: 150),
             SizedBox(height: 30),
             Text(
               "Share this code to other users\n to add them as referals",
