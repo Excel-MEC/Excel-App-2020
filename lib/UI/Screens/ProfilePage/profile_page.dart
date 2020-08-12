@@ -54,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.user.referrerAmbassadorId);
+    // print(widget.user.referrerAmbassadorId);
     return Scaffold(
       appBar: customappbar('Profile'),
       body: Container(

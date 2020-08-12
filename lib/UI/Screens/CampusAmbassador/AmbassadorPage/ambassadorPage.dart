@@ -3,9 +3,23 @@ import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/referedUsers
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
-class AmbassadorPage extends StatelessWidget {
-  final ambassadorData;
+class AmbassadorPage extends StatefulWidget {
+  final Map<String, dynamic> ambassadorData;
   AmbassadorPage(this.ambassadorData);
+  @override
+  _AmbassadorPageState createState() => _AmbassadorPageState();
+}
+
+class _AmbassadorPageState extends State<AmbassadorPage> {
+  Map<String, dynamic> ambassadorData;
+  Future referalList;
+
+  @override
+  void initState() {
+    ambassadorData = widget.ambassadorData;
+    referalList = getReferalList();
+    super.initState();
+  }
 
   // Sample data
   // {id: 123,
@@ -62,20 +76,50 @@ class AmbassadorPage extends StatelessWidget {
               color: Colors.black12,
             ),
             FutureBuilder(
-              future: getReferalList(),
+              future: referalList,
               builder: (context, snapshot) {
                 if (!snapshot.hasData)
                   return Center(
                     child: CircularProgressIndicator(),
                   );
-                if (snapshot.data == "error")
-                  return Text("An error occured, Try again");
+                if (snapshot.data == "error") return referalError();
                 return ReferedUsers(referedUsers: snapshot.data);
               },
             ),
             SizedBox(height: 100)
           ],
         ),
+      ),
+    );
+  }
+
+  Widget referalError() {
+    return Center(
+      child: Column(
+        children: [
+          Text(
+            "An Error Occured",
+            style: TextStyle(
+              color: Color(0xaa000000),
+            ),
+          ),
+          SizedBox(height: 20),
+          RaisedButton(
+            color: primaryColor,
+            child: Text(
+              "Retry",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AmbassadorPage(ambassadorData),
+                ),
+              );
+            },
+          )
+        ],
       ),
     );
   }
