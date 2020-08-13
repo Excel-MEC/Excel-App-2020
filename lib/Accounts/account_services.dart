@@ -57,9 +57,6 @@ class AccountServices {
       );
       Map<String, dynamic> responseData = json.decode(response.body);
       user = User.fromJson(responseData);
-      print("adding to database");
-      await HiveDB().storeData(valueName: "user", value: user.toJson());
-      print("done");
       return user;
     } catch (e) {
       print("Error : $e");
@@ -115,7 +112,7 @@ class AccountServices {
     try {
       print("fetching user details");
       var response = await http.get(
-        AccountConfig.url + 'profile/view',
+        AccountConfig.url + 'profile',
         headers: AccountConfig.getHeader(jwt),
       );
       Map<String, dynamic> responseData = json.decode(response.body);
