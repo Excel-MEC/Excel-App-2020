@@ -29,10 +29,9 @@ class ReferedUsers extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: <Widget>[
-              SizedBox(height: 10),
               Icon(
                 referedUsers.isEmpty ? Icons.info_outline : Icons.stars,
-                color: referedUsers.isEmpty ? Colors.grey : Colors.red,
+                color: referedUsers.isEmpty ? Colors.grey : Color(0xff6c63fe),
                 size: 30,
               ),
               SizedBox(height: 15),
@@ -45,7 +44,7 @@ class ReferedUsers extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 15, color: Color(0xaa000000)),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 15),
               referedUsers.isEmpty ? Container() : line(),
             ] +
             List.generate(

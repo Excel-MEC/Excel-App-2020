@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/API/campus_ambassador.dart';
+import 'package:excelapp/UI/Components/LoadingUI/snackBar.dart';
 import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/referedUsers.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:social_share/social_share.dart';
 
 class AmbassadorPage extends StatefulWidget {
   final User userData;
@@ -33,14 +35,14 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.asset("assets/campusAmbassador/refer.png", height: 150),
+            Image.asset("assets/campusAmbassador/refer.png", height: 130),
             SizedBox(height: 20),
             Text(
               "Hello " + userData.name.split(" ")[0] + ",",
               style: TextStyle(fontSize: 23, color: primaryColor),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 15),
             Text(
               "Share this code to other users\n to add them as referals",
               textAlign: TextAlign.center,
@@ -50,16 +52,16 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
             // Row with referal code
             Center(
               child: Container(
-                margin: EdgeInsets.symmetric(vertical: 25, horizontal: 0),
-                padding: EdgeInsets.all(20),
+                margin: EdgeInsets.symmetric(vertical: 20, horizontal: 0),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      blurRadius: 20,
+                      blurRadius: 13,
                       color: Colors.grey,
-                      spreadRadius: -5,
+                      spreadRadius: -4,
                     )
                   ],
                 ),
@@ -77,11 +79,16 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
                     IconButton(
                       icon: Icon(
                         Icons.content_copy,
-                        size: 25,
+                        size: 28,
                         color: Colors.grey,
                       ),
-                      onPressed: () {
-                        print("object");
+                      onPressed: () async {
+                        await SocialShare.copyToClipboard(
+                          ambassadorData["id"].toString(),
+                        );
+                        Scaffold.of(context).showSnackBar(
+                          snackBar("Copied"),
+                        );
                       },
                     )
                   ],
