@@ -19,8 +19,8 @@ class QrCode extends StatelessWidget {
             children: <Widget>[
               // profile pic
               Container(
-                height: MediaQuery.of(context).size.height/6,
-                width: MediaQuery.of(context).size.height/6,
+                height: MediaQuery.of(context).size.height / 7,
+                width: MediaQuery.of(context).size.height / 7,
                 decoration: BoxDecoration(shape: BoxShape.circle),
                 child: CachedNetworkImage(
                   imageUrl: imageUrl,
@@ -31,9 +31,10 @@ class QrCode extends StatelessWidget {
                         image: image,
                         fit: BoxFit.cover,
                       ),
-                    ), 
+                    ),
                   ),
-                  placeholder: (context, str) => Center(child: CircularProgressIndicator()),
+                  placeholder: (context, str) =>
+                      Center(child: CircularProgressIndicator()),
                 ),
               ),
               // User name
@@ -45,15 +46,14 @@ class QrCode extends StatelessWidget {
               // QR code
               SizedBox(height: 7),
               RaisedButton(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                color: primaryColor,
-                textColor: Colors.white,
-                child: Text(
-                  'SHOW QR CODE',
-                  style: ProfileTheme.buttonTextStyle,
-                ),
-                onPressed: () => qrDialog(context,qrUrl)
-              ),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  color: primaryColor,
+                  textColor: Colors.white,
+                  child: Text(
+                    'SHOW QR CODE',
+                    style: ProfileTheme.buttonTextStyle,
+                  ),
+                  onPressed: () => qrDialog(context, qrUrl)),
             ],
           ),
         ),
@@ -62,23 +62,22 @@ class QrCode extends StatelessWidget {
   }
 }
 
-
-qrDialog(BuildContext context,String qrUrl) {
+qrDialog(BuildContext context, String qrUrl) {
   showModalBottomSheet(
-    context: context,
-    builder: (BuildContext bc) {
-      return Container(
-        height: MediaQuery.of(context).size.height/2,
-        child: Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width/2,
-            child: CachedNetworkImage(
-              imageUrl: qrUrl,
-              placeholder: (context,str) => Center(child: CircularProgressIndicator()),
+      context: context,
+      builder: (BuildContext bc) {
+        return Container(
+          height: MediaQuery.of(context).size.height / 2,
+          child: Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width / 2,
+              child: CachedNetworkImage(
+                imageUrl: qrUrl,
+                placeholder: (context, str) =>
+                    Center(child: CircularProgressIndicator()),
+              ),
             ),
           ),
-        ),
-      );
-    }
-  );
+        );
+      });
 }

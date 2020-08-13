@@ -1,5 +1,5 @@
 import 'package:excelapp/Models/user_model.dart';
-import 'package:excelapp/Services/Database/db_provider.dart';
+import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:excelapp/UI/Components/LoginScreen/login_screen.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +11,8 @@ class CheckUserLoggedIn extends StatefulWidget {
 }
 
 class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
-  DBProvider db;
   bool isProfileUpdated;
-
-  @override
-  void initState() {
-    super.initState();
-    db = DBProvider();
-  }
+  Future userData;
 
   Future<dynamic> checkUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -27,24 +21,29 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
       return 'login';
     } else {
       // Fetch user details from database
-      int userId = prefs.getInt('userId');
       isProfileUpdated = prefs.getBool('isProfileUpdated') ?? false;
-      User user = await db.getUser('User', userId);
-      return user;
+      var user = await HiveDB().retrieveData(valueName: "user");
+      return User.fromJson(user);
     }
+  }
+
+  @override
+  void initState() {
+    userData = checkUser();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Material(
       child: FutureBuilder(
-        future: checkUser(),
+        future: userData,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data == 'login') {
               return LoginScreen();
             } else {
-              return ProfilePage(snapshot.data,isProfileUpdated);
+              return ProfilePage(snapshot.data, isProfileUpdated);
             }
           } else {
             return Center(child: CircularProgressIndicator());

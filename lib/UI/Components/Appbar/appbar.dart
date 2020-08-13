@@ -5,14 +5,13 @@ Widget customappbar(String titleText) {
   return AppBar(
     elevation: 4,
     iconTheme: IconThemeData(color: primaryColor),
+    backgroundColor: Colors.white,
     title: Text(
       titleText,
       style: TextStyle(
         color: primaryColor,
         fontSize: 20,
-        fontWeight: FontWeight.bold,
       ),
     ),
-    backgroundColor: Colors.white
   );
 }

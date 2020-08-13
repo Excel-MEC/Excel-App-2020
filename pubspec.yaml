@@ -20,6 +20,7 @@ dependencies:
   intl: ^0.16.1
   google_sign_in: ^4.5.1
   hive: ^1.4.2
+  social_share: ^2.0.5
  
   # UI
   shimmer: ^1.1.1 
@@ -51,6 +52,8 @@ flutter:
   - assets/introScreen/page2.jpg
   - assets/introScreen/page3.jpg
   - assets/introScreen/page4.jpg
+  - assets/campusAmbassador/refer.png
+  - assets/campusAmbassador/higher.png
 
   fonts:
       - family: poppins

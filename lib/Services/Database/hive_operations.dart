@@ -10,6 +10,9 @@ class HiveDB {
     Hive.init(join(dir.path, 'hiveDB'));
     Box box = await Hive.openBox(valueName);
     var data = box.get(valueName);
+    try {
+      box.close();
+    } catch (_) {}
     return data;
   }
 
@@ -19,5 +22,10 @@ class HiveDB {
     Hive.init(join(dir.path, 'hiveDB'));
     Box box = await Hive.openBox(valueName);
     await box.put(valueName, value);
+    try {
+      box.close();
+    } catch (e) {
+      print("Writing to DB error: $e");
+    }
   }
 }

@@ -9,10 +9,11 @@ Widget homeAppBar(context) {
     title: Text(
       'Excel 2020',
       style: TextStyle(
-          color: primaryColor,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          fontFamily: pfontFamily),
+        color: primaryColor,
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        fontFamily: pfontFamily,
+      ),
     ),
     actions: <Widget>[
       IconButton(

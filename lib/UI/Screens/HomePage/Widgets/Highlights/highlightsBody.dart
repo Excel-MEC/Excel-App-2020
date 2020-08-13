@@ -13,8 +13,8 @@ class HighlightsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       itemCount: highLightsMap.length,
-      viewportFraction: 0.9,
-      height: MediaQuery.of(context).size.height / 3.5,
+      viewportFraction: .9,
+      height: MediaQuery.of(context).size.width * .9 * (3 / 5),
       enlargeCenterPage: true,
       autoPlay: true,
       autoPlayInterval: Duration(seconds: autoplayseconds),

@@ -10,21 +10,22 @@ class CategoryCard extends StatelessWidget {
   final titleStyle = TextStyle(
     color: Colors.white,
     fontFamily: pfontFamily,
-    fontSize: 25,
+    fontSize: 23,
     fontWeight: FontWeight.w600,
   );
   final contentStyle = TextStyle(
     color: Colors.white,
     fontFamily: sfontFamily,
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: FontWeight.w500,
+    shadows: [Shadow(blurRadius: 10, color: primaryColor)],
   );
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height / 3.5,
-      color: Colors.black,
+      color: primaryColor,
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -76,8 +77,10 @@ class CategoryCard extends StatelessWidget {
                       ),
                     );
                   },
-                  child:
-                      Text('View', style: TextStyle(fontFamily: pfontFamily)),
+                  child: Text(
+                    'View',
+                    style: TextStyle(fontFamily: pfontFamily, fontSize: 13),
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),

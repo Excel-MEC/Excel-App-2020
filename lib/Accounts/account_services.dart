@@ -1,6 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:excelapp/Models/user_model.dart';
-import 'package:excelapp/Services/Database/db_provider.dart';
+import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:http/http.dart' as http;
 import 'package:excelapp/Accounts/account_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,8 +24,7 @@ class AccountServices {
       print(responseData);
       user = User.fromJson(responseData);
       print("adding to database");
-      DBProvider dbProvider = DBProvider();
-      await dbProvider.addUser(user, 'User');
+      await HiveDB().storeData(valueName: "user", value: user.toJson());
       print("done");
 
       // Store user id in shared preference
@@ -57,10 +57,6 @@ class AccountServices {
       );
       Map<String, dynamic> responseData = json.decode(response.body);
       user = User.fromJson(responseData);
-      print("adding to database");
-      DBProvider dbProvider = DBProvider();
-      await dbProvider.addUser(user, 'User');
-      print("done");
       return user;
     } catch (e) {
       print("Error : $e");
@@ -106,6 +102,7 @@ class AccountServices {
       );
       print(response.body);
     } catch (e) {
+      print("Error $e");
       return "error";
     }
 
@@ -115,18 +112,39 @@ class AccountServices {
     try {
       print("fetching user details");
       var response = await http.get(
-        AccountConfig.url + 'profile/view',
+        AccountConfig.url + 'profile',
         headers: AccountConfig.getHeader(jwt),
       );
       Map<String, dynamic> responseData = json.decode(response.body);
       user = User.fromJson(responseData);
       print("adding to database");
-      DBProvider dbProvider = DBProvider();
-      await dbProvider.addUser(user, 'User');
+      await HiveDB().storeData(valueName: "user", value: user.toJson());
       print("done");
     } catch (e) {
       print("Error : $e");
     }
     return "done";
+  }
+
+// Used to add referal code to account(Only possible once for an account)
+  static addReferalCode(referalCode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwt = prefs.getString('jwt');
+    try {
+      var response = await http.post(
+        AccountConfig.url + 'Ambassador/referral',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer " + jwt,
+          "Content-Type": "application/json"
+        },
+        body: json.encode({"referralCode": referalCode}),
+      );
+      if (response.statusCode == 500) return "error";
+      print(response.body);
+      print("Referal Status code: " + response.statusCode.toString());
+    } catch (e) {
+      print("Error $e");
+      return "error";
+    }
   }
 }

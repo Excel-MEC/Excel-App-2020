@@ -25,6 +25,7 @@ class FavouriteCard extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
         child: Container(
           child: ListTile(
+            dense: true,
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             leading: Container(

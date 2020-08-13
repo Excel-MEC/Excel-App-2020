@@ -64,12 +64,7 @@ class ScheduleEvent extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
               child: ListTile(
                 dense: true,
-                title: Text(
-                  eventSchedule.name ?? "",
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
+                title: Text(eventSchedule.name ?? ""),
                 leading: CachedNetworkImage(
                   imageUrl: eventSchedule.icon,
                   width: 40,
@@ -103,6 +98,7 @@ Widget lineAndDot(lineNumber, noOfEvents) {
   double left = 25;
   double circleRadius = 4.5;
   double width = left * 2 - 10;
+  double top = 42;
   return Stack(
     children: <Widget>[
       Container(
@@ -121,7 +117,7 @@ Widget lineAndDot(lineNumber, noOfEvents) {
         color: noOfEvents == 0 ? Colors.transparent : primaryColor,
       ),
       Container(
-        margin: EdgeInsets.only(left: left - circleRadius, top: 38),
+        margin: EdgeInsets.only(left: left - circleRadius, top: top),
         child: CircleAvatar(
           backgroundColor: primaryColor,
           radius: circleRadius,

@@ -46,7 +46,7 @@ class _HighlightsSectionState extends State<HighlightsSection> {
         children: <Widget>[
           Container(
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Text(
               "Highlights",
               style: headingStyle,

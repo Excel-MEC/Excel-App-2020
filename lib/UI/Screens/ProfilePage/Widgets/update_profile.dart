@@ -26,13 +26,18 @@ class _UpdateProfileState extends State<UpdateProfile> {
   // int _id;
   String _name;
   String _mobile;
-  String _category;
+  int _categoryId;
   int _institutionId;
   String _institutionName;
-  String _gender = 'Male';
+  String _gender;
   bool _institutionSelected = false;
-  List<String> _categories = <String>['college', 'school', 'professional'];
+  List<String> _categories = <String>['College', 'School', 'Other'];
   List<String> _genders = <String>['Male', 'Female', 'Other'];
+
+// Category id's & their values:
+// 0: College
+// 1: School
+// 2: Other
 
   @override
   void initState() {
@@ -46,9 +51,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
     // _id = user.id;
     _name = user.name;
     _mobile = user.mobileNumber;
-    _category = user.category != "Not Registered" ? user.category : "college";
+    // _category = user.category != "Not Registered" ? user.category : "college";
     _institutionId = user.institutionId;
     _institutionName = user.institutionName;
+    _gender = user.gender;
   }
 
   // Fetch institutions based on category
@@ -87,20 +93,20 @@ class _UpdateProfileState extends State<UpdateProfile> {
       builder: (BuildContext context) => loadingDialog,
       barrierDismissible: false,
     );
-    if (_gender == null) {
+    if (_gender == null || _gender == "Not Registered") {
       Navigator.of(context, rootNavigator: true).pop();
       return "Gender not selected";
     }
 
-    // get institutionId only if category is school or professional
-    if (_category != "professional") {
+    // get institutionId only if category is school or college
+    if (_categoryId != 2) {
       _institutionId = await getInstitutionId(_institutionName);
     }
     if (_institutionId < 0) {
       Navigator.of(context, rootNavigator: true).pop();
       return "One or more fields are invalid!";
     }
-    if (_category != "professional" && !_institutionSelected) {
+    if (_categoryId != 2 && !_institutionSelected) {
       Navigator.of(context, rootNavigator: true).pop();
       return "Select institution";
     }
@@ -110,8 +116,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
       "institutionName": _institutionName,
       "gender": _gender,
       "mobileNumber": _mobile,
-      "category": _category
+      "categoryId": _categoryId.toString()
     };
+    print(userInfo);
     var res = await AccountServices.updateProfile(userInfo);
     Navigator.of(context, rootNavigator: true).pop();
     if (res == "error")
@@ -219,7 +226,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           style: TextStyle(color: primaryColor),
                           underline: Center(),
                           icon: Icon(Icons.keyboard_arrow_down),
-                          hint: Text(_gender ?? "Select Gender"),
+                          hint: Text(
+                              (_gender == "Not Registered" || _gender == null)
+                                  ? "Select Gender"
+                                  : _gender),
                           items: _genders.map<DropdownMenuItem<String>>((val) {
                             return DropdownMenuItem<String>(
                               value: val,
@@ -262,14 +272,16 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           icon: Icon(Icons.keyboard_arrow_down),
                           underline: Center(),
                           hint: Text(
-                            categorySelected ? _category : "Select Category",
+                            categorySelected
+                                ? _categories[_categoryId]
+                                : "Select Category",
                           ),
                           items:
                               _categories.map<DropdownMenuItem<String>>((val) {
                             return DropdownMenuItem<String>(
                               value: val,
                               child: Text(
-                                val[0].toUpperCase() + val.substring(1),
+                                val,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: primaryColor,
@@ -279,15 +291,20 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           }).toList(),
                           onChanged: (String value) {
                             setState(() {
-                              _category = value;
+                              if (value == "College")
+                                _categoryId = 0;
+                              else if (value == "School")
+                                _categoryId = 1;
+                              else
+                                _categoryId = 2;
                             });
-                            if (value == "professional") {
+                            if (value == "Other") {
                               setState(() {
                                 categorySelected = true;
                                 _institutionId = 0;
                               });
                             }
-                            if (value != "professional") {
+                            if (value != "Other") {
                               getInstitutions(context, value);
                             }
                           },
@@ -300,7 +317,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      categorySelected && _category != "professional"
+                      categorySelected && _categoryId != 2
                           ? Container(
                               margin: EdgeInsets.symmetric(horizontal: 5),
                               decoration: BoxDecoration(
@@ -309,8 +326,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               ),
                               child: SearchableDropdown.single(
                                 underline: Center(),
-                                readOnly: !categorySelected ||
-                                    _category == "professional",
+                                readOnly: !categorySelected || _categoryId == 2,
                                 items: institutions
                                     .map<DropdownMenuItem<String>>((val) {
                                   return DropdownMenuItem<String>(

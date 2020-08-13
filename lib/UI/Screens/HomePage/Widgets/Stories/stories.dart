@@ -58,13 +58,13 @@ class StoryCircle extends StatelessWidget {
               ).then((_) => showBottomNav());
             },
             child: CircleAvatar(
-              radius: 31.5,
+              radius: 29.5,
               backgroundColor: Color(0xffcc306C),
               child: CircleAvatar(
                 backgroundColor: Colors.white,
-                radius: 30,
+                radius: 28,
                 child: CircleAvatar(
-                  radius: 27,
+                  radius: 26,
                   backgroundColor: Colors.white,
                   backgroundImage: CachedNetworkImageProvider(
                     story[selectedIndex]['thumbnail'],

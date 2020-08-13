@@ -2,6 +2,7 @@ import 'package:excelapp/Accounts/auth_service.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
+import 'package:excelapp/UI/Screens/ProfilePage/Widgets/referal.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/Widgets/qr_code.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/Widgets/update_profile.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/Widgets/view_profile.dart';
@@ -53,58 +54,56 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    // print(widget.user.referrerAmbassadorId);
     return Scaffold(
       appBar: customappbar('Profile'),
       body: Container(
         padding: EdgeInsets.all(5),
-        child: Column(
+        child: ListView(
           children: <Widget>[
             // Profile and QR
             Container(
               child: QrCode(_user.picture, _user.qrCodeUrl, _user.name),
             ),
+            // Adding Referal if not present
+            (widget.user.referrerAmbassadorId == null ||
+                    widget.user.referrerAmbassadorId == 0)
+                ? AddReferal()
+                : referedBy(widget.user.referrer),
             // User Details
-            Expanded(
-              child: ListView(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ViewProfile()),
-                      );
-                    },
-                    child: cardBuilder('View Profile', true),
-                  ),
-                  // Update profile
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => UpdateProfile(_user)),
-                      );
-                    },
-                    child: cardBuilder('Update Profile', _isProfileUpdated),
-                  ),
-                  // Registered Events
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisteredEvents()),
-                      );
-                    },
-                    child: cardBuilder('Registered Events', true),
-                  ),
-                  // Logout
-                  GestureDetector(
-                    onTap: () => logoutUser(context),
-                    child: cardBuilder('Logout', true),
-                  ),
-                ],
-              ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ViewProfile()),
+                );
+              },
+              child: cardBuilder('View Profile', true),
+            ),
+            // Update profile
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UpdateProfile(_user)),
+                );
+              },
+              child: cardBuilder('Update Profile', _isProfileUpdated),
+            ),
+            // Registered Events
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisteredEvents()),
+                );
+              },
+              child: cardBuilder('Registered Events', true),
+            ),
+            // Logout
+            GestureDetector(
+              onTap: () => logoutUser(context),
+              child: cardBuilder('Logout', true),
             ),
           ],
         ),
@@ -115,9 +114,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
 Widget cardBuilder(String name, bool check) {
   return Card(
-    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+    margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
     elevation: 2,
     child: ListTile(
+      dense: true,
       title: Row(
         children: <Widget>[
           Text(
