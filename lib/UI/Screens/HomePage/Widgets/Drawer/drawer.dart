@@ -3,6 +3,7 @@ import 'package:excelapp/UI/Screens/CampusAmbassador/campusAmbassadorMain.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:social_share/social_share.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -91,7 +92,9 @@ class CustomDrawer extends StatelessWidget {
                   text: "Share",
                   icon: Icons.share,
                   onPressed: () {
-                    alertDialog(text: "Coming Soon", context: context);
+                    SocialShare.shareOptions(
+                      "Come be a part of Excel 2020. Exciting events, surprises and awesome prizes await you!\n\nhttps://play.google.com/store/apps/details?id=org.excelmec",
+                    );
                   },
                 ),
               ],
