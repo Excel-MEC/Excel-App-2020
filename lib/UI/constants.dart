@@ -16,6 +16,7 @@ var timelineCardColor = Color(0xdd282849);
 // Heading in Home Page
 final headingStyle = TextStyle(
   fontWeight: FontWeight.bold,
-  fontSize: 24,
+  fontSize: 19,
+  fontFamily: pfontFamily,
   color: primaryColor,
 );

@@ -7,21 +7,22 @@ class CategoryCard extends StatelessWidget {
   final Map<String, String> category;
   CategoryCard(this.category);
 
+  final titleStyle = TextStyle(
+    color: Colors.white,
+    fontFamily: pfontFamily,
+    fontSize: 23,
+    fontWeight: FontWeight.w600,
+  );
+  final contentStyle = TextStyle(
+    color: Colors.white,
+    fontFamily: sfontFamily,
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+    shadows: [Shadow(blurRadius: 10, color: primaryColor)],
+  );
+
   @override
   Widget build(BuildContext context) {
-    final titleStyle = TextStyle(
-      color: Colors.white,
-      fontFamily: pfontFamily,
-      fontSize: 23,
-      fontWeight: FontWeight.w600,
-    );
-    final contentStyle = TextStyle(
-      color: Colors.white,
-      fontFamily: sfontFamily,
-      fontSize: 13,
-      fontWeight: FontWeight.w500,
-      shadows: [Shadow(blurRadius: 10, color: primaryColor)],
-    );
     return Container(
       height: MediaQuery.of(context).size.height / 3.5,
       color: primaryColor,
