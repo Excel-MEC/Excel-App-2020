@@ -11,8 +11,10 @@ class ViewProfile extends StatefulWidget {
 }
 
 class _ViewProfileState extends State<ViewProfile> {
+  var userDetails;
   @override
   void initState() {
+    userDetails = viewUserProfile();
     super.initState();
   }
 
@@ -33,7 +35,7 @@ class _ViewProfileState extends State<ViewProfile> {
       backgroundColor: Colors.white,
       appBar: customappbar('View Profile'),
       body: FutureBuilder(
-        future: viewUserProfile(),
+        future: userDetails,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data == "Not Updated") {

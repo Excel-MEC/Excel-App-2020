@@ -1,3 +1,4 @@
+import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Services/API/campus_ambassador.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Screens/CampusAmbassador/campusAmbassadorMAin.dart';
@@ -16,18 +17,27 @@ class _JoinAmbassadorProgramState extends State<JoinAmbassadorProgram> {
     setState(() {
       loading = true;
     });
-    var reponse = await joinAmbassadorProgram();
+    var response = await joinAmbassadorProgram();
     setState(() {
       loading = false;
     });
-    if (reponse == "error") {
+    var response2 = await AccountServices.fetchUserDetails();
+
+    if (response == "error") {
       alertDialog(text: "An Error Occured", context: context);
       return;
-    } else
+    } else {
+      if (response2 != "success") {
+        alertDialog(
+            text: "An Error Occured, try logging in and logging out",
+            context: context);
+        return;
+      }
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => CampusAmbassador()),
       );
+    }
   }
 
   @override

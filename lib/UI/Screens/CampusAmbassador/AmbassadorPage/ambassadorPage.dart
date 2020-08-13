@@ -33,14 +33,14 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 30),
+            Image.asset("assets/campusAmbassador/refer.png", height: 150),
+            SizedBox(height: 20),
             Text(
               "Hello " + userData.name.split(" ")[0] + ",",
-              style: TextStyle(fontSize: 25, color: primaryColor),
+              style: TextStyle(fontSize: 23, color: primaryColor),
               textAlign: TextAlign.center,
             ),
-            Image.asset("assets/campusAmbassador/refer.png", height: 150),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             Text(
               "Share this code to other users\n to add them as referals",
               textAlign: TextAlign.center,
@@ -48,41 +48,44 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
             ),
             SizedBox(height: 5),
             // Row with referal code
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 30, horizontal: 50),
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 20,
-                    color: Colors.grey,
-                    spreadRadius: -5,
-                  )
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(width: 30),
-                  Text(
-                    ambassadorData["id"].toString(),
-                    style: TextStyle(fontSize: 37, color: primaryColor),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(width: 10),
-                  IconButton(
-                    icon: Icon(
-                      Icons.content_copy,
-                      size: 30,
+            Center(
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 25, horizontal: 0),
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 20,
                       color: Colors.grey,
+                      spreadRadius: -5,
+                    )
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(width: 30),
+                    Text(
+                      ambassadorData["id"].toString(),
+                      style: TextStyle(fontSize: 30, color: primaryColor),
+                      textAlign: TextAlign.center,
                     ),
-                    onPressed: () {
-                      print("object");
-                    },
-                  )
-                ],
+                    SizedBox(width: 10),
+                    IconButton(
+                      icon: Icon(
+                        Icons.content_copy,
+                        size: 25,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        print("object");
+                      },
+                    )
+                  ],
+                ),
               ),
             ),
 

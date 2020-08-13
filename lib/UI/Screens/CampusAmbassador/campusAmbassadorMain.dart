@@ -52,7 +52,7 @@ class _CampusAmbassadorState extends State<CampusAmbassador> {
               ),
             );
           // If ambassador not an ambassador
-          if (userData == null) return JoinAmbassadorProgram();
+          if (userData.ambassador == "null") return JoinAmbassadorProgram();
           // Ambassador page
           return AmbassadorPage(userData);
         },

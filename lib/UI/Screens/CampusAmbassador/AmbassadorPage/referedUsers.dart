@@ -53,12 +53,15 @@ class ReferedUsers extends StatelessWidget {
               (index) => Padding(
                 padding: EdgeInsets.symmetric(vertical: 5),
                 child: ListTile(
+                  dense: true,
                   leading: CircleAvatar(
+                    radius: 15.5,
                     backgroundColor: primaryColor,
                     child: Text(
                       (index + 1).toString(),
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 13,
                       ),
                     ),
                   ),
