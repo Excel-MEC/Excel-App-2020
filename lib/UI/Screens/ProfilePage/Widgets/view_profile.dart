@@ -93,11 +93,11 @@ Widget details(String field, String value, var icon) {
           ),
         ),
         title: Text(
-          field,
+          field == "Others" ? "Category" : field,
           style: TextStyle(color: primaryColor),
         ),
         subtitle: Text(
-          value,
+          field == "Others" ? "Others" : (value ?? ""),
           style: TextStyle(fontFamily: pfontFamily),
         )),
   );
