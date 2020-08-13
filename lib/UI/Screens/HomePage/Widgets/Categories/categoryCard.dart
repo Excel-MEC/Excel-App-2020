@@ -7,24 +7,24 @@ class CategoryCard extends StatelessWidget {
   final Map<String, String> category;
   CategoryCard(this.category);
 
-  final titleStyle = TextStyle(
-    color: Colors.white,
-    fontFamily: pfontFamily,
-    fontSize: 25,
-    fontWeight: FontWeight.w600,
-  );
-  final contentStyle = TextStyle(
-    color: Colors.white,
-    fontFamily: sfontFamily,
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-  );
-
   @override
   Widget build(BuildContext context) {
+    final titleStyle = TextStyle(
+      color: Colors.white,
+      fontFamily: pfontFamily,
+      fontSize: 23,
+      fontWeight: FontWeight.w600,
+    );
+    final contentStyle = TextStyle(
+      color: Colors.white,
+      fontFamily: sfontFamily,
+      fontSize: 13,
+      fontWeight: FontWeight.w500,
+      shadows: [Shadow(blurRadius: 10, color: primaryColor)],
+    );
     return Container(
       height: MediaQuery.of(context).size.height / 3.5,
-      color: Colors.black,
+      color: primaryColor,
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -76,8 +76,10 @@ class CategoryCard extends StatelessWidget {
                       ),
                     );
                   },
-                  child:
-                      Text('View', style: TextStyle(fontFamily: pfontFamily)),
+                  child: Text(
+                    'View',
+                    style: TextStyle(fontFamily: pfontFamily, fontSize: 13),
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
