@@ -1,8 +1,8 @@
+import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/API/campus_ambassador.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/ambassadorPage.dart';
 import 'package:excelapp/UI/Screens/CampusAmbassador/joinProgram.dart';
-import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
 class CampusAmbassador extends StatefulWidget {
@@ -19,10 +19,9 @@ class _CampusAmbassadorState extends State<CampusAmbassador> {
     super.initState();
   }
 
-// Check snapshot.data["ambassador"]["id"] is null or not to see if user is an ambassador or not
+// Check snapshot.data.ambassador["id"] is null or not to see if user is an ambassador or not
 // Professionals can't join ambassadors program
-// snapshot.data["category"] == "professional" can be used to check if person is professional or not
-// Full structure of data can be found in AmbassadorPage()
+// snapshot.data.category == "professional" can be used to check if person is professional or not
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +36,13 @@ class _CampusAmbassadorState extends State<CampusAmbassador> {
               child: CircularProgressIndicator(),
             );
           // If not logged in
-          if (snapshot.data == "notLoggedIn") return Text("Not logged in");
-          // If error
-          if (snapshot.data == "error") return errorPage();
+          if (snapshot.data == "notLoggedIn")
+            return Center(
+              child: Text("Not logged in"),
+            );
+          User userData = snapshot.data;
           // If professional
-          if (snapshot.data["category"] == "professional")
+          if (userData.category == "professional")
             return Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
@@ -51,43 +52,10 @@ class _CampusAmbassadorState extends State<CampusAmbassador> {
               ),
             );
           // If ambassador not an ambassador
-          if (snapshot.data["ambassador"]["id"] == null)
-            return JoinAmbassadorProgram();
+          if (userData == null) return JoinAmbassadorProgram();
           // Ambassador page
-          return AmbassadorPage(snapshot.data);
+          return AmbassadorPage(userData);
         },
-      ),
-    );
-  }
-
-  Widget errorPage() {
-    return Center(
-      child: Column(
-        children: [
-          SizedBox(height: 100),
-          Text(
-            "An Error Occured",
-            style: TextStyle(
-              color: Color(0xaa000000),
-            ),
-          ),
-          SizedBox(height: 20),
-          RaisedButton(
-            color: primaryColor,
-            child: Text(
-              "Retry",
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CampusAmbassador(),
-                ),
-              );
-            },
-          )
-        ],
       ),
     );
   }

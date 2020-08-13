@@ -1,51 +1,30 @@
+import 'dart:convert';
+
+import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/API/campus_ambassador.dart';
 import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/referedUsers.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
 class AmbassadorPage extends StatefulWidget {
-  final Map<String, dynamic> ambassadorData;
-  AmbassadorPage(this.ambassadorData);
+  final User userData;
+  AmbassadorPage(this.userData);
   @override
   _AmbassadorPageState createState() => _AmbassadorPageState();
 }
 
 class _AmbassadorPageState extends State<AmbassadorPage> {
-  Map<String, dynamic> ambassadorData;
+  User userData;
   Future referalList;
+  Map<String, dynamic> ambassadorData;
 
   @override
   void initState() {
-    ambassadorData = widget.ambassadorData;
+    userData = widget.userData;
+    ambassadorData = jsonDecode(userData.ambassador);
     referalList = getReferalList();
     super.initState();
   }
-
-// Sample Data
-// var ambassadorData = {
-//   "id": 123,
-//   "name": "Name",
-//   "email": "email@gmail.com",
-//   "role": "User,Admin",
-//   "picture":
-//       "url.png",
-//   "qrCodeUrl":
-//       "url.png",
-//   "institutionId": 456,
-//   "gender": "Male",
-//   "mobileNumber": "1234567890",
-//   "category": "college",
-//   "ambassador": {
-//     "id": 123456,
-//     "userId": 123456,
-//     "referredUsers": null,
-//     "freeMembership": 4,
-//     "paidMembership": 0
-//   },
-//   "referrerAmbassadorId": null,
-//   "referrer": null,
-//   "isPaid": false
-// };
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +35,7 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
           children: [
             SizedBox(height: 30),
             Text(
-              "Hello " + ambassadorData["name"].split(" ")[0] + ",",
+              "Hello " + userData.name.split(" ")[0] + ",",
               style: TextStyle(fontSize: 25, color: primaryColor),
               textAlign: TextAlign.center,
             ),
@@ -88,7 +67,7 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
                 children: [
                   SizedBox(width: 30),
                   Text(
-                    ambassadorData["ambassador"]["id"].toString(),
+                    ambassadorData["id"].toString(),
                     style: TextStyle(fontSize: 37, color: primaryColor),
                     textAlign: TextAlign.center,
                   ),
@@ -152,7 +131,7 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AmbassadorPage(ambassadorData),
+                  builder: (context) => AmbassadorPage(userData),
                 ),
               );
             },

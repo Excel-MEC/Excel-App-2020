@@ -57,6 +57,9 @@ class ReferedUsers extends StatelessWidget {
                     backgroundColor: primaryColor,
                     child: Text(
                       (index + 1).toString(),
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   title: Text(referedUsers[index]["name"]),

@@ -76,7 +76,12 @@ class _AddReferalState extends State<AddReferal> {
             loading
                 ? CircularProgressIndicator()
                 : RaisedButton(
-                    child: Text("Add referal Code"),
+                    color: Color(0xfff5f5f5),
+                    elevation: 1,
+                    child: Text(
+                      "Add Referal Code",
+                      style: TextStyle(color: primaryColor),
+                    ),
                     onPressed: () {
                       applyReferal();
                     },
@@ -89,10 +94,10 @@ class _AddReferalState extends State<AddReferal> {
 }
 
 Widget referedBy(referer) {
-  var refererData = jsonDecode(jsonDecode(referer));
+  var refererData = jsonDecode(referer);
   if (refererData == null) return Container();
   return Container(
-    color: Color(0x11000000),
+    color: Color(0x11000077),
     margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
     child: Row(
@@ -107,7 +112,7 @@ Widget referedBy(referer) {
           ),
         ),
         RaisedButton(
-          disabledColor: Colors.grey,
+          disabledColor: Color(0x0a000000),
           child: Text("Add referal Code"),
           onPressed: null,
         ),

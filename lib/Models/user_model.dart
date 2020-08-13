@@ -4,6 +4,7 @@ class User {
   int id;
   String name;
   String email;
+  String role;
   String picture;
   String qrCodeUrl;
   int institutionId;
@@ -11,6 +12,7 @@ class User {
   String gender;
   String mobileNumber;
   String category;
+  String ambassador;
   int referrerAmbassadorId;
   String referrer;
   bool isPaid;
@@ -19,6 +21,7 @@ class User {
     this.id,
     this.name,
     this.email,
+    this.role,
     this.picture,
     this.qrCodeUrl,
     this.institutionId,
@@ -26,6 +29,7 @@ class User {
     this.gender,
     this.mobileNumber,
     this.category,
+    this.ambassador,
     this.referrerAmbassadorId,
     this.referrer,
     this.isPaid,
@@ -35,6 +39,7 @@ class User {
     id = json['id'];
     name = json['name'];
     email = json['email'];
+    role = json['role'];
     picture = json['picture'];
     qrCodeUrl = json['qrCodeUrl'];
     institutionId =
@@ -46,6 +51,7 @@ class User {
     mobileNumber =
         json['mobileNumber'] != null ? json['mobileNumber'] : 'Not Registered';
     category = json['category'] != null ? json['category'] : 'Not Registered';
+    ambassador = jsonEncode(json['ambassador']);
     referrerAmbassadorId = json['referrerAmbassadorId'];
     referrer = jsonEncode(json['referrer']);
     isPaid = (json['isPaid'] == true || json['isPaid'] == 1) ? true : false;
@@ -56,14 +62,16 @@ class User {
     data['id'] = this.id;
     data['name'] = this.name;
     data['email'] = this.email;
+    data['role'] = this.role;
     data['picture'] = this.picture;
     data['qrCodeUrl'] = this.qrCodeUrl;
     data['institutionId'] = this.institutionId;
     data['institutionName'] = this.institutionName;
     data['gender'] = this.gender;
     data['mobileNumber'] = this.mobileNumber;
+    data['ambassador'] = jsonDecode(this.ambassador);
     data['referrerAmbassadorId'] = this.referrerAmbassadorId;
-    data['referrer'] = this.referrer;
+    data['referrer'] = jsonDecode(this.referrer);
     data['isPaid'] = this.isPaid;
     return data;
   }
