@@ -29,7 +29,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   int _categoryId;
   int _institutionId;
   String _institutionName;
-  String _gender = 'Male';
+  String _gender;
   bool _institutionSelected = false;
   List<String> _categories = <String>['College', 'School', 'Other'];
   List<String> _genders = <String>['Male', 'Female', 'Other'];
@@ -54,6 +54,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     // _category = user.category != "Not Registered" ? user.category : "college";
     _institutionId = user.institutionId;
     _institutionName = user.institutionName;
+    _gender = user.gender;
   }
 
   // Fetch institutions based on category
@@ -92,7 +93,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
       builder: (BuildContext context) => loadingDialog,
       barrierDismissible: false,
     );
-    if (_gender == null) {
+    if (_gender == null || _gender == "Not Registered") {
       Navigator.of(context, rootNavigator: true).pop();
       return "Gender not selected";
     }
@@ -225,7 +226,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           style: TextStyle(color: primaryColor),
                           underline: Center(),
                           icon: Icon(Icons.keyboard_arrow_down),
-                          hint: Text(_gender ?? "Select Gender"),
+                          hint: Text(
+                              (_gender == "Not Registered" || _gender == null)
+                                  ? "Select Gender"
+                                  : _gender),
                           items: _genders.map<DropdownMenuItem<String>>((val) {
                             return DropdownMenuItem<String>(
                               value: val,
@@ -289,7 +293,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                             setState(() {
                               if (value == "College")
                                 _categoryId = 0;
-                              else if (value == "College")
+                              else if (value == "School")
                                 _categoryId = 1;
                               else
                                 _categoryId = 2;
