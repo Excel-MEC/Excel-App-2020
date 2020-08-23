@@ -129,7 +129,10 @@ class EventPageBodyState extends State<EventPageBody> {
 
               // Register and Details Button
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // Align button to center if only one button
+                mainAxisAlignment: eventDetails.needRegistration == 1
+                    ? MainAxisAlignment.spaceEvenly
+                    : MainAxisAlignment.center,
                 children: <Widget>[
                   // More Details
                   ButtonTheme(
@@ -158,7 +161,7 @@ class EventPageBodyState extends State<EventPageBody> {
                   // Register
                   eventDetails.needRegistration == 1
                       ? RegisterButton(eventId: eventDetails.id)
-                      : SizedBox(width: deviceWidth / 2.3)
+                      : SizedBox()
                 ],
               ),
               // For Hero Widget
