@@ -32,7 +32,6 @@ class _ViewProfileState extends State<ViewProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: customappbar('View Profile'),
       body: FutureBuilder(
         future: userDetails,
