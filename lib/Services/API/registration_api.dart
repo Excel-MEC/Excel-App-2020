@@ -10,7 +10,7 @@ import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 class RegistrationStatus {
   static final RegistrationStatus instance = RegistrationStatus.internal();
   RegistrationStatus.internal();
-  // 0 if data not retreived, 1 if data retrieved
+  // 0 if data not retreived, 1 if data retrieved, 2 if error, -1 if not loggedin, 3 if fetching
   int registeredStatus = 0;
   // Stores registered event ID's
   Set<int> registrationIDs = {};
@@ -25,6 +25,7 @@ class RegistrationAPI {
       RegistrationStatus.instance.registeredStatus = -1;
       return;
     }
+    RegistrationStatus.instance.registeredStatus = 3;
     var response = await fetchDataFromNet(jwt);
     print('--- Registrations: Network Fetch ---');
     try {
@@ -72,13 +73,19 @@ class RegistrationAPI {
 
 // Recheck if registration possible
   static Future preRegistration({@required int id, @required context}) async {
+    print("Registration status " +
+        RegistrationStatus.instance.registeredStatus.toString());
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
     if (jwt == null) {
       return 'Not Logged In';
     }
     if (RegistrationStatus.instance.registeredStatus == 0) {
-      return 'Cannot Connect';
+      fetchRegistrations();
+      return;
+    }
+    if (RegistrationStatus.instance.registeredStatus == 3) {
+      return 'Could not fetch registration data';
     }
     if (await isRegistered(id)) {
       return 'Already Registered';
