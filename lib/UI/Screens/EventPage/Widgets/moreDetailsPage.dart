@@ -143,7 +143,7 @@ class MoreDetailsState extends State<MoreDetails> {
   Widget details(txt) {
     return SingleChildScrollView(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        margin: EdgeInsets.fromLTRB(20, 20, 20, 55),
         child: Text(
           txt ?? "",
           style: TextStyle(
@@ -156,26 +156,25 @@ class MoreDetailsState extends State<MoreDetails> {
   Widget contactDetails(String e1, String e2) {
     Map<String, dynamic> eventHead1 = json.decode(e1);
     Map<String, dynamic> eventHead2 = json.decode(e2);
-    List<Widget> finDetails = [];
-
-    // Contact 1
-    finDetails.add(SizedBox(height: 10));
-    finDetails.add(contactDetailRow(Icons.person, eventHead1["name"]));
-    finDetails.add(contactDetailRow(Icons.email, eventHead1["email"]));
-    finDetails.add(contactDetailRow(Icons.phone, eventHead1["phoneNumber"]));
-
-    // Contact 2
-    finDetails.add(SizedBox(height: 25));
-    finDetails.add(contactDetailRow(Icons.person, eventHead2["name"]));
-    finDetails.add(contactDetailRow(Icons.email, eventHead2["email"]));
-    finDetails.add(contactDetailRow(Icons.phone, eventHead2["phoneNumber"]));
 
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        child: Column(
-          children: finDetails,
-        ),
+        child: Column(children: <Widget>[
+          // Contact 1
+          SizedBox(height: 10),
+          contactDetailRow(Icons.person, eventHead1["name"]),
+          contactDetailRow(Icons.email, eventHead1["email"]),
+          contactDetailRow(Icons.phone, eventHead1["phoneNumber"]),
+
+          // Contact 2
+          SizedBox(height: 25),
+          contactDetailRow(Icons.person, eventHead2["name"]),
+          contactDetailRow(Icons.email, eventHead2["email"]),
+          contactDetailRow(Icons.phone, eventHead2["phoneNumber"]),
+
+          SizedBox(height: 50),
+        ]),
       ),
     );
   }
