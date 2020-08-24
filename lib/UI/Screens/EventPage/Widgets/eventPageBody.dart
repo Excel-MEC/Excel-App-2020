@@ -8,22 +8,9 @@ import 'backgroundImage.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
 
-class EventPageBody extends StatefulWidget {
+class EventPageBody extends StatelessWidget {
   final EventDetails eventDetails;
   EventPageBody({this.eventDetails});
-  @override
-  EventPageBodyState createState() => EventPageBodyState();
-}
-
-//Event Details
-class EventPageBodyState extends State<EventPageBody> {
-  EventDetails eventDetails;
-
-  @override
-  void initState() {
-    eventDetails = widget.eventDetails;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

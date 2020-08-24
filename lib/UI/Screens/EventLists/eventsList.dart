@@ -38,7 +38,6 @@ class _EventsListState extends State<EventsList> {
     var connectivityResult = await (Connectivity().checkConnectivity());
     result = await db.getEvents(tableName);
     if (result.isNotEmpty) estream.add(result);
-    print(result);
 
     // No connetions available
     if (connectivityResult == ConnectivityResult.none) {
