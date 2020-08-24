@@ -12,6 +12,7 @@ class EventsAPI {
           await http.get(APIConfig.baseUrl + '/events/type' + '/$endpoint');
     } catch (e) {
       print("Error $e");
+      return null;
     }
     List<dynamic> responseData = json.decode(response.body);
     return responseData.map<Event>((event) => Event.fromJson(event)).toList();

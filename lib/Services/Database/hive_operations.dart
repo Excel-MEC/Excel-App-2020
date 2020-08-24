@@ -43,7 +43,7 @@ class HiveDB {
       box.close();
     } catch (_) {}
     if (storedDate == null) return null;
-    return DateTime.now().difference(storedDate).inSeconds;
+    return DateTime.now().difference(storedDate).inMinutes;
   }
 
 // Used to store last time event is fetched
