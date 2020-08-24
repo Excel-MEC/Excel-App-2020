@@ -1,27 +1,16 @@
 import 'dart:convert';
-
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/backgroundImage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/eventDescription.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
 
-class MoreDetails extends StatefulWidget {
+class MoreDetails extends StatelessWidget {
   final EventDetails eventDetails;
   MoreDetails({Key key, @required this.eventDetails}) : super(key: key);
-  @override
-  State<StatefulWidget> createState() {
-    return MoreDetailsState(eventDetails);
-  }
-}
-
-class MoreDetailsState extends State<MoreDetails> {
-  EventDetails eventDetails;
-  MoreDetailsState(this.eventDetails);
 
   @override
   Widget build(BuildContext context) {
-    double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -36,104 +25,105 @@ class MoreDetailsState extends State<MoreDetails> {
             ],
           ),
 
-          Container(
-            child: ListView(
-              children: <Widget>[
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 50.0, top: deviceHeight * 0.15),
-                  child: Row(
-                    children: <Widget>[
-                      //Event Name Details
-                      Expanded(
-                        child: Hero(
-                          tag: 'EventName',
-                          child: Text(
-                            eventDetails.name,
-                            style: TextStyle(
-                              decoration: TextDecoration.none,
-                              fontFamily: pfontFamily,
-                              height: 1.0,
-                              fontSize: 26.0,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.white,
-                            ),
+          Column(
+            children: <Widget>[
+              SafeArea(bottom: false, child: Container()),
+              Padding(
+                padding: EdgeInsets.only(left: 15.0, top: 30),
+                child: Row(
+                  children: <Widget>[
+                    IconButton(
+                      icon: new Icon(Icons.arrow_back),
+                      iconSize: 40.0,
+                      color: Colors.white,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    SizedBox(width: 10),
+                    // Event Name Details
+                    Expanded(
+                      child: Hero(
+                        tag: 'EventName',
+                        child: Text(
+                          eventDetails.name,
+                          style: TextStyle(
+                            decoration: TextDecoration.none,
+                            fontFamily: pfontFamily,
+                            height: 1.0,
+                            fontSize: 26.0,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+              ),
 
-                //EventDetails
-                getEventDetails(eventDetails),
+              //EventDetails
+              getEventDetails(eventDetails),
 
-                SizedBox(height: 10.0),
+              SizedBox(height: 10.0),
 
-                // More details card
-                Container(
-                  height: deviceHeight * .65,
-                  padding: EdgeInsets.only(top: 5.0),
-                  child: Hero(
-                    tag: 'Card',
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
+              // More details card
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(22),
+                    topRight: Radius.circular(22),
+                  ),
+                  child: DefaultTabController(
+                    initialIndex: 0,
+                    length: 4,
+                    child: Scaffold(
+                      appBar: PreferredSize(
+                        preferredSize: Size.fromHeight(1000),
+                        child: TabBar(
+                          labelPadding: EdgeInsets.fromLTRB(16, 5, 16, 0),
+                          indicatorColor: primaryColor,
+                          indicatorSize: TabBarIndicatorSize.label,
+                          labelColor: primaryColor,
+                          labelStyle: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          tabs: [
+                            Tab(
+                              text: 'About',
+                            ),
+                            Tab(
+                              text: 'Format',
+                            ),
+                            Tab(
+                              text: 'Rules',
+                            ),
+                            Tab(
+                              text: 'Contacts',
+                            ),
+                          ],
+                        ),
                       ),
-                      child: DefaultTabController(
-                        initialIndex: 0,
-                        length: 4,
-                        child: Scaffold(
-                          appBar: PreferredSize(
-                            preferredSize: Size.fromHeight(60),
-                            child: AppBar(
-                              backgroundColor: Colors.white,
-                              elevation: 0,
-                              bottom: TabBar(
-                                indicatorSize: TabBarIndicatorSize.label,
-                                indicatorColor: primaryColor,
-                                labelColor: primaryColor,
-                                labelStyle: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w500),
-                                tabs: [
-                                  Tab(
-                                    text: 'About',
-                                  ),
-                                  Tab(
-                                    text: 'Format',
-                                  ),
-                                  Tab(
-                                    text: 'Rules',
-                                  ),
-                                  Tab(
-                                    text: 'Contacts',
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          body: Container(
-                            color: Colors.white,
-                            child: TabBarView(
-                              children: [
-                                details(eventDetails.about),
-                                details(eventDetails.format),
-                                details(eventDetails.rules),
-                                contactDetails(
-                                  eventDetails.eventHead1,
-                                  eventDetails.eventHead2,
-                                )
-                              ],
-                            ),
-                          ),
+                      body: Container(
+                        color: Colors.white,
+                        child: TabBarView(
+                          children: [
+                            details(eventDetails.about),
+                            details(eventDetails.format),
+                            details(eventDetails.rules),
+                            contactDetails(
+                              eventDetails.eventHead1,
+                              eventDetails.eventHead2,
+                            )
+                          ],
                         ),
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
@@ -143,7 +133,7 @@ class MoreDetailsState extends State<MoreDetails> {
   Widget details(txt) {
     return SingleChildScrollView(
       child: Container(
-        margin: EdgeInsets.fromLTRB(20, 20, 20, 55),
+        margin: EdgeInsets.fromLTRB(20, 20, 20, 100),
         child: Text(
           txt ?? "",
           style: TextStyle(
