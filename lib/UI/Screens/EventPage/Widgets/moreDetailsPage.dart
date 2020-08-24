@@ -158,25 +158,34 @@ class MoreDetailsState extends State<MoreDetails> {
     Map<String, dynamic> eventHead2 = json.decode(e2);
 
     return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        child: Column(children: <Widget>[
-          // Contact 1
-          SizedBox(height: 10),
-          contactDetailRow(Icons.person, eventHead1["name"]),
-          contactDetailRow(Icons.email, eventHead1["email"]),
-          contactDetailRow(Icons.phone, eventHead1["phoneNumber"]),
+        child: Container(
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      child: Column(
+        children: <Widget>[] +
+            (e1 == "null"
+                ? []
+                : [
+                      // Contact 1
+                      SizedBox(height: 10),
+                      contactDetailRow(Icons.person, eventHead1["name"]),
+                      contactDetailRow(Icons.email, eventHead1["email"]),
+                      contactDetailRow(Icons.phone, eventHead1["phoneNumber"]),
+                    ] +
+                    (e2 == "null"
+                        ? []
+                        : [
+                            // Contact 2
+                            SizedBox(height: 25),
 
-          // Contact 2
-          SizedBox(height: 25),
-          contactDetailRow(Icons.person, eventHead2["name"]),
-          contactDetailRow(Icons.email, eventHead2["email"]),
-          contactDetailRow(Icons.phone, eventHead2["phoneNumber"]),
+                            contactDetailRow(Icons.person, eventHead2["name"]),
+                            contactDetailRow(Icons.email, eventHead2["email"]),
+                            contactDetailRow(
+                                Icons.phone, eventHead2["phoneNumber"]),
 
-          SizedBox(height: 50),
-        ]),
+                            SizedBox(height: 50),
+                          ])),
       ),
-    );
+    ));
   }
 
   Widget contactDetailRow(var icon, String text) {
