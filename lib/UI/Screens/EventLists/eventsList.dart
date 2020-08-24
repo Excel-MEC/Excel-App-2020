@@ -52,7 +52,10 @@ class _EventsListState extends State<EventsList> {
       int lastUpdatedinMinutes =
           await HiveDB().getTimeStamp("eventlist-$endpoint");
       print("$endpoint last fetched $lastUpdatedinMinutes mins ago");
-      if (lastUpdatedinMinutes == null || lastUpdatedinMinutes > 60) {
+      // If above 60 mins fetch from net
+      if (lastUpdatedinMinutes == null ||
+          lastUpdatedinMinutes > 60 ||
+          result.isEmpty) {
         print("-Fetching from api and updating database: $endpoint");
         result = await EventsAPI.fetchEvents(endpoint);
         if (result == null) return;
