@@ -73,18 +73,23 @@ class FullPageViewState extends State<FullPageView> {
               combinedList.length,
               (index) => Stack(
                 children: <Widget>[
-                  Scaffold(
-                    body: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: CachedNetworkImageProvider(
-                            combinedList[index],
-                          ),
-                        ),
-                      ),
+                  CachedNetworkImage(
+                    imageUrl: combinedList[index],
+                    fit: BoxFit.cover,
+                    height: double.infinity,
+                    width: double.infinity,
+                    // Placeholder when it doesnt Load
+                    placeholder: (context, url) => Container(
+                      color: primaryColor,
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: Center(
+                          child: CircularProgressIndicator(
+                        valueColor: new AlwaysStoppedAnimation(Colors.white),
+                      )),
                     ),
                   ),
+
                   // Overlay to detect taps for next page & previous page
                   Row(
                     children: <Widget>[
