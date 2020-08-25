@@ -8,22 +8,9 @@ import 'backgroundImage.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
 
-class EventPageBody extends StatefulWidget {
+class EventPageBody extends StatelessWidget {
   final EventDetails eventDetails;
   EventPageBody({this.eventDetails});
-  @override
-  EventPageBodyState createState() => EventPageBodyState();
-}
-
-//Event Details
-class EventPageBodyState extends State<EventPageBody> {
-  EventDetails eventDetails;
-
-  @override
-  void initState() {
-    eventDetails = widget.eventDetails;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +116,10 @@ class EventPageBodyState extends State<EventPageBody> {
 
               // Register and Details Button
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // Align button to center if only one button
+                mainAxisAlignment: eventDetails.needRegistration == 1
+                    ? MainAxisAlignment.spaceEvenly
+                    : MainAxisAlignment.center,
                 children: <Widget>[
                   // More Details
                   ButtonTheme(
@@ -158,7 +148,7 @@ class EventPageBodyState extends State<EventPageBody> {
                   // Register
                   eventDetails.needRegistration == 1
                       ? RegisterButton(eventId: eventDetails.id)
-                      : SizedBox(width: deviceWidth / 2.3)
+                      : SizedBox()
                 ],
               ),
               // For Hero Widget

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:excelapp/Services/API/highlights_api.dart';
+import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:shimmer/shimmer.dart';
@@ -15,11 +16,17 @@ class _HighlightsSectionState extends State<HighlightsSection> {
   bool dataLoaded = false;
 
   fetchfromNet() async {
+    int lastUpdatedInMinutes = await HiveDB().getTimeStamp("highlights");
+    print("Highlights last fetched $lastUpdatedInMinutes mins ago");
+
+    if (lastUpdatedInMinutes != null && lastUpdatedInMinutes < 60) return;
+
     var dataFromNet = await fetchAndStoreHighlightsFromNet();
     if (!dataLoaded || dataFromNet != "error") {
       estream.add(dataFromNet);
       dataLoaded = true;
     }
+    if (dataFromNet != "error") await HiveDB().setTimeStamp("highlights");
   }
 
   initialisePage() async {

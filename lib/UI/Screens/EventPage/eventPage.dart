@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/events_api.dart';
@@ -5,6 +6,7 @@ import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/backgroundImage.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/eventPageBody.dart';
+import 'package:excelapp/Services/Database/hive_operations.dart';
 
 class EventPage extends StatefulWidget {
   final int eventId;
@@ -17,57 +19,57 @@ class _EventPageState extends State<EventPage> {
   DBProvider dbProvider;
   int _eventId;
   String _tableName = "EventDetails";
-  Future<List<EventDetails>> eventDetail;
+  StreamController<dynamic> estream;
 
   @override
   void initState() {
     super.initState();
     _eventId = widget.eventId;
     dbProvider = DBProvider();
-    eventDetail = fetchEventDetails(_eventId);
+    estream = StreamController<dynamic>();
+    fetchEventDetails(_eventId);
   }
 
-  Future<List<EventDetails>> fetchEventDetails(int id) async {
-    List<EventDetails> result;
+  void fetchEventDetails(int id) async {
+    EventDetails result;
     var connectivityResult = await (Connectivity().checkConnectivity());
     result = await dbProvider.getEventDetails(_tableName, id);
+    if (result != null) estream.add(result);
 
     // No connetions available
     if (connectivityResult == ConnectivityResult.none) {
       print("all connections down");
-      return result;
+      if (result == null) estream.add("offline");
+      return;
     }
 
-    // Database empty -- Fetch from API
-    if (result.isEmpty && connectivityResult != ConnectivityResult.none) {
-      print("\nfetching from api and updating database");
-      result.add(await EventsAPI.fetchEventDetails(id));
-      await dbProvider.addEventDetails(result[0], _tableName);
-      print("done");
-      return result;
+    // If database empty or has been 1 hr since last fetched: Fetch from API
+    if (result == null || connectivityResult != ConnectivityResult.none) {
+      int lastUpdatedinMinutes = await HiveDB().getTimeStamp("event-$id");
+      print("Event $id: last fetched $lastUpdatedinMinutes mins ago");
+      // If above 60 mins fetch from net
+      if (lastUpdatedinMinutes == null ||
+          lastUpdatedinMinutes > 60 ||
+          result == null) {
+        print("-Fetching from api and updating database: Event $id");
+        EventDetails result = await EventsAPI.fetchEventDetails(id);
+        if (result == null) return;
+        await dbProvider.addEventDetails(result, _tableName);
+        HiveDB().setTimeStamp("event-$id");
+        print("Fetched & Added to DB");
+        estream.add(result);
+      }
     }
-
-    // Database not empty -- Update database
-    if (result.isNotEmpty && connectivityResult != ConnectivityResult.none) {
-      print("Updating database");
-      EventsAPI.fetchEventDetails(id).then((value) {
-        dbProvider.addEventDetails(result[0], _tableName);
-        print("done");
-      }).catchError((e) => print("Not Updated : $e"));
-      return result;
-    }
-
-    return result;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: eventDetail,
+      body: StreamBuilder(
+        stream: estream.stream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data.isEmpty) {
+            if (snapshot.data == "offline") {
               return Center(
                 child: Text(
                   "No Connection. Please retry",
@@ -79,7 +81,7 @@ class _EventPageState extends State<EventPage> {
                 ),
               );
             }
-            return EventPageBody(eventDetails: snapshot.data[0]);
+            return EventPageBody(eventDetails: snapshot.data);
           } else {
             return Stack(
               fit: StackFit.expand,

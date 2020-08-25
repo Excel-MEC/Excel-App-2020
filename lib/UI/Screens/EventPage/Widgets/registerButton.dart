@@ -22,9 +22,6 @@ class _RegisterButtonState extends State<RegisterButton> {
   }
 
   register(context) async {
-    setState(() {
-      isLoading = true;
-    });
     String response = await RegistrationAPI.preRegistration(
         id: widget.eventId, context: context);
     if (response == "proceed") {
@@ -40,11 +37,17 @@ class _RegisterButtonState extends State<RegisterButton> {
                 child: Text("Proceed"),
                 onPressed: () {
                   () async {
+                    // Starts loading
+                    setState(() {
+                      isLoading = true;
+                    });
+                    // Registers for event
                     await RegistrationAPI.registerEvent(
                       id: widget.eventId,
                       refreshFunction: refreshIsRegistered,
                       context: context,
                     );
+                    // Ends Loading
                     setState(() {
                       isLoading = false;
                     });
@@ -68,9 +71,6 @@ class _RegisterButtonState extends State<RegisterButton> {
     } else {
       // Show returned error
       alertDialog(text: response, context: context);
-      setState(() {
-        isLoading = false;
-      });
     }
 
     refreshIsRegistered();
