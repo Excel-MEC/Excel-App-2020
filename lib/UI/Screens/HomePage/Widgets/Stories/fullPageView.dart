@@ -26,7 +26,10 @@ class FullPageViewState extends State<FullPageView> {
   PageController _pageController;
 
   nextPage(index) {
-    if (index == combinedList.length - 1) Navigator.pop(context);
+    if (index == combinedList.length - 1) {
+      Navigator.pop(context);
+      return;
+    }
     setState(() {
       selectedIndex = index + 1;
     });
@@ -159,7 +162,8 @@ class FullPageViewState extends State<FullPageView> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   ' ' * 5 +
-                      getStoryName(listLengths, selectedIndex, storiesMapList),
+                      storiesMapList[getStoryIndex(
+                          listLengths, selectedIndex, storiesMapList)]['name'],
                   style: TextStyle(
                       color: Colors.white,
                       shadows: [Shadow(blurRadius: 10, color: Colors.black)],
@@ -221,7 +225,7 @@ getInitialIndex(storyNumber, storiesMapList) {
   return total;
 }
 
-String getStoryName(listLengths, index, storiesMapList) {
+int getStoryIndex(listLengths, index, storiesMapList) {
   index = index + 1;
   int temp = 0;
   int val = 0;
@@ -230,5 +234,5 @@ String getStoryName(listLengths, index, storiesMapList) {
     if (temp != listLengths[i]) val += 1;
     temp = listLengths[i];
   }
-  return storiesMapList[val]['name'];
+  return val;
 }
