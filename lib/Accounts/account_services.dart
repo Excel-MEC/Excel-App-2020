@@ -140,6 +140,7 @@ class AccountServices {
         body: json.encode({"referralCode": referalCode}),
       );
       if (response.statusCode == 500) return "error";
+      if (response.statusCode == 404) return "invalid";
       print(response.body);
       print("Referal Status code: " + response.statusCode.toString());
     } catch (e) {

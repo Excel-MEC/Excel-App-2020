@@ -1,5 +1,6 @@
 import 'package:excelapp/Services/API/registration_api.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
+import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -90,11 +91,7 @@ class _RegisterButtonState extends State<RegisterButton> {
       child: RaisedButton(
         onPressed: () => register(context),
         child: isLoading
-            ? Center(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
-                ),
-              )
+            ? LoadingAnimation(color: Colors.white)
             : Text(registered ? 'Registered' : 'Register'),
         color: registered ? Color(0xff337733) : primaryColor,
         textColor: Colors.white,
