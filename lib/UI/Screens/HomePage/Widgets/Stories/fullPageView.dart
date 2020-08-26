@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,10 @@ class FullPageViewState extends State<FullPageView> {
   PageController _pageController;
 
   nextPage(index) {
-    if (index == combinedList.length - 1) Navigator.pop(context);
+    if (index == combinedList.length - 1) {
+      Navigator.pop(context);
+      return;
+    }
     setState(() {
       selectedIndex = index + 1;
     });
@@ -70,18 +74,22 @@ class FullPageViewState extends State<FullPageView> {
               combinedList.length,
               (index) => Stack(
                 children: <Widget>[
-                  Scaffold(
-                    body: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: CachedNetworkImageProvider(
-                            combinedList[index],
-                          ),
-                        ),
+                  CachedNetworkImage(
+                    imageUrl: combinedList[index],
+                    fit: BoxFit.cover,
+                    height: double.infinity,
+                    width: double.infinity,
+                    // Placeholder when it doesnt Load
+                    placeholder: (context, url) => Container(
+                      color: primaryColor,
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: Center(
+                        child: LoadingAnimation(color: Colors.white),
                       ),
                     ),
                   ),
+
                   // Overlay to detect taps for next page & previous page
                   Row(
                     children: <Widget>[
@@ -159,7 +167,8 @@ class FullPageViewState extends State<FullPageView> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   ' ' * 5 +
-                      getStoryName(listLengths, selectedIndex, storiesMapList),
+                      storiesMapList[getStoryIndex(
+                          listLengths, selectedIndex, storiesMapList)]['name'],
                   style: TextStyle(
                       color: Colors.white,
                       shadows: [Shadow(blurRadius: 10, color: Colors.black)],
@@ -221,7 +230,7 @@ getInitialIndex(storyNumber, storiesMapList) {
   return total;
 }
 
-String getStoryName(listLengths, index, storiesMapList) {
+int getStoryIndex(listLengths, index, storiesMapList) {
   index = index + 1;
   int temp = 0;
   int val = 0;
@@ -230,5 +239,5 @@ String getStoryName(listLengths, index, storiesMapList) {
     if (temp != listLengths[i]) val += 1;
     temp = listLengths[i];
   }
-  return storiesMapList[val]['name'];
+  return val;
 }

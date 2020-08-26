@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
+import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/profile_main.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +25,17 @@ class _AddReferalState extends State<AddReferal> {
     });
     var response = await AccountServices.addReferalCode(referal);
     // If we get error
-    if (response == "error") {
-      alertDialog(
-        text: "Something went wrong. Try again",
-        context: context,
-      );
+    if (response == "error" || response == "invalid") {
+      if (response == "error")
+        alertDialog(
+          text: "Something went wrong. Try again",
+          context: context,
+        );
+      else if (response == "invalid")
+        alertDialog(
+          text: "Invalid referal code",
+          context: context,
+        );
       setState(() {
         loading = false;
       });
@@ -74,7 +81,7 @@ class _AddReferalState extends State<AddReferal> {
               ),
             ),
             loading
-                ? CircularProgressIndicator()
+                ? LoadingAnimation()
                 : RaisedButton(
                     color: Color(0xfff5f5f5),
                     elevation: 1,

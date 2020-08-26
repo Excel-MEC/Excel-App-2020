@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/API/campus_ambassador.dart';
+import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Components/LoadingUI/snackBar.dart';
 import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/referedUsers.dart';
+import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/shareOptions.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:social_share/social_share.dart';
@@ -35,14 +37,14 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.asset("assets/campusAmbassador/refer.png", height: 130),
+            Image.asset("assets/campusAmbassador/refer.png", height: 120),
             SizedBox(height: 20),
             Text(
               "Hello " + userData.name.split(" ")[0] + ",",
-              style: TextStyle(fontSize: 23, color: primaryColor),
+              style: TextStyle(fontSize: 22, color: primaryColor),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 13),
             Text(
               "Share this code to other users\n to add them as referals",
               textAlign: TextAlign.center,
@@ -69,10 +71,10 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(width: 30),
+                    SizedBox(width: 25),
                     Text(
                       ambassadorData["id"].toString(),
-                      style: TextStyle(fontSize: 30, color: primaryColor),
+                      style: TextStyle(fontSize: 27, color: primaryColor),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(width: 10),
@@ -95,7 +97,7 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
                 ),
               ),
             ),
-
+            SharingOptions(referalCode: ambassadorData["id"].toString()),
             // Refered users section
             FutureBuilder(
               future: referalList,
@@ -105,7 +107,7 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
                     children: [
                       SizedBox(height: 30),
                       Center(
-                        child: CircularProgressIndicator(),
+                        child: LoadingAnimation(),
                       ),
                     ],
                   );

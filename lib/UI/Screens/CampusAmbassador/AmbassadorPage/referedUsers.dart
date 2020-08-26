@@ -15,6 +15,11 @@ class ReferedUsers extends StatelessWidget {
   ReferedUsers({this.referedUsers});
   @override
   Widget build(BuildContext context) {
+    String referalText;
+    String ref = referedUsers.length == 1 ? "Referal" : "Referals";
+    referalText = referedUsers.isEmpty
+        ? "No Refered Users"
+        : "Your Have " + referedUsers.length.toString() + " $ref";
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -29,6 +34,9 @@ class ReferedUsers extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: <Widget>[
+              SizedBox(height: 15),
+              line(),
+              SizedBox(height: 15),
               Icon(
                 referedUsers.isEmpty ? Icons.info_outline : Icons.stars,
                 color: referedUsers.isEmpty ? Colors.grey : Color(0xff6c63fe),
@@ -36,11 +44,7 @@ class ReferedUsers extends StatelessWidget {
               ),
               SizedBox(height: 15),
               Text(
-                referedUsers.isEmpty
-                    ? "No Refered Users"
-                    : "Your Have " +
-                        referedUsers.length.toString() +
-                        " Referals:",
+                referalText,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 15, color: Color(0xaa000000)),
               ),

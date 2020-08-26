@@ -3,6 +3,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
+import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Services/API/events_api.dart';
@@ -111,8 +112,7 @@ class _EventsListState extends State<EventsList> {
                     },
                   );
                 } else {
-                  // TODO : Proper load UI
-                  return Center(child: CircularProgressIndicator());
+                  return LoadingAnimation();
                 }
               },
             ),

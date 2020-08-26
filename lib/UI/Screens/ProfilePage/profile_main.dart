@@ -1,5 +1,6 @@
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
+import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Components/LoginScreen/login_screen.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
               return ProfilePage(snapshot.data, isProfileUpdated);
             }
           } else {
-            return Center(child: CircularProgressIndicator());
+            return LoadingAnimation();
           }
         },
       ),
