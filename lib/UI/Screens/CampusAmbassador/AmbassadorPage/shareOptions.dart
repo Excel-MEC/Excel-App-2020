@@ -10,9 +10,14 @@ class SharingOptions extends StatelessWidget {
   SharingOptions({this.referalCode});
   @override
   Widget build(BuildContext context) {
-    String refUrl =
+    String siteUrl =
         "https://staging.accounts.excelmec.org/auth/login?referral=$referalCode";
-    String message = "Come join us at Excel 2020\n" + refUrl;
+    String appUrl =
+        "https://play.google.com/store/apps/details?id=org.excelmec";
+    String intro = "Come join us at Excel 2020\n";
+    String message =
+        "$intro Logon to our website: $siteUrl\nOr install our app: $appUrl \n and use referal code $referalCode";
+    // print(message);
     return Container(
       margin: EdgeInsets.all(13),
       child: Row(
@@ -23,10 +28,13 @@ class SharingOptions extends StatelessWidget {
             icon: Icons.mail_outline,
             color: Color(0xff666666),
             action: () {
+              String encodedMessage = Uri.encodeComponent(
+                  "$intro ! <br>Logon to our website: $siteUrl <br><br>Or install our app: $appUrl <br> and use referal code $referalCode");
               final Uri params = Uri(
                 scheme: 'mailto',
                 path: '',
-                query: 'subject=Welcome to Excel 2020&body=$message',
+                query:
+                    'subject=Come join us at Excel 2020&body=$encodedMessage',
               );
               launchURL(params.toString());
             },
@@ -36,10 +44,8 @@ class SharingOptions extends StatelessWidget {
             icon: FontAwesomeIcons.facebookF,
             color: Color(0xff3b5998),
             action: () {
-              var urlmessage =
-                  Uri.encodeComponent("Come Join us at Excel 2020");
-              var encodedURL = Uri.encodeComponent(
-                  "https://staging.accounts.excelmec.org/auth/login?referral=$referalCode");
+              var urlmessage = Uri.encodeComponent(message);
+              var encodedURL = Uri.encodeComponent(siteUrl);
               launchURL(
                   "https://www.facebook.com/sharer/sharer.php?u=$encodedURL&quote=$urlmessage");
             },
@@ -50,8 +56,8 @@ class SharingOptions extends StatelessWidget {
             color: Color(0xff00acee),
             action: () {
               SocialShare.shareTwitter(
-                "This is Social Share plugin",
-                url: refUrl,
+                Uri.encodeComponent(message),
+                url: "",
                 trailingText: "",
                 hashtags: ["ExcelMEC", "Excel2020"],
               );
