@@ -87,7 +87,8 @@ class StoryCircle extends StatelessWidget {
 var storiesMapList = [
   {
     'name': 'First',
-    'thumbnail': "https://img.icons8.com/cute-clipart/2x/penrose-square.png",
+    'thumbnail':
+        "https://i.pinimg.com/originals/df/05/0e/df050ee55770ce3a2205b88de190c372.png",
     'images': [
       'https://i.pinimg.com/originals/ba/f0/56/baf056ed17e25075de467541c4f9a745.jpg',
       'https://i.pinimg.com/564x/bc/19/d3/bc19d39ffca6afd3d185f9ae00ceb549.jpg',
@@ -115,7 +116,7 @@ var storiesMapList = [
   {
     'name': 'Fourth',
     'thumbnail':
-        "https://i.pinimg.com/564x/3b/ce/75/3bce75834335f8aa9d0c1861bbcc3043.jpg",
+        "https://wallpaperstream.com/wallpapers/full/apple-logo/Red-Background-and-White-Apple-Logo-HD-Wallpaper.jpg",
     'images': [
       'https://i.pinimg.com/originals/ba/f0/56/baf056ed17e25075de467541c4f9a745.jpg',
       'https://i.pinimg.com/564x/bc/19/d3/bc19d39ffca6afd3d185f9ae00ceb549.jpg',
