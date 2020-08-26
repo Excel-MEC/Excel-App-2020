@@ -3,6 +3,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/events_api.dart';
 import 'package:excelapp/Services/Database/db_provider.dart';
+import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/backgroundImage.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/eventPageBody.dart';
@@ -94,11 +95,7 @@ class _EventPageState extends State<EventPage> {
                     Color.fromRGBO(0, 0, 0, .8)
                   ],
                 ),
-                Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  ),
-                )
+                LoadingAnimation(color: Colors.white)
               ],
             );
           }

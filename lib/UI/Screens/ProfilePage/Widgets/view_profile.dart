@@ -1,6 +1,7 @@
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
+import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:excelapp/UI/constants.dart';
@@ -43,7 +44,7 @@ class _ViewProfileState extends State<ViewProfile> {
               return viewProfileBody(snapshot.data, context);
             }
           } else {
-            return Center(child: CircularProgressIndicator());
+            return LoadingAnimation();
           }
         },
       ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/API/campus_ambassador.dart';
+import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Components/LoadingUI/snackBar.dart';
 import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/referedUsers.dart';
 import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/shareOptions.dart';
@@ -106,7 +107,7 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
                     children: [
                       SizedBox(height: 30),
                       Center(
-                        child: CircularProgressIndicator(),
+                        child: LoadingAnimation(),
                       ),
                     ],
                   );

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -84,9 +85,8 @@ class FullPageViewState extends State<FullPageView> {
                       height: double.infinity,
                       width: double.infinity,
                       child: Center(
-                          child: CircularProgressIndicator(
-                        valueColor: new AlwaysStoppedAnimation(Colors.white),
-                      )),
+                        child: LoadingAnimation(color: Colors.white),
+                      ),
                     ),
                   ),
 
