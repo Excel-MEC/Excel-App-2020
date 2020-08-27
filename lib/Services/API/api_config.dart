@@ -9,6 +9,6 @@ class APIConfig {
     if (category == 'Talks') return 'talk';
     if (category == 'Workshops') return 'workshop';
     if (category == 'Conferences') return 'conference';
-    return null;
+    return category;
   }
 }
