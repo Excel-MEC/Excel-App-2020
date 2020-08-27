@@ -57,7 +57,7 @@ class EventDetails {
     this.rounds,
   });
 
-  EventDetails.fromJson(Map<String, dynamic> data) {
+  EventDetails.fromJson(data) {
     id = data['id'];
     name = data['name'];
     icon = data['icon'];

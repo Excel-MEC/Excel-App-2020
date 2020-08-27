@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
-import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Services/API/events_api.dart';
@@ -68,39 +67,13 @@ class _EventsListState extends State<EventsList> {
                 // If no internet & not stored
                 if (snapshot.data == "error")
                   return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "An error occured",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        RaisedButton(
-                          color: primaryColor,
-                          padding:
-                              EdgeInsets.symmetric(vertical: 9, horizontal: 40),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Text(
-                            "Retry",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EventsList(endpoint),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                    child: Text(
+                      "Failed to load. Please retry",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.grey,
+                      ),
                     ),
                   );
                 List<Event> list = snapshot.data;
