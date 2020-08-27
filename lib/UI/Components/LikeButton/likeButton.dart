@@ -95,6 +95,7 @@ class _LikeButton extends State<LikeButton> {
                     : Icon(Icons.favorite, color: Colors.redAccent),
                 onPressed: () {
                   likeState ? deleteFromFavourites() : addToFavourites();
+                  getFavouritedStatus();
                 },
               ),
       ),
