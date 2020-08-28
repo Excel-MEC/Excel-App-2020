@@ -1,4 +1,5 @@
 import 'package:excelapp/Accounts/account_config.dart';
+import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_sign_in/google_sign_in.dart';
@@ -35,7 +36,7 @@ class AuthService {
       print(response.statusCode);
       final Map<String, dynamic> responseData = json.decode(response.body);
       // Store JWT token locally
-      String jwt = responseData['token'].toString();
+      String jwt = responseData['accessToken'].toString();
       print("JWT : $jwt");
       prefs.setString('jwt', jwt);
 
@@ -54,6 +55,7 @@ class AuthService {
     await prefs.remove('jwt');
     await prefs.setBool('isProfileUpdated', false);
     await prefs.setBool('isLogged', false);
+    await HiveDB().storeData(valueName: "user", value: null);
 
     return 'success';
   }
