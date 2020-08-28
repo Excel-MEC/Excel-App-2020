@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:excelapp/Services/API/events_api.dart';
+import 'package:excelapp/UI/Components/Appbar/darkAppbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/backgroundImage.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,7 @@ class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: darkAppbar(),
       body: StreamBuilder(
         stream: estream.stream,
         builder: (context, snapshot) {

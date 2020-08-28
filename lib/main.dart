@@ -14,11 +14,15 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    // Set status bar color
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Color(0x07000033)));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Excel 2020',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(brightness: Brightness.light),
       ),
       home: Splashscreen(),
     );
