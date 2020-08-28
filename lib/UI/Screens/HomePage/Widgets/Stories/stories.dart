@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Components/Navigation/customNavigation.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Stories/fullPageView.dart';
@@ -59,7 +60,7 @@ class StoryCircle extends StatelessWidget {
             },
             child: CircleAvatar(
               radius: 29.5,
-              backgroundColor: Color(0xffcc306C),
+              backgroundColor: Color(0xff7799aa),
               child: CircleAvatar(
                 backgroundColor: Colors.white,
                 radius: 28,
