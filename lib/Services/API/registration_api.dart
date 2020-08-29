@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:excelapp/Accounts/fetchAuthorisedData.dart';
+import 'package:excelapp/Accounts/getAuthorisedData.dart';
+import 'package:excelapp/Accounts/postAuthorisedData.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
@@ -47,7 +47,7 @@ class RegistrationAPI {
     print("Fetching registered events");
     var response;
     try {
-      response = await fetchAuthorisedData(APIConfig.baseUrl + '/registration');
+      response = await getAuthorisedData(APIConfig.baseUrl + '/registration');
     } catch (e) {
       print("Error $e");
       return "error";
@@ -94,15 +94,9 @@ class RegistrationAPI {
 // Registers event
   static Future registerEvent(
       {@required int id, @required refreshFunction, @required context}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
     try {
-      var a = await http.post(
-        APIConfig.baseUrl + '/registration',
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer " + jwt,
-          "Content-Type": "application/json"
-        },
+      var a = await postAuthorisedData(
+        url: APIConfig.baseUrl + '/registration',
         body: json.encode({"id": id}),
       );
       print("Registration over with status code " + a.statusCode.toString());
@@ -118,10 +112,7 @@ class RegistrationAPI {
 Future fetchDataFromNet(jwt) async {
   http.Response res;
   try {
-    res = await http.get(
-      APIConfig.baseUrl + '/registration',
-      headers: {HttpHeaders.authorizationHeader: "Bearer " + jwt},
-    );
+    res = await getAuthorisedData(APIConfig.baseUrl + '/registration');
     return res;
   } catch (_) {
     await Future.delayed(Duration(milliseconds: 2000), () async {

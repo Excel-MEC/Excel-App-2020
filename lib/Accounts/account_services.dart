@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:excelapp/Accounts/fetchAuthorisedData.dart';
+import 'package:excelapp/Accounts/getAuthorisedData.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:http/http.dart' as http;
@@ -51,7 +51,7 @@ class AccountServices {
     try {
       print("fetching user details");
       var response =
-          await fetchAuthorisedData(AccountConfig.url + 'profile/view');
+          await getAuthorisedData(AccountConfig.url + 'profile/view');
       if (response == null) return null;
       Map<String, dynamic> responseData = json.decode(response.body);
       user = User.fromJson(responseData);

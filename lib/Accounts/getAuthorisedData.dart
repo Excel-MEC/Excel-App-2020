@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // The following function Refreshes Access token/JWT
 // If it has been expired
 
-fetchAuthorisedData(String url) async {
+getAuthorisedData(String url) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String jwt = prefs.getString('jwt');
   var response = await http.get(
