@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:excelapp/Accounts/fetchAuthorisedData.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:http/http.dart' as http;
@@ -42,19 +43,16 @@ class RegistrationAPI {
 
 // List to display Registered Events
 
-  static Future<List<Event>> fetchRegistrations() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
-    if (jwt == null) return [];
+  static fetchRegistrations() async {
+    print("Fetching registered events");
     var response;
     try {
-      response = await http.get(
-        APIConfig.baseUrl + '/registration',
-        headers: {HttpHeaders.authorizationHeader: "Bearer " + jwt},
-      );
+      response = await fetchAuthorisedData(APIConfig.baseUrl + '/registration');
     } catch (e) {
       print("Error $e");
+      return "error";
     }
+    if (response == "error") return "error";
     List<dynamic> responseData = json.decode(response.body);
     return responseData.map<Event>((event) => Event.fromJson(event)).toList();
   }
