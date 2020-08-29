@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:excelapp/Accounts/getAuthorisedData.dart';
+import 'package:excelapp/Accounts/postAuthorisedData.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:http/http.dart' as http;
@@ -94,9 +95,8 @@ class AccountServices {
     User user;
 
     try {
-      var response = await http.post(
-        AccountConfig.url + 'profile/update',
-        headers: AccountConfig.getHeader(jwt),
+      var response = await postAuthorisedData(
+        url: AccountConfig.url + 'profile/update',
         body: json.encode(userInfo),
       );
       print(response.body);

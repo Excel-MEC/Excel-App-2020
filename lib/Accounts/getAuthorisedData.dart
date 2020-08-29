@@ -14,7 +14,7 @@ getAuthorisedData(String url) async {
     headers: AccountConfig.getHeader(jwt),
   );
   if (response.statusCode == 455) {
-    print("Token Expired, Retrying");
+    print("----------\nToken Expired, Retrying\n----------");
     // Getting Refresh Token
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String refreshToken = prefs.getString('refreshToken');
