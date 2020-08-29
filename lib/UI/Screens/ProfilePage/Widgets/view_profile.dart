@@ -26,6 +26,7 @@ class _ViewProfileState extends State<ViewProfile> {
       return "Not Updated";
     } else {
       User user = await AccountServices.viewProfile();
+      if (user == null) return "error";
       return user;
     }
   }
@@ -40,6 +41,10 @@ class _ViewProfileState extends State<ViewProfile> {
           if (snapshot.hasData) {
             if (snapshot.data == "Not Updated") {
               return Center(child: Text("Profile not updated"));
+            }
+
+            if (snapshot.data == "error") {
+              return Center(child: Text("An error occured, Try again"));
             } else {
               return viewProfileBody(snapshot.data, context);
             }

@@ -21,7 +21,7 @@ class AuthService {
     }
 
     // Store access token locally
-    print("Access Token : $accessToken");
+    print("Google Access Token : $accessToken");
     prefs.setString('access_token', accessToken);
 
     // Send access token to backend -- Recieve jwt
@@ -37,8 +37,11 @@ class AuthService {
       final Map<String, dynamic> responseData = json.decode(response.body);
       // Store JWT token locally
       String jwt = responseData['accessToken'].toString();
+      String refreshToken = responseData['refreshToken'].toString();
       print("JWT : $jwt");
+      print("\nRefresh Token : $refreshToken");
       prefs.setString('jwt', jwt);
+      prefs.setString('refreshToken', refreshToken);
 
       // User has logged in
       prefs.setBool('isLogged', true);

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:excelapp/Accounts/fetchAuthorisedData.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:http/http.dart' as http;
@@ -45,21 +46,19 @@ class AccountServices {
 
   // View user profile
   static viewProfile() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
     User user;
 
     try {
       print("fetching user details");
-      var response = await http.get(
-        AccountConfig.url + 'profile/view',
-        headers: AccountConfig.getHeader(jwt),
-      );
+      var response =
+          await fetchAuthorisedData(AccountConfig.url + 'profile/view');
+      if (response == null) return null;
       Map<String, dynamic> responseData = json.decode(response.body);
       user = User.fromJson(responseData);
       return user;
     } catch (e) {
       print("Error : $e");
+      return null;
     }
   }
 
