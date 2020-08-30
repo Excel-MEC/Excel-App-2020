@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'package:connectivity/connectivity.dart';
 import 'package:excelapp/Services/API/api_config.dart';
-import 'package:excelapp/Services/Database/db_provider.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:flutter/material.dart';
@@ -19,51 +17,39 @@ class EventsList extends StatefulWidget {
 }
 
 class _EventsListState extends State<EventsList> {
-  DBProvider db;
   String endpoint;
-  String tableName;
   StreamController<dynamic> estream;
 
   @override
   void initState() {
     super.initState();
     endpoint = APIConfig.getEndpoint(widget.category);
-    tableName = widget.category;
-    db = DBProvider();
     estream = StreamController<dynamic>();
     fetchEvents(endpoint);
   }
 
   void fetchEvents(String endpoint) async {
-    List<Event> result;
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    result = await db.getEvents(tableName);
-    if (result.isNotEmpty) estream.add(result);
-
-    // No connetions available
-    if (connectivityResult == ConnectivityResult.none) {
-      print("all connections down");
-      if (result.isEmpty) estream.add("offline");
-      return;
-    }
+    var result1;
+    result1 = await EventsAPI.fetchEventListFromStorage(endpoint);
+    if (result1 != null) estream.add(result1);
 
     // If database empty or has been 1 hr since last fetched: Fetch from API
-    if (result.isEmpty || connectivityResult != ConnectivityResult.none) {
-      int lastUpdatedinMinutes =
-          await HiveDB().getTimeStamp("eventlist-$endpoint");
-      print("$endpoint last fetched $lastUpdatedinMinutes mins ago");
-      // If above 60 mins fetch from net
-      if (lastUpdatedinMinutes == null ||
-          lastUpdatedinMinutes > 60 ||
-          result.isEmpty) {
-        print("-Fetching from api and updating database: $endpoint");
-        result = await EventsAPI.fetchEvents(endpoint);
-        if (result == null) return;
-        await db.addEvents(result, tableName);
-        HiveDB().setTimeStamp("eventlist-$endpoint");
-        print("Fetched & Added to DB");
-        estream.add(result);
+    int lastUpdatedinMinutes =
+        await HiveDB().getTimeStamp("eventlist-$endpoint");
+    print("$endpoint last fetched $lastUpdatedinMinutes mins ago");
+    // If above 60 mins fetch from net
+    if (lastUpdatedinMinutes == null ||
+        lastUpdatedinMinutes > 60 ||
+        result1 == null) {
+      var result2 = await EventsAPI.fetchAndStoreEventListFromNet(endpoint);
+      if (result2 == "error" && result1 == null) {
+        estream.add("error");
+        return;
       }
+      if (result2 == "error") return;
+      HiveDB().setTimeStamp("eventlist-$endpoint");
+      print("Fetched & Added to DB");
+      estream.add(result2);
     }
   }
 
@@ -79,10 +65,10 @@ class _EventsListState extends State<EventsList> {
               stream: estream.stream,
               builder: (context, snapshot) {
                 // If no internet & not stored
-                if (snapshot.data == "offline")
+                if (snapshot.data == "error")
                   return Center(
                     child: Text(
-                      "You are offline",
+                      "Failed to load. Please retry",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 17,
@@ -91,20 +77,20 @@ class _EventsListState extends State<EventsList> {
                     ),
                   );
                 List<Event> list = snapshot.data;
+                // If data is present
                 if (snapshot.hasData) {
-                  // If list is empty
-                  if (snapshot.data.isEmpty) {
+                  // If no events
+                  if (list.isEmpty)
                     return Center(
                       child: Text(
                         "No Events",
-                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 17,
                           color: Colors.grey,
                         ),
                       ),
                     );
-                  }
+
                   return ListView.builder(
                     itemCount: list.length,
                     itemBuilder: (BuildContext context, int index) {

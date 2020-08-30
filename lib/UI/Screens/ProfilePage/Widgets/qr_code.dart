@@ -64,20 +64,19 @@ class QrCode extends StatelessWidget {
 
 qrDialog(BuildContext context, String qrUrl) {
   showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return Container(
-          height: MediaQuery.of(context).size.height / 2,
-          child: Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width / 2,
-              child: CachedNetworkImage(
-                imageUrl: qrUrl,
-                placeholder: (context, str) =>
-                    Center(child: CircularProgressIndicator()),
-              ),
-            ),
+    context: context,
+    builder: (BuildContext bc) {
+      return Container(
+        margin: EdgeInsets.only(bottom: 60),
+        child: Center(
+          child: CachedNetworkImage(
+            imageUrl: qrUrl,
+            height: MediaQuery.of(context).size.height / 2.5,
+            placeholder: (context, str) =>
+                Center(child: CircularProgressIndicator()),
           ),
-        );
-      });
+        ),
+      );
+    },
+  );
 }

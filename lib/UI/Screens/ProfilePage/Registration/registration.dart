@@ -13,8 +13,10 @@ class RegisteredEvents extends StatefulWidget {
 }
 
 class _RegisteredEventsState extends State<RegisteredEvents> {
+  Future registrationList;
   @override
   void initState() {
+    registrationList = RegistrationAPI.fetchRegistrations();
     super.initState();
   }
 
@@ -27,11 +29,14 @@ class _RegisteredEventsState extends State<RegisteredEvents> {
           SizedBox(height: 20),
           Expanded(
             child: FutureBuilder(
-              future: RegistrationAPI.fetchRegistrations(),
+              future: registrationList,
               builder: (context, snapshot) {
-                List<Event> list = snapshot.data;
                 if (snapshot.hasData) {
+                  if (snapshot.data == "error") {
+                    return Center(child: Text("An error occured, Try again"));
+                  }
                   // If no data is obtained from API
+                  List<Event> list = snapshot.data;
                   if (snapshot.data.isEmpty) {
                     return Center(
                       child: Text(

@@ -16,7 +16,7 @@ class Event {
       this.category,
       this.datetime});
 
-  Event.fromJson(Map<String, dynamic> json) {
+  Event.fromJson(json) {
     id = json['id'];
     name = json['name'];
     icon = json['icon'];

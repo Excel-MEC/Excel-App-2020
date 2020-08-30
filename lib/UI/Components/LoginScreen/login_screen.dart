@@ -1,6 +1,7 @@
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Accounts/auth_service.dart';
 import 'package:excelapp/Services/API/favourites_api.dart';
+import 'package:excelapp/UI/Components/Appbar/darkAppbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/profile_main.dart';
 import 'package:excelapp/UI/constants.dart';
@@ -50,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: customappbar('Excel Accounts'),
+      appBar: darkAppbar(color: primaryColor),
       body: Container(
         color: primaryColor,
         child: Center(

@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:excelapp/Accounts/deleteAuthorisedData.dart';
+import 'package:excelapp/Accounts/getAuthorisedData.dart';
+import 'package:excelapp/Accounts/postAuthorisedData.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/api_config.dart';
-import 'package:http/http.dart' as http;
-import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +47,7 @@ class FavouritesAPI {
 
     FavouritesStatus.instance.favouritesStatus = 4;
     var response = await fetchDataFromNet(jwt);
-    print('--- Favourites: Network request ---');
+    print('--- Favourites: Fetched from network ---');
     FavouritesStatus.instance.favouritesStatus = 1;
 
     try {
@@ -87,12 +88,8 @@ class FavouritesAPI {
       return 'Network not available';
     if (!await isFavourited(id)) return "Already Unfavourited";
     try {
-      var a = await http.delete(
+      var a = await deleteAuthorisedData(
         APIConfig.baseUrl + '/bookmark/' + id.toString(),
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer " + jwt,
-          "Content-Type": "application/json"
-        },
       );
       print("Removing from favourites attempted with status code " +
           a.statusCode.toString());
@@ -117,12 +114,8 @@ class FavouritesAPI {
       return "Network not Aailable";
     else if (await isFavourited(id)) return "Already in Favourites";
     try {
-      var a = await http.post(
-        APIConfig.baseUrl + '/bookmark',
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer " + jwt,
-          "Content-Type": "application/json"
-        },
+      var a = await postAuthorisedData(
+        url: APIConfig.baseUrl + '/bookmark',
         body: json.encode({"id": id}),
       );
       print("Adding to favourites attempted with status code " +
@@ -142,12 +135,9 @@ class FavouritesAPI {
 }
 
 Future fetchDataFromNet(jwt) async {
-  http.Response res;
+  var res;
   try {
-    res = await http.get(
-      APIConfig.baseUrl + '/bookmark',
-      headers: {HttpHeaders.authorizationHeader: "Bearer " + jwt},
-    );
+    res = await getAuthorisedData(APIConfig.baseUrl + '/bookmark');
     return res;
   } catch (_) {
     await Future.delayed(Duration(milliseconds: 3000), () async {

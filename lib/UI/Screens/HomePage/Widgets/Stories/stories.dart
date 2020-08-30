@@ -59,7 +59,7 @@ class StoryCircle extends StatelessWidget {
             },
             child: CircleAvatar(
               radius: 29.5,
-              backgroundColor: Color(0xffcc306C),
+              backgroundColor: Color(0xff7799aa),
               child: CircleAvatar(
                 backgroundColor: Colors.white,
                 radius: 28,

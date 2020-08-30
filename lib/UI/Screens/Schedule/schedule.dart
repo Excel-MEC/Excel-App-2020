@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:excelapp/Services/API/schedule_api.dart';
+import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/Schedule/Widgets/schedulePage.dart';
+import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Schedule extends StatefulWidget {
   @override
@@ -12,8 +13,6 @@ class Schedule extends StatefulWidget {
 class _ScheduleState extends State<Schedule> {
   bool dataLoaded = false;
   StreamController<dynamic> estream;
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
 
   fetchfromNet() async {
     var dataFromNet = await fetchAndStoreScheduleFromNet();
@@ -21,7 +20,6 @@ class _ScheduleState extends State<Schedule> {
       estream.add(dataFromNet);
       dataLoaded = true;
     }
-    _refreshController.refreshCompleted();
   }
 
   initialisePage() async {
@@ -43,24 +41,53 @@ class _ScheduleState extends State<Schedule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SmartRefresher(
-        enablePullDown: true,
-        onRefresh: fetchfromNet,
-        controller: _refreshController,
-        child: StreamBuilder(
-          stream: estream.stream,
-          builder: (context, snapshot) {
-            if (snapshot.data == "error")
-              return Center(
-                child: Text("Couldn't connect, pull down to refresh"),
+      body: StreamBuilder(
+        stream: estream.stream,
+        builder: (context, snapshot) {
+          // If couldnt fetch
+          if (snapshot.data == "error") return errorRetry();
+          // If got data
+          if (snapshot.hasData)
+            return new SchedulePage(scheduleData: snapshot.data);
+          // When loading
+          return LoadingAnimation();
+        },
+      ),
+    );
+  }
+
+  Widget errorRetry() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Couldn't fetch Schedule",
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.grey,
+            ),
+          ),
+          SizedBox(height: 30),
+          RaisedButton(
+            color: primaryColor,
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Schedule(),
+                ),
               );
-            if (snapshot.hasData)
-              return new SchedulePage(scheduleData: snapshot.data);
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ),
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              "Retry",
+              style: TextStyle(color: Colors.white),
+            ),
+          )
+        ],
       ),
     );
   }

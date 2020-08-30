@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:excelapp/Models/event_details.dart';
+import 'package:excelapp/UI/Components/Appbar/darkAppbar.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/backgroundImage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/eventDescription.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class MoreDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: darkAppbar(),
       body: Stack(
         children: <Widget>[
           // Background Image
