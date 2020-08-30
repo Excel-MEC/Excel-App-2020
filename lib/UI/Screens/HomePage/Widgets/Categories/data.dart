@@ -21,7 +21,7 @@ var categoriesMap = [
     "name": "Workshops",
     "info": "End up expertising in a skill by attending our workshops",
     "imageUrl":
-        "https://images.unsplash.com/photo-1524169358666-79f22534bc6e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+        "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
   },
   {
     "name": "Conferences",

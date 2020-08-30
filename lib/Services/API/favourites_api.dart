@@ -47,7 +47,7 @@ class FavouritesAPI {
 
     FavouritesStatus.instance.favouritesStatus = 4;
     var response = await fetchDataFromNet(jwt);
-    print('--- Favourites: Network request ---');
+    print('--- Favourites: Fetched from network ---');
     FavouritesStatus.instance.favouritesStatus = 1;
 
     try {
