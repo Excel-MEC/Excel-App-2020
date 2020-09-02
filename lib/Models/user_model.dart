@@ -11,6 +11,7 @@ class User {
   String institutionName;
   String gender;
   String mobileNumber;
+  int categoryId;
   String category;
   String ambassador;
   int referrerAmbassadorId;
@@ -44,13 +45,12 @@ class User {
     qrCodeUrl = json['qrCodeUrl'];
     institutionId =
         json.containsKey('institutionId') ? json['institutionId'] : 0;
-    institutionName = json.containsKey('institutionName')
-        ? json['institutionName']
-        : 'Not Registered';
-    gender = json['gender'] != null ? json['gender'] : 'Not Registered';
-    mobileNumber =
-        json['mobileNumber'] != null ? json['mobileNumber'] : 'Not Registered';
-    category = json['category'] != null ? json['category'] : 'Not Registered';
+    institutionName =
+        json.containsKey('institutionName') ? json['institutionName'] : null;
+    gender = json['gender'];
+    mobileNumber = json['mobileNumber'];
+    categoryId = json['categoryId'];
+    category = json['category'];
     ambassador = jsonEncode(json['ambassador']);
     referrerAmbassadorId = json['referrerAmbassadorId'];
     referrer = jsonEncode(json['referrer']);
@@ -69,6 +69,7 @@ class User {
     data['institutionName'] = this.institutionName;
     data['gender'] = this.gender;
     data['mobileNumber'] = this.mobileNumber;
+    data['categoryId'] = this.categoryId;
     data['ambassador'] = jsonDecode(this.ambassador);
     data['referrerAmbassadorId'] = this.referrerAmbassadorId;
     data['referrer'] = jsonDecode(this.referrer);

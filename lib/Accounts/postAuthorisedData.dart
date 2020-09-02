@@ -18,6 +18,7 @@ postAuthorisedData({String url, body}) async {
     },
     body: body,
   );
+  print(response.statusCode);
   if (response.statusCode == 455) {
     print("----------\nToken Expired, Retrying\n----------");
     // Getting Refresh Token
@@ -53,7 +54,7 @@ postAuthorisedData({String url, body}) async {
       body: body,
     );
   }
-  if (response.statusCode == 200) return response;
+  if (response.statusCode == 200 || response.statusCode == 422) return response;
   print("Error fetching Data");
   return null;
 }

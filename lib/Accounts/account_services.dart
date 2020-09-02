@@ -65,18 +65,14 @@ class AccountServices {
 
   // Fetch list of institutions
   static fetchInstitutions(String category) async {
-    if (category == "professional") {
+    if (category == "Other") {
       return [];
     }
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
-
     try {
       print("fetching institutions");
-      var response = await http.get(
+      var response = await getAuthorisedData(
         AccountConfig.url + 'institution/$category/list',
-        headers: AccountConfig.getHeader(jwt),
       );
       List<dynamic> responseData = json.decode(response.body);
       // print(responseData);
