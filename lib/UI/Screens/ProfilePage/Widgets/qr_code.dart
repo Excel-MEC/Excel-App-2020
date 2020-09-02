@@ -71,7 +71,7 @@ qrDialog(BuildContext context, String qrUrl) {
         child: Center(
           child: CachedNetworkImage(
             imageUrl: qrUrl,
-            height: MediaQuery.of(context).size.height / 2.5,
+            height: MediaQuery.of(context).size.height / 3.2,
             placeholder: (context, str) =>
                 Center(child: CircularProgressIndicator()),
           ),
