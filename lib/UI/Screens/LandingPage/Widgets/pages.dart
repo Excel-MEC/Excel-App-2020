@@ -8,7 +8,7 @@ Widget introPage() {
       Text(
         'Welcome',
         style: TextStyle(
-            fontSize: 20, color: primaryColor, fontFamily: pfontFamily),
+            fontSize: 20, color: Color(0xff555555), fontFamily: pfontFamily),
       ),
       SizedBox(height: 40),
       Hero(
@@ -30,7 +30,7 @@ Widget introPage() {
         child: Text(
           "Excel is the annual techno-managerial fest of Govt. Model Engineering College. It is the nations second and south India's first ever of its kind !",
           style: TextStyle(
-              fontSize: 15, color: primaryColor, fontFamily: pfontFamily),
+              fontSize: 15, color: lightTextColor, fontFamily: pfontFamily),
         ),
       ),
     ],
@@ -62,7 +62,7 @@ Widget page(title, desc, img, context) {
             desc,
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: 15, color: primaryColor, fontFamily: pfontFamily),
+                fontSize: 15, color: lightTextColor, fontFamily: pfontFamily),
           ),
         ),
       ],
@@ -90,14 +90,14 @@ Widget lastPage(context) {
         Text(
           "Inspire | Innovate | Engineer",
           style: TextStyle(
-              fontSize: 17, color: primaryColor, fontFamily: pfontFamily),
+              fontSize: 17, color: lightTextColor, fontFamily: pfontFamily),
         ),
         SizedBox(height: 30),
         Text(
           "We are as exited as you are !\n Get on the hype train & experience the fest of the year.",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 15, color: primaryColor, fontFamily: pfontFamily),
+              fontSize: 15, color: lightTextColor, fontFamily: pfontFamily),
         ),
         SizedBox(height: 50),
         RaisedButton(

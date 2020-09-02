@@ -58,7 +58,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
     if (_categoryId == 1 || _categoryId == 0) {
       await getInstitutions(context);
       _institutionName = await getInstitutionName(_institutionId);
-      print(_institutionName);
       setState(() {
         _institutionName = _institutionName;
       });
@@ -76,11 +75,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
     else
       category = "Other";
     final loadingDialog = alertBox("Fetching Institutions");
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => loadingDialog,
-      barrierDismissible: false,
-    );
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) => loadingDialog,
+    //   barrierDismissible: false,
+    // );
 
     try {
       List<Institution> res = await AccountServices.fetchInstitutions(category);
@@ -91,9 +90,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
         institutions.clear();
         institutions.addAll(res);
       });
-      Navigator.of(context, rootNavigator: true).pop();
+      // Navigator.of(context, rootNavigator: true).pop();
     } catch (_) {
-      Navigator.of(context, rootNavigator: true).pop();
+      // Navigator.of(context, rootNavigator: true).pop();
       alertDialog(
         text: "Failed to fetch institutions\nTry again",
         context: context,

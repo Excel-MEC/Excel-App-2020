@@ -58,12 +58,17 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            'Are you sure you want to Logout ?',
-            style: TextStyle(fontSize: 17, color: primaryColor),
+            'Do you want to Logout ?',
+            style: TextStyle(fontSize: 16, color: primaryColor),
           ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           actions: <Widget>[
             FlatButton(
-              child: Text("Yes"),
+              child: Text(
+                "Yes",
+                style: TextStyle(fontSize: 14.5, color: primaryColor),
+              ),
               onPressed: () {
                 // Logout
                 logoutUser();
@@ -71,7 +76,10 @@ class _ProfilePageState extends State<ProfilePage> {
               },
             ),
             FlatButton(
-              child: Text("Cancel"),
+              child: Text(
+                "Cancel",
+                style: TextStyle(fontSize: 14.5, color: primaryColor),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
