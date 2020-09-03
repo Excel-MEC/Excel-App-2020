@@ -12,7 +12,7 @@ fetchAmbassadorDetails() async {
   if (prefs.getBool('isLogged') == false || prefs.getBool('isLogged') == null) {
     return 'notLoggedIn';
   } else {
-    var user = await HiveDB().retrieveData(valueName: "user");
+    var user = await HiveDB.retrieveData(valueName: "user");
     return User.fromJson(user);
   }
 }

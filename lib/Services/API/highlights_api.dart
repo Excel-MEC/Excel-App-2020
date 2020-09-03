@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 fetchHighlightsFromStorage() async {
   print("-    Highlights: Storage Fetch    -");
-  var highlightsData = await HiveDB().retrieveData(valueName: "highlights");
+  var highlightsData = await HiveDB.retrieveData(valueName: "highlights");
   if (highlightsData == null) return;
   return highlightsData
       .map<Highlights>((highlight) => Highlights.fromJson(highlight))
@@ -18,7 +18,7 @@ fetchAndStoreHighlightsFromNet() async {
   try {
     var response = await http.get(APIConfig.baseUrl + "/highlights");
     List responseData = json.decode(response.body);
-    await HiveDB().storeData(valueName: "highlights", value: responseData);
+    await HiveDB.storeData(valueName: "highlights", value: responseData);
     return responseData
         .map<Highlights>((highlight) => Highlights.fromJson(highlight))
         .toList();

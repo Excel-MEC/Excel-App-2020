@@ -54,7 +54,6 @@ postAuthorisedData({String url, body}) async {
       body: body,
     );
   }
-  if (response.statusCode == 200 || response.statusCode == 422) return response;
-  print("Error fetching Data");
-  return null;
+  print(response.statusCode);
+  return response;
 }

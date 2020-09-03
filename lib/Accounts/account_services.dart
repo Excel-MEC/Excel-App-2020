@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:excelapp/Accounts/getAuthorisedData.dart';
 import 'package:excelapp/Accounts/postAuthorisedData.dart';
 import 'package:excelapp/Models/user_model.dart';
@@ -26,7 +25,7 @@ class AccountServices {
       print(responseData);
       user = User.fromJson(responseData);
       print("adding to database");
-      await HiveDB().storeData(valueName: "user", value: user.toJson());
+      await HiveDB.storeData(valueName: "user", value: user.toJson());
       print("done");
 
       // Store user id in shared preference
@@ -113,7 +112,7 @@ class AccountServices {
       Map<String, dynamic> responseData = json.decode(response.body);
       user = User.fromJson(responseData);
       print("adding to database");
-      await HiveDB().storeData(valueName: "user", value: user.toJson());
+      await HiveDB.storeData(valueName: "user", value: user.toJson());
       print("done");
     } catch (e) {
       print("Error : $e");
@@ -123,15 +122,9 @@ class AccountServices {
 
 // Used to add referal code to account(Only possible once for an account)
   static addReferalCode(referalCode) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
     try {
-      var response = await http.post(
-        AccountConfig.url + 'Ambassador/referral',
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer " + jwt,
-          "Content-Type": "application/json"
-        },
+      var response = await postAuthorisedData(
+        url: AccountConfig.url + 'Ambassador/referral',
         body: json.encode({"referralCode": referalCode}),
       );
       if (response.statusCode == 500) return "error";
