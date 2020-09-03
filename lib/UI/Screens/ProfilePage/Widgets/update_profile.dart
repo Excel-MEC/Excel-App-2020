@@ -56,7 +56,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     _gender = user.gender;
     _categoryId = user.categoryId;
     if (_categoryId == 1 || _categoryId == 0) {
-      await getInstitutions(context);
+      await getInstitutions(loading: false);
       _institutionName = await getInstitutionName(_institutionId);
       setState(() {
         _institutionName = _institutionName;
@@ -65,7 +65,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   }
 
   // Fetch institutions based on category
-  getInstitutions(BuildContext context) async {
+  getInstitutions({loading = true}) async {
     await Future.delayed(Duration(microseconds: 1));
     String category;
     if (_categoryId == 0)
@@ -75,11 +75,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
     else
       category = "Other";
     final loadingDialog = alertBox("Fetching Institutions");
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) => loadingDialog,
-    //   barrierDismissible: false,
-    // );
+    if (loading)
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => loadingDialog,
+        barrierDismissible: false,
+      );
 
     try {
       List<Institution> res = await AccountServices.fetchInstitutions(category);
@@ -90,9 +91,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
         institutions.clear();
         institutions.addAll(res);
       });
-      // Navigator.of(context, rootNavigator: true).pop();
+      if (loading) Navigator.of(context, rootNavigator: true).pop();
     } catch (_) {
-      // Navigator.of(context, rootNavigator: true).pop();
+      if (loading) Navigator.of(context, rootNavigator: true).pop();
       alertDialog(
         text: "Failed to fetch institutions\nTry again",
         context: context,
@@ -344,7 +345,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               });
                             }
                             if (value != "Other") {
-                              getInstitutions(context);
+                              getInstitutions();
                             }
                             _institutionName = null;
                           },
