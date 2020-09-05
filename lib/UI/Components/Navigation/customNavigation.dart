@@ -115,6 +115,7 @@ Widget _buildFab(BuildContext context, bottonNavHidden) {
         child: Image.asset(
           'assets/excel logo.png',
           height: 37,
+          color: Colors.white,
         ),
         elevation: 2.0,
       ),

@@ -6,7 +6,7 @@ import 'package:excelapp/Services/Database/hive_operations.dart';
 
 fetchScheduleFromStorage() async {
   print("-    Schedule: Storage Fetch    -");
-  var scheduleData = await HiveDB().retrieveData(valueName: "schedule");
+  var scheduleData = await HiveDB.retrieveData(valueName: "schedule");
   if (scheduleData == null) return;
   return scheduleJSONtoModel(scheduleData);
 }
@@ -26,7 +26,7 @@ fetchAndStoreScheduleFromNet() async {
     }
 
     // Updates in DB
-    await HiveDB().storeData(valueName: "schedule", value: scheduleData);
+    await HiveDB.storeData(valueName: "schedule", value: scheduleData);
 
     return scheduleJSONtoModel(scheduleData);
   } catch (_) {

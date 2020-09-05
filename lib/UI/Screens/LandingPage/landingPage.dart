@@ -56,7 +56,7 @@ class _LandingPageState extends State<LandingPage> {
       nextFlex: 0,
       skip: Text('Skip',
           style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor)),
-      next: Icon(Icons.arrow_forward),
+      next: Icon(Icons.arrow_forward, color: primaryColor),
       done: Text(''),
       dotsDecorator: DotsDecorator(
         activeColor: primaryColor,

@@ -35,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
     RegistrationAPI.fetchRegisteredEvents();
   }
 
-  logoutUser(BuildContext context) async {
+  logoutUser() async {
     final alertDialog = alertBox("Please Wait");
     showDialog(
       context: context,
@@ -49,6 +49,44 @@ class _ProfilePageState extends State<ProfilePage> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => CheckUserLoggedIn()),
+    );
+  }
+
+  logOutConfirmation() async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Do you want to Logout ?',
+            style: TextStyle(fontSize: 16, color: primaryColor),
+          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                "Yes",
+                style: TextStyle(fontSize: 14.5, color: primaryColor),
+              ),
+              onPressed: () {
+                // Logout
+                logoutUser();
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text(
+                "Cancel",
+                style: TextStyle(fontSize: 14.5, color: primaryColor),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -102,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             // Logout
             GestureDetector(
-              onTap: () => logoutUser(context),
+              onTap: () => logOutConfirmation(),
               child: cardBuilder('Logout', true),
             ),
           ],

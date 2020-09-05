@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color primaryColor = Color(0xff252a50);
+const Color lightTextColor = Color(0xff555555);
 
 const String pfontFamily = "poppins";
 const String sfontFamily = "quicksand";

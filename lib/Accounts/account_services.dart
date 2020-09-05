@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:excelapp/Accounts/getAuthorisedData.dart';
 import 'package:excelapp/Accounts/postAuthorisedData.dart';
 import 'package:excelapp/Models/user_model.dart';
@@ -26,7 +25,7 @@ class AccountServices {
       print(responseData);
       user = User.fromJson(responseData);
       print("adding to database");
-      await HiveDB().storeData(valueName: "user", value: user.toJson());
+      await HiveDB.storeData(valueName: "user", value: user.toJson());
       print("done");
 
       // Store user id in shared preference
@@ -53,7 +52,7 @@ class AccountServices {
       print("fetching user details");
       var response =
           await getAuthorisedData(AccountConfig.url + 'profile/view');
-      if (response == null) return null;
+      if (response.statusCode != 200) return null;
       Map<String, dynamic> responseData = json.decode(response.body);
       user = User.fromJson(responseData);
       return user;
@@ -65,18 +64,14 @@ class AccountServices {
 
   // Fetch list of institutions
   static fetchInstitutions(String category) async {
-    if (category == "professional") {
+    if (category == "Other") {
       return [];
     }
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
-
     try {
       print("fetching institutions");
-      var response = await http.get(
+      var response = await getAuthorisedData(
         AccountConfig.url + 'institution/$category/list',
-        headers: AccountConfig.getHeader(jwt),
       );
       List<dynamic> responseData = json.decode(response.body);
       // print(responseData);
@@ -99,6 +94,8 @@ class AccountServices {
         url: AccountConfig.url + 'profile/update',
         body: json.encode(userInfo),
       );
+      if (response.statusCode != 200 && response.statusCode != 422)
+        return "error";
       print(response.body);
     } catch (e) {
       print("Error $e");
@@ -117,7 +114,7 @@ class AccountServices {
       Map<String, dynamic> responseData = json.decode(response.body);
       user = User.fromJson(responseData);
       print("adding to database");
-      await HiveDB().storeData(valueName: "user", value: user.toJson());
+      await HiveDB.storeData(valueName: "user", value: user.toJson());
       print("done");
     } catch (e) {
       print("Error : $e");
@@ -127,15 +124,9 @@ class AccountServices {
 
 // Used to add referal code to account(Only possible once for an account)
   static addReferalCode(referalCode) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
     try {
-      var response = await http.post(
-        AccountConfig.url + 'Ambassador/referral',
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer " + jwt,
-          "Content-Type": "application/json"
-        },
+      var response = await postAuthorisedData(
+        url: AccountConfig.url + 'Ambassador/referral',
         body: json.encode({"referralCode": referalCode}),
       );
       if (response.statusCode == 500) return "error";

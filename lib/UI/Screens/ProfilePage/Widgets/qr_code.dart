@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:excelapp/UI/Screens/ProfilePage/Widgets/updateImage.dart';
 import 'package:excelapp/UI/Themes/profile_themes.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
@@ -17,26 +18,38 @@ class QrCode extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // profile pic
-              Container(
-                height: MediaQuery.of(context).size.height / 7,
-                width: MediaQuery.of(context).size.height / 7,
-                decoration: BoxDecoration(shape: BoxShape.circle),
-                child: CachedNetworkImage(
-                  imageUrl: imageUrl,
-                  imageBuilder: (context, image) => Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: image,
-                        fit: BoxFit.cover,
+              // Profile pic
+              Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    radius: MediaQuery.of(context).size.height / 14,
+                    backgroundImage: CachedNetworkImageProvider(
+                      imageUrl,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ImgUpload(imgUrl: imageUrl)),
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 15,
+                      backgroundColor: Colors.black45,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                        size: 17,
                       ),
                     ),
                   ),
-                  placeholder: (context, str) =>
-                      Center(child: CircularProgressIndicator()),
-                ),
+                ],
               ),
+
               // User name
               SizedBox(height: 5),
               Text(
@@ -71,7 +84,7 @@ qrDialog(BuildContext context, String qrUrl) {
         child: Center(
           child: CachedNetworkImage(
             imageUrl: qrUrl,
-            height: MediaQuery.of(context).size.height / 2.5,
+            width: MediaQuery.of(context).size.width * .60,
             placeholder: (context, str) =>
                 Center(child: CircularProgressIndicator()),
           ),

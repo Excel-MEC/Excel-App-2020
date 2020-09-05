@@ -23,7 +23,7 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
     } else {
       // Fetch user details from database
       isProfileUpdated = prefs.getBool('isProfileUpdated') ?? false;
-      var user = await HiveDB().retrieveData(valueName: "user");
+      var user = await HiveDB.retrieveData(valueName: "user");
       if (user == null) return "login";
       return User.fromJson(user);
     }

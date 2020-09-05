@@ -18,7 +18,6 @@ class UpdateProfile extends StatefulWidget {
 }
 
 class _UpdateProfileState extends State<UpdateProfile> {
-  bool categorySelected;
   List<Institution> institutions = [];
 
   // Form Fields
@@ -30,7 +29,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
   int _institutionId;
   String _institutionName;
   String _gender;
-  bool _institutionSelected = false;
   List<String> _categories = <String>['College', 'School', 'Other'];
   List<String> _genders = <String>['Male', 'Female', 'Other'];
   String notInListOptionName = "NOT IN THIS LIST";
@@ -45,11 +43,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
   void initState() {
     super.initState();
     initialiseUserDetails(widget.user);
-    categorySelected = false;
   }
 
   // Initialize form fields
-  initialiseUserDetails(User user) {
+  initialiseUserDetails(User user) async {
     // _id = user.id;
     _name = user.name;
     _mobile = user.mobileNumber;
@@ -57,16 +54,33 @@ class _UpdateProfileState extends State<UpdateProfile> {
     _institutionId = user.institutionId;
     _institutionName = user.institutionName;
     _gender = user.gender;
+    _categoryId = user.categoryId;
+    if (_categoryId == 1 || _categoryId == 0) {
+      await getInstitutions(loading: false);
+      _institutionName = await getInstitutionName(_institutionId);
+      setState(() {
+        _institutionName = _institutionName;
+      });
+    }
   }
 
   // Fetch institutions based on category
-  getInstitutions(BuildContext context, String category) async {
+  getInstitutions({loading = true}) async {
+    await Future.delayed(Duration(microseconds: 1));
+    String category;
+    if (_categoryId == 0)
+      category = "College";
+    else if (_categoryId == 1)
+      category = "School";
+    else
+      category = "Other";
     final loadingDialog = alertBox("Fetching Institutions");
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => loadingDialog,
-      barrierDismissible: false,
-    );
+    if (loading)
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => loadingDialog,
+        barrierDismissible: false,
+      );
 
     try {
       List<Institution> res = await AccountServices.fetchInstitutions(category);
@@ -76,11 +90,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
       setState(() {
         institutions.clear();
         institutions.addAll(res);
-        categorySelected = true;
       });
-      Navigator.of(context, rootNavigator: true).pop();
+      if (loading) Navigator.of(context, rootNavigator: true).pop();
     } catch (_) {
-      Navigator.of(context, rootNavigator: true).pop();
+      if (loading) Navigator.of(context, rootNavigator: true).pop();
       alertDialog(
         text: "Failed to fetch institutions\nTry again",
         context: context,
@@ -97,7 +110,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
       builder: (BuildContext context) => loadingDialog,
       barrierDismissible: false,
     );
-    if (_gender == null || _gender == "Not Registered") {
+    if (_gender == null || _gender == null) {
       Navigator.of(context, rootNavigator: true).pop();
       return "Gender not selected";
     }
@@ -110,18 +123,21 @@ class _UpdateProfileState extends State<UpdateProfile> {
     if (_institutionName == notInListOptionName) {
       _institutionId = 0;
     }
-    if (_institutionId < 0) {
+    if (_institutionId == null && _categoryId != 2) {
       Navigator.of(context, rootNavigator: true).pop();
       return "One or more fields are invalid!";
     }
-    if (_categoryId != 2 && !_institutionSelected) {
+    if (_categoryId != 2 && _institutionName == null) {
       Navigator.of(context, rootNavigator: true).pop();
       return "Select institution";
     }
-    print(_institutionId);
     if (_customInstitutionName == notInListOptionName) {
       Navigator.of(context, rootNavigator: true).pop();
       return "Enter institution name";
+    }
+    if (_institutionName == null && _categoryId != 2) {
+      Navigator.of(context, rootNavigator: true).pop();
+      return "Choose institution name";
     }
 
     String finalInstitutionName = (_institutionName == notInListOptionName)
@@ -154,6 +170,17 @@ class _UpdateProfileState extends State<UpdateProfile> {
       }
     });
     return id;
+  }
+
+  // Method to get institution name
+  Future<String> getInstitutionName(int institutionId) async {
+    String name;
+    institutions.forEach((e) {
+      if (institutionId == e.id) {
+        name = e.name;
+      }
+    });
+    return name;
   }
 
   @override
@@ -197,7 +224,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   SizedBox(height: 20),
                   // Mobile Number
                   TextFormField(
-                    initialValue: _mobile == "Not Registered" ? "" : _mobile,
+                    initialValue: _mobile ?? "",
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp("[0-9]"))
@@ -243,10 +270,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           style: TextStyle(color: primaryColor),
                           underline: Center(),
                           icon: Icon(Icons.keyboard_arrow_down),
-                          hint: Text(
-                              (_gender == "Not Registered" || _gender == null)
-                                  ? "Select Gender"
-                                  : _gender),
+                          hint: Text(_gender ?? "Select Gender"),
                           items: _genders.map<DropdownMenuItem<String>>((val) {
                             return DropdownMenuItem<String>(
                               value: val,
@@ -289,9 +313,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           icon: Icon(Icons.keyboard_arrow_down),
                           underline: Center(),
                           hint: Text(
-                            categorySelected
-                                ? _categories[_categoryId]
-                                : "Select Category",
+                            (_categoryId == null ||
+                                    (_categoryId != 2 && institutions.isEmpty))
+                                ? "Select Category"
+                                : _categories[_categoryId],
                           ),
                           items:
                               _categories.map<DropdownMenuItem<String>>((val) {
@@ -312,19 +337,17 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 _categoryId = 0;
                               else if (value == "School")
                                 _categoryId = 1;
-                              else
+                              else if (value == "Other") {
                                 _categoryId = 2;
+                                setState(() {
+                                  _institutionId = 0;
+                                });
+                              }
                             });
-                            if (value == "Other") {
-                              setState(() {
-                                categorySelected = true;
-                                _institutionId = 0;
-                              });
-                            }
                             if (value != "Other") {
-                              getInstitutions(context, value);
+                              getInstitutions();
                             }
-                            _institutionName = "";
+                            _institutionName = null;
                           },
                         ),
                       ),
@@ -333,7 +356,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   SizedBox(height: 30),
                   // Select Institution
 
-                  categorySelected && _categoryId != 2
+                  (_categoryId != null &&
+                          _categoryId != 2 &&
+                          institutions.isNotEmpty)
                       ? Container(
                           margin: EdgeInsets.symmetric(horizontal: 5),
                           decoration: BoxDecoration(
@@ -342,7 +367,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           ),
                           child: SearchableDropdown.single(
                             underline: Center(),
-                            readOnly: !categorySelected || _categoryId == 2,
+                            readOnly: _categoryId == null || _categoryId == 2,
                             items: institutions
                                 .map<DropdownMenuItem<String>>((val) {
                               return DropdownMenuItem<String>(
@@ -357,12 +382,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               );
                             }).toList(),
                             displayClearIcon: false,
-                            hint: 'Select Institution',
+                            hint: _institutionName ?? 'Select Institution',
                             style: TextStyle(fontSize: 14),
                             icon: Icon(Icons.keyboard_arrow_down),
                             searchHint: 'Enter Institution Name',
                             onChanged: (value) {
-                              _institutionSelected = true;
                               setState(() {
                                 _institutionName = value;
                               });
@@ -398,7 +422,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         )
                       : Center(),
 
-                  SizedBox(height: categorySelected ? 25 : 90),
+                  SizedBox(height: _categoryId != null ? 25 : 90),
                   // Submit button
                   ButtonTheme(
                     minWidth: MediaQuery.of(context).size.width / 3,

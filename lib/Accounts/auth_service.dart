@@ -58,7 +58,7 @@ class AuthService {
     await prefs.remove('jwt');
     await prefs.setBool('isProfileUpdated', false);
     await prefs.setBool('isLogged', false);
-    await HiveDB().storeData(valueName: "user", value: null);
+    await HiveDB.storeData(valueName: "user", value: null);
 
     return 'success';
   }

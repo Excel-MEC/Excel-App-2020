@@ -42,8 +42,6 @@ class _AddReferalState extends State<AddReferal> {
       return;
     }
     print(response);
-    // Check response & validate
-    // if(response!="success") show error
     var refetchDetails = await AccountServices.fetchUserDetails();
 
     setState(() {

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:excelapp/Services/API/api_config.dart';
-import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_card.dart';
@@ -33,24 +32,15 @@ class _EventsListState extends State<EventsList> {
     result1 = await EventsAPI.fetchEventListFromStorage(endpoint);
     if (result1 != null) estream.add(result1);
 
-    // If database empty or has been 1 hr since last fetched: Fetch from API
-    int lastUpdatedinMinutes =
-        await HiveDB().getTimeStamp("eventlist-$endpoint");
-    print("$endpoint last fetched $lastUpdatedinMinutes mins ago");
-    // If above 60 mins fetch from net
-    if (lastUpdatedinMinutes == null ||
-        lastUpdatedinMinutes > 60 ||
-        result1 == null) {
-      var result2 = await EventsAPI.fetchAndStoreEventListFromNet(endpoint);
-      if (result2 == "error" && result1 == null) {
-        estream.add("error");
-        return;
-      }
-      if (result2 == "error") return;
-      HiveDB().setTimeStamp("eventlist-$endpoint");
-      print("Fetched & Added to DB");
-      estream.add(result2);
+    // Fetch from net & update
+    var result2 = await EventsAPI.fetchAndStoreEventListFromNet(endpoint);
+    if (result2 == "error" && result1 == null) {
+      estream.add("error");
+      return;
     }
+    if (result2 == "error") return;
+    print("- $endpoint fetched, added to DB, & updated in UI");
+    estream.add(result2);
   }
 
   @override
