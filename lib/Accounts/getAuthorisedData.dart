@@ -25,7 +25,5 @@ getAuthorisedData(String url) async {
       headers: AccountConfig.getHeader(jwt),
     );
   }
-  if (response.statusCode == 200) return response;
-  print("Error fetching Data");
-  return null;
+  return response;
 }

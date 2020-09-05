@@ -52,7 +52,7 @@ class AccountServices {
       print("fetching user details");
       var response =
           await getAuthorisedData(AccountConfig.url + 'profile/view');
-      if (response == null) return null;
+      if (response.statusCode != 200) return null;
       Map<String, dynamic> responseData = json.decode(response.body);
       user = User.fromJson(responseData);
       return user;
@@ -94,6 +94,8 @@ class AccountServices {
         url: AccountConfig.url + 'profile/update',
         body: json.encode(userInfo),
       );
+      if (response.statusCode != 200 && response.statusCode != 422)
+        return "error";
       print(response.body);
     } catch (e) {
       print("Error $e");

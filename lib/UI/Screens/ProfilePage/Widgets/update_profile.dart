@@ -313,7 +313,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           icon: Icon(Icons.keyboard_arrow_down),
                           underline: Center(),
                           hint: Text(
-                            (_categoryId == null || institutions.isEmpty)
+                            (_categoryId == null ||
+                                    (_categoryId != 2 && institutions.isEmpty))
                                 ? "Select Category"
                                 : _categories[_categoryId],
                           ),
@@ -336,14 +337,13 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 _categoryId = 0;
                               else if (value == "School")
                                 _categoryId = 1;
-                              else
+                              else if (value == "Other") {
                                 _categoryId = 2;
+                                setState(() {
+                                  _institutionId = 0;
+                                });
+                              }
                             });
-                            if (value == "Other") {
-                              setState(() {
-                                _institutionId = 0;
-                              });
-                            }
                             if (value != "Other") {
                               getInstitutions();
                             }

@@ -88,11 +88,13 @@ class FavouritesAPI {
       return 'Network not available';
     if (!await isFavourited(id)) return "Already Unfavourited";
     try {
-      var a = await deleteAuthorisedData(
+      var response = await deleteAuthorisedData(
         APIConfig.baseUrl + '/bookmark/' + id.toString(),
       );
       print("Removing from favourites attempted with status code " +
-          a.statusCode.toString());
+          response.statusCode.toString());
+
+      if (response.statusCode != 200) return "An error occured";
       FavouritesStatus.instance.favouritesIDs.remove(id);
       FavouritesStatus.instance.removeEventFromMemory(id);
       // Can instead use FavouritesStatus.instance.favouritesStatus = 3;
@@ -114,12 +116,13 @@ class FavouritesAPI {
       return "Network not Aailable";
     else if (await isFavourited(id)) return "Already in Favourites";
     try {
-      var a = await postAuthorisedData(
+      var response = await postAuthorisedData(
         url: APIConfig.baseUrl + '/bookmark',
         body: json.encode({"id": id}),
       );
       print("Adding to favourites attempted with status code " +
-          a.statusCode.toString());
+          response.statusCode.toString());
+      if (response.statusCode != 200) return "An error occured";
       FavouritesStatus.instance.favouritesIDs.add(id);
       // Converts event details model to event model to add to favourites
       Event eventDetailsToEvent = Event.fromJson(eventDetails.toJson());

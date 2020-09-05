@@ -166,7 +166,7 @@ class _ImgUploadState extends State<ImgUpload> {
                     ),
                     SizedBox(height: 15),
                     imageOption(
-                      optionName: "Take Photo",
+                      optionName: "Use Camera",
                       icon: Icons.camera_alt,
                       onPressed: () {
                         getImage(fromGallery: false);

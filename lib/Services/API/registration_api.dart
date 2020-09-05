@@ -52,7 +52,7 @@ class RegistrationAPI {
       print("Error $e");
       return "error";
     }
-    if (response == "error") return "error";
+    if (response.statusCode != 200) return "error";
     List<dynamic> responseData = json.decode(response.body);
     return responseData.map<Event>((event) => Event.fromJson(event)).toList();
   }
@@ -95,11 +95,14 @@ class RegistrationAPI {
   static Future registerEvent(
       {@required int id, @required refreshFunction, @required context}) async {
     try {
-      var a = await postAuthorisedData(
+      var response = await postAuthorisedData(
         url: APIConfig.baseUrl + '/registration',
         body: json.encode({"id": id}),
       );
-      print("Registration over with status code " + a.statusCode.toString());
+      print("Registration over with status code " +
+          response.statusCode.toString());
+
+      if (response.statusCode != 200) return;
       RegistrationStatus.instance.registrationIDs.add(id);
       refreshFunction();
     } catch (_) {

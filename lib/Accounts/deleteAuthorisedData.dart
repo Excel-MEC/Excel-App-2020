@@ -31,8 +31,5 @@ deleteAuthorisedData(String url) async {
       },
     );
   }
-  print(response.statusCode);
-  if (response.statusCode == 200) return response;
-  print("Error in delete request");
-  return null;
+  return response;
 }
