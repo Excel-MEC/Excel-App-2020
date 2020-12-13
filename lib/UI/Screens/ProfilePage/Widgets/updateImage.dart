@@ -4,12 +4,12 @@ import 'package:excelapp/Accounts/getAuthorisedData.dart';
 import 'package:excelapp/Accounts/refreshToken.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/constants.dart';
+import 'package:excelapp/main.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
-import 'package:excelapp/UI/Screens/ProfilePage/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -87,9 +87,11 @@ class _ImgUploadState extends State<ImgUpload> {
         await HiveDB.storeData(valueName: "user", value: user.toJson());
         // Clearing image cache
         await DefaultCacheManager().removeFile(user.picture);
-        Navigator.pop(context);
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => ProfilePage(user, true)));
+        imageCache.clear();
+        await Future.delayed(Duration(milliseconds: 100));
+        // Restart App to clear existing cache
+        runApp(new Center());
+        runApp(new MyApp());
       } else
         alertDialog(
             text: "Failed to update image, Try again", context: context);
