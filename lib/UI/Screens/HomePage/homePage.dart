@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Stories(),
+              // Stories(),
               HighlightsSection(),
               Categories(),
               SocialIcons(),

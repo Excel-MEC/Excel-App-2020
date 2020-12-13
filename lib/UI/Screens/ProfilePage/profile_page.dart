@@ -103,11 +103,11 @@ class _ProfilePageState extends State<ProfilePage> {
             Container(
               child: QrCode(_user.picture, _user.qrCodeUrl, _user.name),
             ),
-            // Adding Referal if not present
-            (widget.user.referrerAmbassadorId == null ||
-                    widget.user.referrerAmbassadorId == 0)
-                ? AddReferal()
-                : referedBy(widget.user.referrer),
+            // UNCOMMENT TO ADD REFERALS
+            // (widget.user.referrerAmbassadorId == null ||
+            //         widget.user.referrerAmbassadorId == 0)
+            //     ? AddReferal()
+            //     : referedBy(widget.user.referrer),
             // User Details
             GestureDetector(
               onTap: () {

@@ -60,27 +60,20 @@ class CustomDrawer extends StatelessWidget {
                     margin: EdgeInsets.symmetric(vertical: 15),
                   ),
                 ),
-                SizedBox(height: 10),
-                DrawerOption(
-                  text: "Excel Prelims",
-                  icon: Icons.short_text,
-                  onPressed: () {
-                    alertDialog(text: "Coming Soon", context: context);
-                  },
-                ),
-                DrawerOption(
-                  text: "Campus Ambassador",
-                  icon: Icons.center_focus_weak,
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CampusAmbassador(),
-                      ),
-                    );
-                  },
-                ),
+                // UNCOMMENT TO INCLUDE CAMPUS AMBASSADOR
+                // DrawerOption(
+                //   text: "Campus Ambassador",
+                //   icon: Icons.center_focus_weak,
+                //   onPressed: () {
+                //     Navigator.pop(context);
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => CampusAmbassador(),
+                //       ),
+                //     );
+                //   },
+                // ),
                 DrawerOption(
                   text: "Excel Website",
                   icon: Icons.dvr,
