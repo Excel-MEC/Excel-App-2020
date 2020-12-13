@@ -15,6 +15,17 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
     setState(() {});
   }
 
+  reloadAfterDelay() async {
+    await Future.delayed(Duration(seconds: 10));
+    refreshPage();
+  }
+
+  @override
+  void initState() {
+    reloadAfterDelay();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +41,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                 if (!snapshot.hasData)
                   return Center(
                     child: Text(
-                      "Could not fetch favourites",
+                      "Favourites not fetched.",
                       style: TextStyle(color: Colors.black54),
                     ),
                   );

@@ -3,7 +3,7 @@ import 'package:excelapp/UI/Screens/HomePage/Widgets/home_appBar.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Categories/categories.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/socialIcons.dart';
-import 'package:excelapp/UI/Screens/HomePage/Widgets/Stories/stories.dart';
+// import 'package:excelapp/UI/Screens/HomePage/Widgets/Stories/stories.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Drawer/drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
       drawer: CustomDrawer(),
       body: Container(
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Column(
             children: <Widget>[
               // Stories(),

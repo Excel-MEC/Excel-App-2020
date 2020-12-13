@@ -147,7 +147,7 @@ class EventPageBody extends StatelessWidget {
                   ),
                   // Register
                   eventDetails.needRegistration == 1
-                      ? RegisterButton(eventId: eventDetails.id)
+                      ? RegisterButton(eventDetails: eventDetails)
                       : SizedBox()
                 ],
               ),
