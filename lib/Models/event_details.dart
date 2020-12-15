@@ -26,6 +26,7 @@ class EventDetails {
   int currentRound;
   int needRegistration;
   String rounds;
+  String registration;
 
   EventDetails({
     this.id,
@@ -55,6 +56,7 @@ class EventDetails {
     this.currentRound,
     this.needRegistration,
     this.rounds,
+    this.registration,
   });
 
   EventDetails.fromJson(data) {
@@ -88,6 +90,7 @@ class EventDetails {
             ? 1
             : 0;
     rounds = data['rounds'];
+    registration = data['registration'];
   }
 
   Map<String, dynamic> toJson() {

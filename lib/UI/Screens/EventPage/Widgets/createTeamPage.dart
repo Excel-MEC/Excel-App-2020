@@ -1,5 +1,6 @@
 import 'package:excelapp/Models/event_Team.dart';
 import 'package:excelapp/Models/event_details.dart';
+import 'package:excelapp/Services/API/events_api.dart';
 import 'package:excelapp/Services/API/registration_api.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
@@ -30,13 +31,18 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
         refreshFunction: widget.refreshIsRegistered,
         context: context,
       );
+
+      if (registered == -1)
+        alertDialog(text: "An error occured", context: context);
+      else {
+        EventsAPI.fetchAndStoreEventDetailsFromNet(widget.eventDetails.id);
+        await Future.delayed(Duration(milliseconds: 200));
+        Navigator.pop(context);
+        return;
+      }
       setState(() {
         isLoading = false;
       });
-      if (registered == -1)
-        alertDialog(text: "An error occured", context: context);
-      else
-        Navigator.pop(context);
     } else
       alertDialog(
         text: "Team creation failed",

@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/registration_api.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/createTeamPage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/joinTeamPage.dart';
+import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +21,17 @@ class RegisterButton extends StatefulWidget {
 class _RegisterButtonState extends State<RegisterButton> {
   bool registered = false;
   bool isLoading = false;
+
+  reloadPage() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EventPage(
+          widget.eventDetails.id,
+        ),
+      ),
+    );
+  }
 
   void refreshIsRegistered() async {
     bool checkIfRegistered =
@@ -61,7 +74,10 @@ class _RegisterButtonState extends State<RegisterButton> {
                             refreshIsRegistered: refreshIsRegistered,
                           ),
                         ),
-                      );
+                      ).then((_) async {
+                        reloadPage();
+                        return;
+                      });
                     },
                   ),
                 ),
@@ -79,7 +95,11 @@ class _RegisterButtonState extends State<RegisterButton> {
                             refreshIsRegistered: refreshIsRegistered,
                           ),
                         ),
-                      );
+                      ).then((_) async {
+                        reloadPage();
+                        return;
+                      });
+                      return;
                     },
                   ),
                 ),
@@ -133,6 +153,22 @@ class _RegisterButtonState extends State<RegisterButton> {
           },
         );
       }
+    } else if (response == 'Already Registered') {
+      if (widget.eventDetails.registration == "null") {
+        reloadPage();
+        return;
+      } else if (widget.eventDetails.isTeam == 1) {
+        dynamic registrationDetails =
+            widget.eventDetails.registration.toString();
+        registrationDetails = json.decode(registrationDetails);
+        var teamID = registrationDetails["teamId"];
+        // var team = registrationDetails["team"];
+        // print(teamID);
+        // print(team);
+        alertDialog(text: "Team ID is $teamID", context: context);
+      } else
+        alertDialog(
+            text: "You have registered for this event.", context: context);
     } else {
       // Show returned error
       alertDialog(text: response, context: context);
