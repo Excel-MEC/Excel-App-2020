@@ -110,6 +110,7 @@ class RegistrationAPI {
         url: APIConfig.baseUrl + '/registration',
         body: requestBody,
       );
+      print(response.body);
       print("Registration over with status code " +
           response.statusCode.toString());
 
@@ -124,6 +125,7 @@ class RegistrationAPI {
   }
 
   static Future createTeam(String teamName, int eventId) async {
+    print(json.encode({"name": teamName, "eventId": eventId}));
     try {
       var response = await postAuthorisedData(
         url: APIConfig.baseUrl + '/team',

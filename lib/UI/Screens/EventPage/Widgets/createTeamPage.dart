@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/event_Team.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/events_api.dart';
@@ -19,7 +20,7 @@ class CreateTeamPage extends StatefulWidget {
 
 class _CreateTeamPageState extends State<CreateTeamPage> {
   final _formKey = GlobalKey<FormState>();
-  String teamName;
+  String teamName = "";
   bool isLoading = false;
   createTeam() async {
     TeamDetails teamdetails =
@@ -33,7 +34,7 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
       );
 
       if (registered == -1)
-        alertDialog(text: "An error occured", context: context);
+        alertDialog(text: "Registration failed. Try again", context: context);
       else {
         EventsAPI.fetchAndStoreEventDetailsFromNet(widget.eventDetails.id);
         await Future.delayed(Duration(milliseconds: 200));
@@ -67,16 +68,52 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
           primaryColor: primaryColor,
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
+          padding: EdgeInsets.symmetric(horizontal: 40),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 50),
+                SizedBox(height: 15),
+                Center(
+                  child: Container(
+                    height: 100,
+                    child: Card(
+                      elevation: 8,
+                      child: Container(
+                        padding: EdgeInsets.all(20),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.eventDetails.icon,
+                        ),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "You are about to create a team for the event " +
+                      widget.eventDetails.name.toString() +
+                      ".",
+                  style: TextStyle(fontSize: 15.0),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "If there is an existing team which you wish to join, go back and enter the team code of the team to join.",
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: lightTextColor,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 40),
                 Form(
                   key: _formKey,
                   child: TextFormField(
                     style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
-                    onSaved: (String value) {
+                    onChanged: (String value) {
                       setState(() {
                         teamName = value;
                       });
@@ -116,7 +153,8 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
-                )
+                ),
+                SizedBox(height: 100),
               ],
             ),
           ),

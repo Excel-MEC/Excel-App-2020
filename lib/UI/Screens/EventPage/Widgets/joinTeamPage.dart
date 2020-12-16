@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/events_api.dart';
 import 'package:excelapp/Services/API/registration_api.dart';
@@ -58,17 +59,53 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
           primaryColor: primaryColor,
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
+          padding: EdgeInsets.symmetric(horizontal: 40),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 50),
+                SizedBox(height: 15),
+                Center(
+                  child: Container(
+                    height: 100,
+                    child: Card(
+                      elevation: 8,
+                      child: Container(
+                        padding: EdgeInsets.all(20),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.eventDetails.icon,
+                        ),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "You are about to join a team for the event " +
+                      widget.eventDetails.name.toString() +
+                      ".",
+                  style: TextStyle(fontSize: 15.0),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "You can get the team code by asking other team members.",
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: lightTextColor,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 30),
                 Form(
                   key: _formKey,
                   child: TextFormField(
                     style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
                     keyboardType: TextInputType.number,
-                    onSaved: (String value) {
+                    onChanged: (String value) {
                       setState(() {
                         teamID = int.parse(value);
                       });
@@ -105,7 +142,7 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

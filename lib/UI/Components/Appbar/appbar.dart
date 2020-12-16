@@ -10,7 +10,7 @@ Widget customappbar(String titleText) {
       titleText,
       style: TextStyle(
         color: primaryColor,
-        fontSize: 20,
+        fontSize: 17,
       ),
     ),
   );

@@ -44,7 +44,7 @@ class EventPageBody extends StatelessWidget {
               ),
               // Icon
               Container(
-                height: deviceHeight * 0.2,
+                height: deviceHeight * 0.18,
                 child: Card(
                   elevation: 8,
                   child: Container(
@@ -71,7 +71,7 @@ class EventPageBody extends StatelessWidget {
                 children: <Widget>[
                   IconButton(
                     icon: new Icon(Icons.arrow_back),
-                    iconSize: 40.0,
+                    iconSize: 30.0,
                     color: Colors.white,
                     onPressed: () {
                       Navigator.pop(context);
@@ -100,7 +100,10 @@ class EventPageBody extends StatelessWidget {
                   Hero(
                     tag: 'LikeButton',
                     child: Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
                       child: LikeButton(eventDetails: eventDetails),
                     ),
                   ),
