@@ -4,6 +4,7 @@ import 'package:excelapp/Services/API/registration_api.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Components/dialogWithContent/dialogWithContent.dart';
+import 'package:excelapp/UI/Screens/EventPage/Widgets/changeTeamPage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/createTeamPage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/joinTeamPage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/viewTeam.dart';
@@ -11,7 +12,7 @@ import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
-// The given file contains login related to registration of event
+// The given file contains logic related to registration of event & the button
 
 class RegisterButton extends StatefulWidget {
   final EventDetails eventDetails;
@@ -35,7 +36,7 @@ class _RegisterButtonState extends State<RegisterButton> {
     );
   }
 
-  openTeamPage(int teamID) {
+  openJoinTeamPage(int teamID) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -45,6 +46,21 @@ class _RegisterButtonState extends State<RegisterButton> {
         ),
       ),
     );
+  }
+
+  openChangeTeamPage(int teamID) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangeTeamPage(
+          eventDetails: widget.eventDetails,
+          refreshIsRegistered: refreshIsRegistered,
+        ),
+      ),
+    ).then((_) async {
+      reloadPage();
+      return;
+    });
   }
 
   void refreshIsRegistered() async {
@@ -150,8 +166,6 @@ class _RegisterButtonState extends State<RegisterButton> {
                       setState(() {
                         isLoading = false;
                       });
-
-                      reloadPage();
                     }();
 
                     Navigator.pop(context);
@@ -200,24 +214,44 @@ class _RegisterButtonState extends State<RegisterButton> {
                 ),
                 SizedBox(height: 35),
                 Text(
-                  "is you team ID",
+                  "is your team ID",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 35),
-                RaisedButton(
-                  color: primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
+                FractionallySizedBox(
+                  widthFactor: .8,
+                  child: RaisedButton(
+                    color: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      openJoinTeamPage(teamID);
+                    },
+                    child: Text(
+                      "View Team",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    openTeamPage(teamID);
-                  },
-                  child: Text(
-                    "View Team",
-                    style: TextStyle(color: Colors.white),
+                ),
+                FractionallySizedBox(
+                  widthFactor: .8,
+                  child: RaisedButton(
+                    color: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      openChangeTeamPage(teamID);
+                    },
+                    child: Text(
+                      "Change Team",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-                )
+                ),
               ],
             ),
             context: context);
@@ -248,8 +282,12 @@ class _RegisterButtonState extends State<RegisterButton> {
         onPressed: () => register(context),
         child: isLoading
             ? LoadingAnimation(color: Colors.white)
-            : Text(registered ? 'Registered' : 'Register'),
-        color: registered ? Color(0xff337733) : primaryColor,
+            : Text(registered
+                ? (widget.eventDetails.isTeam == 1
+                    ? 'Manage Team'
+                    : 'Registered')
+                : 'Register'),
+        color: registered ? Color(0xff335533) : primaryColor,
         textColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),

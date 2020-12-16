@@ -1,36 +1,42 @@
+import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:excelapp/Accounts/putAuthorisedData.dart';
 import 'package:excelapp/Models/event_details.dart';
+import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/Services/API/events_api.dart';
-import 'package:excelapp/Services/API/registration_api.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
-class JoinTeamPage extends StatefulWidget {
+class ChangeTeamPage extends StatefulWidget {
   final EventDetails eventDetails;
   final Function refreshIsRegistered;
-  JoinTeamPage(
+  ChangeTeamPage(
       {@required this.eventDetails, @required this.refreshIsRegistered});
   @override
-  _JoinTeamPageState createState() => _JoinTeamPageState();
+  _ChangeTeamPageState createState() => _ChangeTeamPageState();
 }
 
-class _JoinTeamPageState extends State<JoinTeamPage> {
+class _ChangeTeamPageState extends State<ChangeTeamPage> {
   final _formKey = GlobalKey<FormState>();
   int teamID;
   bool isLoading = false;
   registerEvent() async {
-    var registered = await RegistrationAPI.registerEvent(
-      id: widget.eventDetails.id,
-      teamId: teamID,
-      refreshFunction: widget.refreshIsRegistered,
-      context: context,
+    var requestBody =
+        json.encode({"eventId": widget.eventDetails.id, "teamId": teamID});
+    print(requestBody);
+    var response = await putAuthorisedData(
+      url: APIConfig.baseUrl + '/registration/team',
+      body: requestBody,
     );
+    print(response.body);
+    print("Changing team over with status code " +
+        response.statusCode.toString());
 
-    if (registered == -1)
-      alertDialog(text: "Joining team failed. Try again", context: context);
+    if (response.statusCode != 200)
+      alertDialog(text: "Changing team failed. Try again", context: context);
     else {
       EventsAPI.fetchAndStoreEventDetailsFromNet(widget.eventDetails.id);
       await Future.delayed(Duration(milliseconds: 200));
@@ -53,7 +59,7 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customappbar("Join Team"),
+      appBar: customappbar("Change Team"),
       body: Theme(
         data: Theme.of(context).copyWith(
           primaryColor: primaryColor,
@@ -83,7 +89,7 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  "You are about to join a team for the event " +
+                  "You will be removed from the current team if you change team." +
                       widget.eventDetails.name.toString() +
                       ".",
                   style: TextStyle(fontSize: 15.0),
@@ -91,7 +97,7 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  "You can get the team code by asking other team members.",
+                  "Enter the ID of the team you wish to join.",
                   style: TextStyle(
                     fontSize: 14.0,
                     color: lightTextColor,
@@ -112,12 +118,12 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                     },
                     validator: (value) {
                       if (value.isEmpty) {
-                        return "Enter ID of the required team to join";
+                        return "Enter ID of the new team";
                       }
                       return null;
                     },
                     decoration: InputDecoration(
-                      labelText: "Enter ID of team to join",
+                      labelText: "Enter ID of new team",
                       icon: Icon(Icons.edit),
                       contentPadding: EdgeInsets.zero,
                     ),
