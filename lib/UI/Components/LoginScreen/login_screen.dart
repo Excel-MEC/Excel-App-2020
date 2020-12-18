@@ -54,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: darkAppbar(),
       body: Container(
         decoration: BoxDecoration(
+          color: primaryColor,
           image: DecorationImage(
             image: AssetImage('assets/BG 2.jpg'),
             fit: BoxFit.cover,

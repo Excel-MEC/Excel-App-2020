@@ -35,9 +35,13 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
     print("Changing team over with status code " +
         response.statusCode.toString());
 
-    if (response.statusCode != 200)
-      alertDialog(text: "Changing team failed. Try again", context: context);
-    else {
+    if (response.statusCode != 200) {
+      try {
+        alertDialog(text: jsonDecode(response.body)["error"], context: context);
+      } catch (_) {
+        alertDialog(text: "Changing Team failed. Try again", context: context);
+      }
+    } else {
       EventsAPI.fetchAndStoreEventDetailsFromNet(widget.eventDetails.id);
       await Future.delayed(Duration(milliseconds: 200));
       Navigator.pop(context);
@@ -53,7 +57,14 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
     setState(() {
       isLoading = true;
     });
-    await registerEvent();
+    try {
+      await registerEvent();
+    } catch (_) {
+      alertDialog(text: "Changing Team failed. Try again", context: context);
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override

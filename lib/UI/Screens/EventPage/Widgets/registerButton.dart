@@ -11,6 +11,8 @@ import 'package:excelapp/UI/Screens/EventPage/Widgets/viewTeam.dart';
 import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:social_share/social_share.dart';
 
 // The given file contains logic related to registration of event & the button
 
@@ -207,10 +209,39 @@ class _RegisterButtonState extends State<RegisterButton> {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 35),
-                Text(
-                  "$teamID",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 25, color: primaryColor),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(width: 30),
+                    Text(
+                      "$teamID",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 25, color: primaryColor),
+                    ),
+                    SizedBox(width: 10),
+                    IconButton(
+                      icon: Icon(
+                        Icons.content_copy,
+                        size: 28,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () async {
+                        await SocialShare.copyToClipboard(
+                          teamID.toString(),
+                        );
+                        // alertDialog(text: "Copied", context: context);
+                        Fluttertoast.showToast(
+                          msg: "Copied",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Color(0x77000000),
+                          textColor: Colors.white,
+                          fontSize: 11.0,
+                        );
+                      },
+                    )
+                  ],
                 ),
                 SizedBox(height: 35),
                 Text(

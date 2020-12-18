@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/event_Team.dart';
 import 'package:excelapp/Models/event_details.dart';
@@ -34,21 +36,30 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
       );
 
       if (registered == -1)
-        alertDialog(text: "Registration failed. Try again", context: context);
-      else {
+        print("Error occured");
+      else if (registered != null && registered.statusCode != 200) {
+        try {
+          alertDialog(
+            text: jsonDecode(registered.body)["error"].toString(),
+            context: context,
+          );
+        } catch (_) {
+          alertDialog(text: "Registration failed. Try again", context: context);
+        }
+      } else {
         EventsAPI.fetchAndStoreEventDetailsFromNet(widget.eventDetails.id);
         await Future.delayed(Duration(milliseconds: 200));
         Navigator.pop(context);
         return;
       }
-      setState(() {
-        isLoading = false;
-      });
     } else
       alertDialog(
         text: "Team creation failed",
         context: context,
       );
+    setState(() {
+      isLoading = false;
+    });
   }
 
   onSubmit() async {

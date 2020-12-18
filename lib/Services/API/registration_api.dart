@@ -77,7 +77,7 @@ class RegistrationAPI {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
     if (jwt == null) {
-      return 'Not Logged In';
+      return 'Log in to register for events';
     }
     if (RegistrationStatus.instance.registeredStatus == 0) {
       fetchRegistrations();
@@ -87,7 +87,7 @@ class RegistrationAPI {
       return 'Could not fetch registration data';
     }
     if (await isRegistered(id)) {
-      return 'Already Registered';
+      return 'You have already registered for this event.';
     }
     return "proceed";
   }
@@ -114,12 +114,14 @@ class RegistrationAPI {
       print("Registration over with status code " +
           response.statusCode.toString());
 
-      if (response.statusCode != 200) return -1;
+      if (response.statusCode != 200) return response;
 
       RegistrationStatus.instance.registrationIDs.add(id);
       refreshFunction();
     } catch (_) {
-      alertDialog(text: 'Registration Failed', context: context);
+      alertDialog(
+          text: 'Operation failed. Check network connection.',
+          context: context);
       return -1;
     }
   }
@@ -132,12 +134,11 @@ class RegistrationAPI {
         body: json.encode({"name": teamName, "eventId": eventId}),
       );
       print("Create team status code " + response.statusCode.toString());
-      if (response.statusCode != 200) return null;
+      if (response.statusCode != 200) return;
       TeamDetails teamDetails = TeamDetails.fromJson(jsonDecode(response.body));
       return teamDetails;
     } catch (_) {
-      print("Handle error: create team");
-      return null;
+      return;
     }
   }
 }

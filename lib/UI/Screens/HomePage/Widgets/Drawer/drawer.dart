@@ -74,6 +74,7 @@ class CustomDrawer extends StatelessWidget {
                 //     );
                 //   },
                 // ),
+
                 DrawerOption(
                   text: "Excel Website",
                   icon: Icons.dvr,
@@ -81,6 +82,20 @@ class CustomDrawer extends StatelessWidget {
                     launch("https://excelmec.org/");
                   },
                 ),
+                // DrawerOption(
+                //   text: "Prelims",
+                //   icon: Icons.sort,
+                //   onPressed: () {
+                //     Navigator.pop(context);
+                //     hideBottomNav();
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => DemoPage(),
+                //       ),
+                //     );
+                //   },
+                // ),
                 DrawerOption(
                   text: "Excel on Linktree",
                   icon: Icons.add_link,

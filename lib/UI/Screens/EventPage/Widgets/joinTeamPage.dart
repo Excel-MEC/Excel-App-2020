@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/events_api.dart';
@@ -28,10 +30,19 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
       refreshFunction: widget.refreshIsRegistered,
       context: context,
     );
-
-    if (registered == -1)
-      alertDialog(text: "Joining team failed. Try again", context: context);
-    else {
+    print(registered);
+    if (registered == -1) {
+      print("Joining failed");
+    } else if (registered != null && registered.statusCode != 200) {
+      try {
+        alertDialog(
+          text: jsonDecode(registered.body)["error"].toString(),
+          context: context,
+        );
+      } catch (_) {
+        alertDialog(text: "Registration failed. Try again", context: context);
+      }
+    } else {
       EventsAPI.fetchAndStoreEventDetailsFromNet(widget.eventDetails.id);
       await Future.delayed(Duration(milliseconds: 200));
       Navigator.pop(context);
