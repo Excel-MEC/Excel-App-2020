@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:excelapp/Accounts/getAuthorisedData.dart';
 import 'package:excelapp/Accounts/postAuthorisedData.dart';
+import 'package:excelapp/Models/event_Team.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:http/http.dart' as http;
@@ -71,12 +72,12 @@ class RegistrationAPI {
 
 // Recheck if registration possible
   static Future preRegistration({@required int id, @required context}) async {
-    print("Registration status " +
-        RegistrationStatus.instance.registeredStatus.toString());
+    // print("Registration status " +
+    //     RegistrationStatus.instance.registeredStatus.toString());
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
     if (jwt == null) {
-      return 'Not Logged In';
+      return 'Log in to register for events';
     }
     if (RegistrationStatus.instance.registeredStatus == 0) {
       fetchRegistrations();
@@ -86,27 +87,58 @@ class RegistrationAPI {
       return 'Could not fetch registration data';
     }
     if (await isRegistered(id)) {
-      return 'Already Registered';
+      return 'You have already registered for this event.';
     }
     return "proceed";
   }
 
 // Registers event
   static Future registerEvent(
-      {@required int id, @required refreshFunction, @required context}) async {
+      {@required int id,
+      int teamId,
+      @required refreshFunction,
+      @required context}) async {
+    var requestBody;
+    if (teamId != null) {
+      requestBody = json.encode({"eventId": id, "teamId": teamId});
+    } else {
+      requestBody = json.encode({"eventId": id});
+    }
     try {
+      print(requestBody);
       var response = await postAuthorisedData(
         url: APIConfig.baseUrl + '/registration',
-        body: json.encode({"id": id}),
+        body: requestBody,
       );
+      print(response.body);
       print("Registration over with status code " +
           response.statusCode.toString());
 
-      if (response.statusCode != 200) return;
+      if (response.statusCode != 200) return response;
+
       RegistrationStatus.instance.registrationIDs.add(id);
       refreshFunction();
     } catch (_) {
-      alertDialog(text: 'Registration Failed', context: context);
+      alertDialog(
+          text: 'Operation failed. Check network connection.',
+          context: context);
+      return -1;
+    }
+  }
+
+  static Future createTeam(String teamName, int eventId) async {
+    print(json.encode({"name": teamName, "eventId": eventId}));
+    try {
+      var response = await postAuthorisedData(
+        url: APIConfig.baseUrl + '/team',
+        body: json.encode({"name": teamName, "eventId": eventId}),
+      );
+      print("Create team status code " + response.statusCode.toString());
+      if (response.statusCode != 200) return;
+      TeamDetails teamDetails = TeamDetails.fromJson(jsonDecode(response.body));
+      return teamDetails;
+    } catch (_) {
+      return;
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:excelapp/Accounts/getAuthorisedData.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/api_config.dart';
@@ -41,12 +42,15 @@ class EventsAPI {
   static fetchAndStoreEventDetailsFromNet(int id) async {
     print("- Event list $id network fetch");
     try {
-      var response = await http.get(APIConfig.baseUrl + '/events/$id');
+      var response = await getAuthorisedData(APIConfig.baseUrl + '/events/$id');
 
       Map<String, dynamic> responseData = json.decode(response.body);
+      // print(responseData);
       responseData["eventHead1"] = json.encode(responseData["eventHead1"]);
       responseData["eventHead2"] = json.encode(responseData["eventHead2"]);
       responseData["rounds"] = json.encode(responseData["rounds"]);
+      responseData["registration"] = json.encode(responseData["registration"]);
+
       await HiveDB.storeData(
           valueName: "eventdetails-$id", value: responseData);
       EventDetails event = EventDetails.fromJson(responseData);
@@ -55,5 +59,9 @@ class EventsAPI {
       print("Error $e");
       return ("error");
     }
+  }
+
+  static deleteEventDetailsfromDB(int id) {
+    HiveDB.deleteData(valueName: "eventdetails-$id");
   }
 }

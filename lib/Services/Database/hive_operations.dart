@@ -28,4 +28,14 @@ class HiveDB {
       print("Writing to DB error: $e");
     }
   }
+
+  static deleteData({String valueName}) async {
+    Directory dir = await getApplicationDocumentsDirectory();
+    await dir.create(recursive: true); // make sure it exists
+    try {
+      Hive.init(join(dir.path, 'hiveDB'));
+      await Hive.deleteBoxFromDisk(valueName);
+      print("successfully deleted the box");
+    } catch (_) {}
+  }
 }

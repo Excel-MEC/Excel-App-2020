@@ -1,4 +1,4 @@
-import 'package:excelapp/UI/Screens/HomePage/Widgets/Notifications/notifications.dart';
+// import 'package:excelapp/UI/Screens/HomePage/Widgets/Notifications/notifications.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -15,23 +15,23 @@ Widget homeAppBar(context) {
         fontFamily: pfontFamily,
       ),
     ),
-    actions: <Widget>[
-      IconButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => NotificationsPage(),
-            ),
-          );
-        },
-        icon: Icon(
-          Icons.notifications,
-          color: primaryColor,
-        ),
-      ),
-      SizedBox(width: 10)
-    ],
+    // actions: <Widget>[
+    //   IconButton(
+    //     onPressed: () {
+    //       Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //           builder: (context) => NotificationsPage(),
+    //         ),
+    //       );
+    //     },
+    //     icon: Icon(
+    //       Icons.notifications,
+    //       color: primaryColor,
+    //     ),
+    //   ),
+    //   SizedBox(width: 10)
+    // ],
     iconTheme: IconThemeData(color: primaryColor),
   );
 }

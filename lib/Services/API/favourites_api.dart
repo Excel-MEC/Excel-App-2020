@@ -118,7 +118,7 @@ class FavouritesAPI {
     try {
       var response = await postAuthorisedData(
         url: APIConfig.baseUrl + '/bookmark',
-        body: json.encode({"id": id}),
+        body: json.encode({"eventId": id}),
       );
       print("Adding to favourites attempted with status code " +
           response.statusCode.toString());

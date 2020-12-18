@@ -35,8 +35,8 @@ class MoreDetails extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     IconButton(
-                      icon: new Icon(Icons.arrow_back),
-                      iconSize: 40.0,
+                      icon: Icon(Icons.arrow_back),
+                      iconSize: 30.0,
                       color: Colors.white,
                       onPressed: () {
                         Navigator.pop(context);
@@ -53,7 +53,7 @@ class MoreDetails extends StatelessWidget {
                             decoration: TextDecoration.none,
                             fontFamily: pfontFamily,
                             height: 1.0,
-                            fontSize: 26.0,
+                            fontSize: 23.0,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
                           ),
@@ -67,7 +67,7 @@ class MoreDetails extends StatelessWidget {
               //EventDetails
               getEventDetails(eventDetails),
 
-              SizedBox(height: 10.0),
+              SizedBox(height: 7.0),
 
               // More details card
               Expanded(

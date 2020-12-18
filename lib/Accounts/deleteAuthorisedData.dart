@@ -17,7 +17,7 @@ deleteAuthorisedData(String url) async {
     },
   );
   // If token has expired, rfresh it
-  if (response.statusCode == 455) {
+  if (response.statusCode == 455 || response.statusCode == 500) {
     // Refreshes Token & gets JWT
     jwt = await refreshToken();
     if (jwt == null) return null;

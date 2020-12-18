@@ -1,5 +1,5 @@
-import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
-import 'package:excelapp/UI/Screens/CampusAmbassador/campusAmbassadorMain.dart';
+// import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
+// import 'package:excelapp/UI/Screens/CampusAmbassador/campusAmbassadorMain.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -60,32 +60,47 @@ class CustomDrawer extends StatelessWidget {
                     margin: EdgeInsets.symmetric(vertical: 15),
                   ),
                 ),
-                SizedBox(height: 10),
-                DrawerOption(
-                  text: "Excel Prelims",
-                  icon: Icons.short_text,
-                  onPressed: () {
-                    alertDialog(text: "Coming Soon", context: context);
-                  },
-                ),
-                DrawerOption(
-                  text: "Campus Ambassador",
-                  icon: Icons.center_focus_weak,
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CampusAmbassador(),
-                      ),
-                    );
-                  },
-                ),
+                // UNCOMMENT TO INCLUDE CAMPUS AMBASSADOR
+                // DrawerOption(
+                //   text: "Campus Ambassador",
+                //   icon: Icons.center_focus_weak,
+                //   onPressed: () {
+                //     Navigator.pop(context);
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => CampusAmbassador(),
+                //       ),
+                //     );
+                //   },
+                // ),
+
                 DrawerOption(
                   text: "Excel Website",
                   icon: Icons.dvr,
                   onPressed: () {
                     launch("https://excelmec.org/");
+                  },
+                ),
+                // DrawerOption(
+                //   text: "Prelims",
+                //   icon: Icons.sort,
+                //   onPressed: () {
+                //     Navigator.pop(context);
+                //     hideBottomNav();
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => DemoPage(),
+                //       ),
+                //     );
+                //   },
+                // ),
+                DrawerOption(
+                  text: "Excel on Linktree",
+                  icon: Icons.add_link,
+                  onPressed: () {
+                    launch("https://linktr.ee/excelmec");
                   },
                 ),
                 DrawerOption(

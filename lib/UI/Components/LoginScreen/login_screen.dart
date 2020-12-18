@@ -51,40 +51,50 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: darkAppbar(color: primaryColor),
+      appBar: darkAppbar(),
       body: Container(
-        color: primaryColor,
+        decoration: BoxDecoration(
+          color: primaryColor,
+          image: DecorationImage(
+            image: AssetImage('assets/BG 2.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height / 6,
-                child: Image(
-                  image: AssetImage("assets/excel logo.png"),
-                  fit: BoxFit.contain,
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height / 6,
+                  child: Image(
+                    image: AssetImage("assets/excel logo.png"),
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
-              SizedBox(height: 20),
-              Text(
-                "Excel 2020 | Accounts",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
+                SizedBox(height: 40),
+                Text(
+                  "Excel 2020  |  Accounts",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              SizedBox(height: 40),
-              ButtonTheme(
-                minWidth: MediaQuery.of(context).size.width / 2,
-                child: RaisedButton(
-                  color: Colors.white,
-                  textColor: primaryColor,
-                  child: Text("Login"),
-                  onPressed: () => authentication(context),
+                SizedBox(height: 100),
+                ButtonTheme(
+                  minWidth: MediaQuery.of(context).size.width / 2,
+                  child: RaisedButton(
+                    color: Colors.white,
+                    textColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text("Login"),
+                    onPressed: () => authentication(context),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -2,7 +2,7 @@ import 'package:excelapp/Accounts/auth_service.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
-import 'package:excelapp/UI/Screens/ProfilePage/Widgets/referal.dart';
+// import 'package:excelapp/UI/Screens/ProfilePage/Widgets/referal.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/Widgets/qr_code.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/Widgets/update_profile.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/Widgets/view_profile.dart';
@@ -103,11 +103,11 @@ class _ProfilePageState extends State<ProfilePage> {
             Container(
               child: QrCode(_user.picture, _user.qrCodeUrl, _user.name),
             ),
-            // Adding Referal if not present
-            (widget.user.referrerAmbassadorId == null ||
-                    widget.user.referrerAmbassadorId == 0)
-                ? AddReferal()
-                : referedBy(widget.user.referrer),
+            // UNCOMMENT TO ADD REFERALS
+            // (widget.user.referrerAmbassadorId == null ||
+            //         widget.user.referrerAmbassadorId == 0)
+            //     ? AddReferal()
+            //     : referedBy(widget.user.referrer),
             // User Details
             GestureDetector(
               onTap: () {
@@ -155,7 +155,7 @@ Widget cardBuilder(String name, bool check) {
     margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
     elevation: 2,
     child: ListTile(
-      dense: true,
+      // dense: true,
       title: Row(
         children: <Widget>[
           Text(
