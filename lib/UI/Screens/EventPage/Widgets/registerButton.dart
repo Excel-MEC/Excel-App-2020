@@ -9,6 +9,7 @@ import 'package:excelapp/UI/Screens/EventPage/Widgets/createTeamPage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/joinTeamPage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/viewTeam.dart';
 import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/Drawer/drawer.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -205,8 +206,9 @@ class _RegisterButtonState extends State<RegisterButton> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "You have already registered for this event.",
+                  "Share this team Id with your teammates to add them to team",
                   textAlign: TextAlign.center,
+                  style: TextStyle(color: Color(0xaa000000)),
                 ),
                 SizedBox(height: 35),
                 Row(
@@ -247,6 +249,7 @@ class _RegisterButtonState extends State<RegisterButton> {
                 Text(
                   "is your team ID",
                   textAlign: TextAlign.center,
+                  style: TextStyle(color: Color(0xaa000000)),
                 ),
                 SizedBox(height: 35),
                 FractionallySizedBox(
@@ -275,7 +278,14 @@ class _RegisterButtonState extends State<RegisterButton> {
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      openChangeTeamPage(teamID);
+                      if (widget.eventDetails.registrationOpen == 1)
+                        openChangeTeamPage(teamID);
+                      else
+                        alertDialog(
+                          text:
+                              "Registrations for this event has been closed. \n\nTeam change operation cannot be performed.",
+                          context: context,
+                        );
                     },
                     child: Text(
                       "Change Team",
@@ -287,10 +297,11 @@ class _RegisterButtonState extends State<RegisterButton> {
             ),
             context: context);
         // END OF DIALOG
-      } else
-        alertDialog(
-            text: "You have registered for this event.", context: context);
-    } else {
+      }
+    } else if (response == 'Already Registered')
+      alertDialog(
+          text: "You have registered for this event.", context: context);
+    else {
       // Show returned error
       alertDialog(text: response, context: context);
     }
@@ -306,19 +317,50 @@ class _RegisterButtonState extends State<RegisterButton> {
 
   @override
   Widget build(BuildContext context) {
+    String buttonText = "";
+    Color buttonColor = primaryColor;
+
+    if (widget.eventDetails.needRegistration == 1) {
+      if (registered) {
+        buttonText =
+            widget.eventDetails.isTeam == 1 ? 'Manage Team' : 'Registered';
+        buttonColor = registered ? Color(0xff335533) : primaryColor;
+      } else if (widget.eventDetails.registrationOpen == 1) {
+        buttonText = "Register";
+        buttonColor = primaryColor;
+      } else {
+        buttonText = "Registration Closed";
+        buttonColor = Colors.red;
+      }
+    } else {
+      if (widget.eventDetails.button == null) {
+        // Should not happen
+      } else {
+        buttonText = widget.eventDetails.button.toString();
+        buttonColor = primaryColor;
+      }
+    }
     return ButtonTheme(
       minWidth: MediaQuery.of(context).size.width / 2.3,
       height: 45.0,
       child: RaisedButton(
-        onPressed: () => register(context),
+        onPressed: () {
+          if (widget.eventDetails.needRegistration == 1) {
+            if (registered) {
+              register(context);
+            } else if (widget.eventDetails.registrationOpen == 1) {
+              register(context);
+            } else {
+              alertDialog(text: "Registration Closed", context: context);
+            }
+          } else if (widget.eventDetails.registrationLink != null) {
+            launchURL(widget.eventDetails.registrationLink.toString());
+          }
+        },
         child: isLoading
             ? LoadingAnimation(color: Colors.white)
-            : Text(registered
-                ? (widget.eventDetails.isTeam == 1
-                    ? 'Manage Team'
-                    : 'Registered')
-                : 'Register'),
-        color: registered ? Color(0xff335533) : primaryColor,
+            : Text(buttonText),
+        color: buttonColor,
         textColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),

@@ -87,7 +87,7 @@ class RegistrationAPI {
       return 'Could not fetch registration data';
     }
     if (await isRegistered(id)) {
-      return 'You have already registered for this event.';
+      return 'Already Registered';
     }
     return "proceed";
   }

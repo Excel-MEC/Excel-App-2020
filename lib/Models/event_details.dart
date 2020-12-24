@@ -25,6 +25,10 @@ class EventDetails {
   int numberOfRounds;
   int currentRound;
   int needRegistration;
+  int registrationOpen;
+  String registrationEndDate;
+  String button;
+  String registrationLink;
   String rounds;
   String registration;
 
@@ -55,6 +59,10 @@ class EventDetails {
     this.numberOfRounds,
     this.currentRound,
     this.needRegistration,
+    this.registrationOpen,
+    this.registrationEndDate,
+    this.button,
+    this.registrationLink,
     this.rounds,
     this.registration,
   });
@@ -89,6 +97,17 @@ class EventDetails {
         (data['needRegistration'] == true || data['needRegistration'] == 1)
             ? 1
             : 0;
+    needRegistration =
+        (data['needRegistration'] == true || data['needRegistration'] == 1)
+            ? 1
+            : 0;
+    registrationOpen =
+        (data['registrationOpen'] == true || data['registrationOpen'] == 1)
+            ? 1
+            : 0;
+    registrationEndDate = data['registrationEndDate'];
+    button = data['button'];
+    registrationLink = data['registrationLink'];
     rounds = data['rounds'];
     registration = data['registration'];
   }
@@ -121,6 +140,10 @@ class EventDetails {
     data['numberOfRounds'] = this.numberOfRounds;
     data['currentRound'] = this.currentRound;
     data['needRegistration'] = this.needRegistration;
+    data['registrationOpen'] = this.registrationOpen;
+    data['registrationEndDate'] = this.registrationEndDate;
+    data['button'] = this.button;
+    data['registrationLink'] = this.registrationLink;
     data['rounds'] = this.rounds;
     return data;
   }

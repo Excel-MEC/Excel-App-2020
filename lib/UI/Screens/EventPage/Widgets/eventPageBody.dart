@@ -14,6 +14,13 @@ class EventPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget registerButton;
+
+    if (eventDetails.needRegistration == 0 && eventDetails.button == null)
+      registerButton = SizedBox();
+    else
+      registerButton = RegisterButton(eventDetails: eventDetails);
+
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     Color textColor = Colors.white;
@@ -120,9 +127,11 @@ class EventPageBody extends StatelessWidget {
               // Register and Details Button
               Row(
                 // Align button to center if only one button
-                mainAxisAlignment: eventDetails.needRegistration == 1
-                    ? MainAxisAlignment.spaceEvenly
-                    : MainAxisAlignment.center,
+                mainAxisAlignment: eventDetails.needRegistration == 0 &&
+                        eventDetails.button == null
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.spaceEvenly,
+
                 children: <Widget>[
                   // More Details
                   ButtonTheme(
@@ -148,10 +157,8 @@ class EventPageBody extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Register
-                  eventDetails.needRegistration == 1
-                      ? RegisterButton(eventDetails: eventDetails)
-                      : SizedBox()
+                  // Register button
+                  registerButton,
                 ],
               ),
               // For Hero Widget

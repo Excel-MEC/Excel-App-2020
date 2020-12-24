@@ -25,7 +25,8 @@ Widget getEventDetails(EventDetails eventDetails) {
           detailRow(
               Icons.people_outline,
               eventDetails.isTeam == 1
-                  ? "Team size: " + eventDetails.teamSize.toString()
+                  ? "Team size: " +
+                      (eventDetails.teamSize ?? "Not Specified").toString()
                   : 'Induvidual Event'),
           SizedBox(height: 7.0),
           // Venue
