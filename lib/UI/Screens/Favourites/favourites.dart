@@ -32,7 +32,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
       appBar: customappbar("Favourites"),
       body: Column(
         children: [
-          SizedBox(height: 20),
           Expanded(
             child: FutureBuilder(
               future: FavouritesAPI.fetchFavourites(),
@@ -75,15 +74,31 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                 } else {
                   // When favourites is not empty
                   List<Event> list = snapshot.data;
-                  return ListView.builder(
-                    itemCount: list.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return FavouriteCard(
-                        event: list[index],
-                        refreshFavourites: refreshPage,
-                      );
-                    },
+                  return ListView(
+                    physics: BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics(),
+                    ),
+                    children: <Widget>[
+                          SizedBox(height: 20),
+                        ] +
+                        List.generate(
+                          list.length,
+                          (index) => FavouriteCard(
+                            event: list[index],
+                            refreshFavourites: refreshPage,
+                          ),
+                        ),
                   );
+
+                  // ListView.builder(
+                  //   itemCount: list.length,
+                  //   itemBuilder: (BuildContext context, int index) {
+                  //     return FavouriteCard(
+                  //       event: list[index],
+                  //       refreshFavourites: refreshPage,
+                  //     );
+                  //   },
+                  // );
                 }
               },
             ),

@@ -49,7 +49,6 @@ class _EventsListState extends State<EventsList> {
       appBar: customappbar(widget.category),
       body: Column(
         children: <Widget>[
-          SizedBox(height: 20),
           Expanded(
             child: StreamBuilder(
               stream: estream.stream,
@@ -81,11 +80,22 @@ class _EventsListState extends State<EventsList> {
                       ),
                     );
 
-                  return ListView.builder(
-                    itemCount: list.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return EventCard(list[index]);
-                    },
+                  return ListView(
+                    physics: BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics(),
+                    ),
+                    children: <Widget>[
+                          SizedBox(height: 20),
+                        ] +
+                        List.generate(
+                          list.length,
+                          (index) => EventCard(
+                            list[index],
+                          ),
+                        ) +
+                        <Widget>[
+                          SizedBox(height: 100),
+                        ],
                   );
                 } else {
                   return LoadingAnimation();
