@@ -94,7 +94,7 @@ class _EventsListState extends State<EventsList> {
                           ),
                         ) +
                         <Widget>[
-                          SizedBox(height: 100),
+                          SizedBox(height: 60),
                         ],
                   );
                 } else {

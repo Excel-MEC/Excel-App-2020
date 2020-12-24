@@ -87,18 +87,11 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                             event: list[index],
                             refreshFavourites: refreshPage,
                           ),
-                        ),
+                        ) +
+                        <Widget>[
+                          SizedBox(height: 60),
+                        ],
                   );
-
-                  // ListView.builder(
-                  //   itemCount: list.length,
-                  //   itemBuilder: (BuildContext context, int index) {
-                  //     return FavouriteCard(
-                  //       event: list[index],
-                  //       refreshFavourites: refreshPage,
-                  //     );
-                  //   },
-                  // );
                 }
               },
             ),
