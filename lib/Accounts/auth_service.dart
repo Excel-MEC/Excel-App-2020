@@ -26,6 +26,7 @@ class AuthService {
 
     // Send access token to backend -- Recieve jwt
     try {
+      print(AccountConfig.url + 'auth/login/');
       Map<String, String> token = {"accessToken": accessToken};
       var response = await http.post(
         AccountConfig.url + 'auth/login/',
@@ -34,6 +35,7 @@ class AuthService {
       );
       print(json.encode(token));
       print(response.statusCode);
+      print(response.body);
       final Map<String, dynamic> responseData = json.decode(response.body);
       // Store JWT token locally
       String jwt = responseData['accessToken'].toString();

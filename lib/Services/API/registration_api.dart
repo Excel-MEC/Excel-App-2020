@@ -5,6 +5,8 @@ import 'package:excelapp/Models/event_Team.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:http/http.dart' as http;
+import 'package:excelapp/Models/user_model.dart';
+import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
@@ -23,7 +25,7 @@ class RegistrationAPI {
   static void fetchRegisteredEvents() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
-    if (jwt == null) {
+    if (jwt == null || jwt == "null") {
       RegistrationStatus.instance.registeredStatus = -1;
       return;
     }
@@ -62,7 +64,7 @@ class RegistrationAPI {
   static isRegistered(id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
-    if (jwt == null)
+    if (jwt == null || jwt == "null")
       return false;
     else if (RegistrationStatus.instance.registrationIDs.contains(id))
       return true;
@@ -76,8 +78,14 @@ class RegistrationAPI {
     //     RegistrationStatus.instance.registeredStatus.toString());
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
-    if (jwt == null) {
+    if (jwt == null || jwt == "null") {
       return 'Log in to register for events';
+    }
+    var user = await HiveDB.retrieveData(valueName: "user");
+    if (user == null) return "Login";
+    if (User.fromJson(user).gender == null ||
+        User.fromJson(user).gender == "null") {
+      return "Update profile to register for events.";
     }
     if (RegistrationStatus.instance.registeredStatus == 0) {
       fetchRegistrations();

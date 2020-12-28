@@ -330,7 +330,7 @@ class _RegisterButtonState extends State<RegisterButton> {
         buttonColor = primaryColor;
       } else {
         buttonText = "Registration Closed";
-        buttonColor = Colors.red;
+        buttonColor = Color(0xff7d141d);
       }
     } else {
       if (widget.eventDetails.button == null) {
