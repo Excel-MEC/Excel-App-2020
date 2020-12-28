@@ -81,12 +81,6 @@ class RegistrationAPI {
     if (jwt == null || jwt == "null") {
       return 'Log in to register for events';
     }
-    var user = await HiveDB.retrieveData(valueName: "user");
-    if (user == null) return "Login";
-    if (User.fromJson(user).gender == null ||
-        User.fromJson(user).gender == "null") {
-      return "Update profile to register for events.";
-    }
     if (RegistrationStatus.instance.registeredStatus == 0) {
       fetchRegistrations();
       return;
@@ -97,6 +91,14 @@ class RegistrationAPI {
     if (await isRegistered(id)) {
       return 'Already Registered';
     }
+
+    var user = await HiveDB.retrieveData(valueName: "user");
+    if (user == null) return "Login";
+    if (User.fromJson(user).gender == null ||
+        User.fromJson(user).gender == "null") {
+      return "Update profile to register for events.";
+    }
+
     return "proceed";
   }
 
