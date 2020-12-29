@@ -12,7 +12,7 @@ dependencies:
   # Add packages below -- App size is a concern
 
   # Backend
-  path: ^1.6.4
+  path: ^1.7.0
   shared_preferences: ^0.5.6+3
   cached_network_image: ^2.0.0
   connectivity: ^0.4.8+2
@@ -48,12 +48,15 @@ flutter:
   uses-material-design: true
 
   assets:
-  - assets/
+  - assets/BG 2.jpg
+  - assets/divider.png
+  - assets/excel logo.png
+  - assets/categories/
   - assets/introScreen/page2.jpg
   - assets/introScreen/page3.jpg
   - assets/introScreen/page4.jpg
-  - assets/campusAmbassador/refer.png
-  - assets/campusAmbassador/higher.png
+  # - assets/campusAmbassador/refer.png
+  # - assets/campusAmbassador/higher.png
 
   fonts:
       - family: poppins
@@ -63,14 +66,14 @@ flutter:
             weight: 600
           - asset: assets/fonts/Poppins-Bold.ttf
             weight: 700
-          - asset: assets/fonts/Poppins-ExtraBold.ttf
-            weight: 800
+          # - asset: assets/fonts/Poppins-ExtraBold.ttf
+          #   weight: 800
       - family: quicksand
         fonts:
           - asset: assets/fonts/Quicksand-Regular.ttf
-          - asset: assets/fonts/Quicksand-SemiBold.ttf
-            weight: 600
-          - asset: assets/fonts/Quicksand-Bold.ttf
-            weight: 700
-          - asset: assets/fonts/Quicksand-Light.ttf
-            weight: 300
+          # - asset: assets/fonts/Quicksand-SemiBold.ttf
+          #   weight: 600
+          # - asset: assets/fonts/Quicksand-Bold.ttf
+          #   weight: 700
+          # - asset: assets/fonts/Quicksand-Light.ttf
+          #   weight: 300
