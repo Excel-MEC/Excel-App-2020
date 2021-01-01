@@ -1,6 +1,6 @@
 name: excelapp
 description: The Official App of the tech fest of Govt. Model Engineering College.
-version: 0.1.0+1
+version: 0.1.1+2
 
 environment:
   sdk: ">=2.2.0 <3.0.0"
@@ -41,7 +41,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/min.png"
+  image_path: "assets/icon.png"
 
 flutter:
 
