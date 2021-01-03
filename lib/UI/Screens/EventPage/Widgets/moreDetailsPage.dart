@@ -12,6 +12,43 @@ class MoreDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Tab> tabList = [];
+    List<Widget> tabContent = [];
+
+// Format & Rules are added only if they are not empty.
+
+// About
+    tabList.add(Tab(
+      text: 'About',
+    ));
+    tabContent.add(details(eventDetails.about));
+
+// Format
+    if (eventDetails.format != null) {
+      tabList.add(Tab(
+        text: 'Format',
+      ));
+
+      tabContent.add(details(eventDetails.format));
+    }
+
+// Rules
+    if (eventDetails.rules != null) {
+      tabList.add(Tab(
+        text: 'Rules',
+      ));
+      tabContent.add(details(eventDetails.rules));
+    }
+
+// Contacts
+    tabList.add(Tab(
+      text: 'Contacts',
+    ));
+    tabContent.add(contactDetails(
+      eventDetails.eventHead1,
+      eventDetails.eventHead2,
+    ));
+
     return Scaffold(
       appBar: darkAppbar(),
       body: Stack(
@@ -78,7 +115,7 @@ class MoreDetails extends StatelessWidget {
                   ),
                   child: DefaultTabController(
                     initialIndex: 0,
-                    length: 4,
+                    length: tabList.length,
                     child: Scaffold(
                       appBar: PreferredSize(
                         preferredSize: Size.fromHeight(1000),
@@ -91,34 +128,13 @@ class MoreDetails extends StatelessWidget {
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
-                          tabs: [
-                            Tab(
-                              text: 'About',
-                            ),
-                            Tab(
-                              text: 'Format',
-                            ),
-                            Tab(
-                              text: 'Rules',
-                            ),
-                            Tab(
-                              text: 'Contacts',
-                            ),
-                          ],
+                          tabs: tabList,
                         ),
                       ),
                       body: Container(
                         color: Colors.white,
                         child: TabBarView(
-                          children: [
-                            details(eventDetails.about),
-                            details(eventDetails.format),
-                            details(eventDetails.rules),
-                            contactDetails(
-                              eventDetails.eventHead1,
-                              eventDetails.eventHead2,
-                            )
-                          ],
+                          children: tabContent,
                         ),
                       ),
                     ),
