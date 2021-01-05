@@ -51,6 +51,7 @@ class FavouritesAPI {
     FavouritesStatus.instance.favouritesStatus = 1;
 
     try {
+      if (response.statusCode != 200) return [];
       List data = json.decode(response.body);
       // Add event ID's
       FavouritesStatus.instance.favouritesIDs = {};

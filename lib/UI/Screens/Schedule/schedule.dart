@@ -64,7 +64,7 @@ class _ScheduleState extends State<Schedule> {
           Text(
             "Couldn't fetch Schedule",
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 14,
               color: Colors.grey,
             ),
           ),

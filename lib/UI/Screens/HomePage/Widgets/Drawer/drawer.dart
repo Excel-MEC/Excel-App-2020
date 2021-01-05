@@ -5,6 +5,7 @@ import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:social_share/social_share.dart';
+import 'package:excelapp/UI/Screens/Results/results.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -75,6 +76,19 @@ class CustomDrawer extends StatelessWidget {
                 //     );
                 //   },
                 // ),
+
+                DrawerOption(
+                  text: "Results",
+                  icon: Icons.wb_iridescent,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ResultsPage(),
+                      ),
+                    );
+                  },
+                ),
 
                 DrawerOption(
                   text: "Excel Website",

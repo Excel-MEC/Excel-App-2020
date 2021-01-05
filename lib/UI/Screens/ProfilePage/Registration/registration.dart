@@ -40,10 +40,10 @@ class _RegisteredEventsState extends State<RegisteredEvents> {
                   if (snapshot.data.isEmpty) {
                     return Center(
                       child: Text(
-                        "No Events",
+                        "No Events\n\n",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 14,
                           color: Colors.grey,
                         ),
                       ),

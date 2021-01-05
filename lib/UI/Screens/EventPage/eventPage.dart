@@ -54,7 +54,7 @@ class _EventPageState extends State<EventPage> {
                   "Failed to load event. Please retry",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 17,
+                    fontSize: 14,
                     color: Colors.grey,
                   ),
                 ),
