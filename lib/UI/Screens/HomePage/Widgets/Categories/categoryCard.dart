@@ -1,7 +1,6 @@
 import 'package:excelapp/UI/Screens/EventLists/eventsList.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class CategoryCard extends StatelessWidget {
   final Map<String, String> category;
@@ -31,8 +30,8 @@ class CategoryCard extends StatelessWidget {
         children: <Widget>[
           // Image
           Container(
-            child: CachedNetworkImage(
-              imageUrl: category['imageUrl'],
+            child: Image.asset(
+              category['imageUrl'],
               fit: BoxFit.cover,
             ),
           ),

@@ -126,14 +126,14 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
                     style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
                     onChanged: (String value) {
                       setState(() {
-                        teamName = value;
+                        teamName = value.trim();
                       });
                     },
                     validator: (value) {
                       if (value.isEmpty) {
                         return "Enter a team name";
                       }
-                      if (value.length < 5) {
+                      if (value.trim().length < 5) {
                         return "Enter atleast 5 characters";
                       }
                       return null;

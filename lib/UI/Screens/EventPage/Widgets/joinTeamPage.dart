@@ -9,6 +9,7 @@ import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class JoinTeamPage extends StatefulWidget {
   final EventDetails eventDetails;
@@ -115,6 +116,9 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                   key: _formKey,
                   child: TextFormField(
                     style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                    ],
                     keyboardType: TextInputType.number,
                     onChanged: (String value) {
                       setState(() {

@@ -66,9 +66,10 @@ Widget viewProfileBody(User userData, context) {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 15),
+            SizedBox(height: 0),
             details('Name', userData.name, Icons.person),
             details('Email', userData.email, Icons.email),
+            details('Excel ID', userData.id.toString(), Icons.person),
             details('Gender', userData.gender, Icons.face),
             details('Mobile', userData.mobileNumber, Icons.phone),
             details(
@@ -77,6 +78,7 @@ Widget viewProfileBody(User userData, context) {
               userData.institutionName,
               Icons.home,
             ),
+            SizedBox(height: 70),
           ],
         ),
       ),
@@ -86,7 +88,7 @@ Widget viewProfileBody(User userData, context) {
 
 Widget details(String field, String value, var icon) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8),
+    padding: const EdgeInsets.symmetric(vertical: 5),
     child: ListTile(
         dense: true,
         leading: CircleAvatar(

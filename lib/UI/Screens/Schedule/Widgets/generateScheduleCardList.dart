@@ -26,7 +26,7 @@ class TimeTableList extends StatelessWidget {
                     child: Center(
                         child: Text(
                       "No Events",
-                      style: TextStyle(fontSize: 15, color: Colors.grey),
+                      style: TextStyle(fontSize: 13, color: Colors.grey),
                     )),
                   )
                 : Center(),
@@ -112,7 +112,9 @@ Widget lineAndDot(lineNumber, noOfEvents) {
             : EdgeInsets.only(left: left, top: rowHeight / 2),
         width: 1.0,
         height: lineNumber != 0
-            ? lineNumber == noOfEvents ? rowHeight / 2 : rowHeight
+            ? lineNumber == noOfEvents
+                ? rowHeight / 2
+                : rowHeight
             : rowHeight / 2,
         color: noOfEvents == 0 ? Colors.transparent : primaryColor,
       ),

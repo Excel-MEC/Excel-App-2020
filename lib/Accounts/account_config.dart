@@ -6,7 +6,8 @@ class AccountConfig {
   // static final String redirect = 'com.excelmec.app.excelapp://ajeshkumar.eu.auth0.com/android/com.excelmec.app.excelapp/callback';
 
   //Backend -- Accounts
-  static final String url = 'https://staging.accounts.excelmec.org/api/';
+  // static final String url = 'https://staging.accounts.excelmec.org/api/';
+  static final String url = 'https://accounts.excelmec.org/api/';
 
   //header -- GET request
   static Map<String, String> getHeader(String token) {

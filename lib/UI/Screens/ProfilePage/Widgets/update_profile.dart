@@ -206,7 +206,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
                     onSaved: (String value) {
                       setState(() {
-                        _name = value;
+                        _name = value.trim();
                       });
                     },
                     validator: (value) {

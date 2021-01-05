@@ -1,6 +1,6 @@
 name: excelapp
 description: The Official App of the tech fest of Govt. Model Engineering College.
-version: 1.0.0+1
+version: 0.1.4+6
 
 environment:
   sdk: ">=2.2.0 <3.0.0"
@@ -12,7 +12,7 @@ dependencies:
   # Add packages below -- App size is a concern
 
   # Backend
-  path: ^1.6.4
+  path: ^1.7.0
   shared_preferences: ^0.5.6+3
   cached_network_image: ^2.0.0
   connectivity: ^0.4.8+2
@@ -41,19 +41,22 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/min.png"
+  image_path: "assets/icon.png"
 
 flutter:
 
   uses-material-design: true
 
   assets:
-  - assets/
-  - assets/introScreen/page2.jpg
-  - assets/introScreen/page3.jpg
-  - assets/introScreen/page4.jpg
-  - assets/campusAmbassador/refer.png
-  - assets/campusAmbassador/higher.png
+  - assets/BG 2.jpg
+  - assets/divider.png
+  - assets/excel logo.png
+  - assets/categories/
+  - assets/introScreen/page2.png
+  - assets/introScreen/page3.png
+  - assets/introScreen/page4.png
+  # - assets/campusAmbassador/refer.png
+  # - assets/campusAmbassador/higher.png
 
   fonts:
       - family: poppins
@@ -63,14 +66,14 @@ flutter:
             weight: 600
           - asset: assets/fonts/Poppins-Bold.ttf
             weight: 700
-          - asset: assets/fonts/Poppins-ExtraBold.ttf
-            weight: 800
+          # - asset: assets/fonts/Poppins-ExtraBold.ttf
+          #   weight: 800
       - family: quicksand
         fonts:
           - asset: assets/fonts/Quicksand-Regular.ttf
-          - asset: assets/fonts/Quicksand-SemiBold.ttf
-            weight: 600
-          - asset: assets/fonts/Quicksand-Bold.ttf
-            weight: 700
-          - asset: assets/fonts/Quicksand-Light.ttf
-            weight: 300
+          # - asset: assets/fonts/Quicksand-SemiBold.ttf
+          #   weight: 600
+          # - asset: assets/fonts/Quicksand-Bold.ttf
+          #   weight: 700
+          # - asset: assets/fonts/Quicksand-Light.ttf
+          #   weight: 300

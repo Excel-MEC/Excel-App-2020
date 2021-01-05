@@ -18,6 +18,7 @@ class EventsList extends StatefulWidget {
 class _EventsListState extends State<EventsList> {
   String endpoint;
   StreamController<dynamic> estream;
+  String selectedOption = "All Events";
 
   @override
   void initState() {
@@ -49,7 +50,6 @@ class _EventsListState extends State<EventsList> {
       appBar: customappbar(widget.category),
       body: Column(
         children: <Widget>[
-          SizedBox(height: 20),
           Expanded(
             child: StreamBuilder(
               stream: estream.stream,
@@ -61,7 +61,7 @@ class _EventsListState extends State<EventsList> {
                       "Failed to load. Please retry",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 14,
                         color: Colors.grey,
                       ),
                     ),
@@ -75,17 +75,84 @@ class _EventsListState extends State<EventsList> {
                       child: Text(
                         "No Events",
                         style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 14,
                           color: Colors.grey,
                         ),
                       ),
                     );
 
-                  return ListView.builder(
-                    itemCount: list.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return EventCard(list[index]);
-                    },
+                  return ListView(
+                    physics: BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics(),
+                    ),
+                    children: <Widget>[
+                          SizedBox(height: 7),
+                          widget.category == "Competitions"
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: DropdownButton(
+                                    hint: Center(
+                                      child: Text(
+                                        selectedOption,
+                                        style: TextStyle(
+                                          color: Colors.black54,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ),
+                                    isExpanded: true,
+                                    items: [
+                                      "All Events",
+                                      "CS Tech Events",
+                                      "General Tech Events",
+                                      "Non Tech Events"
+                                    ].map((value) {
+                                      return new DropdownMenuItem<String>(
+                                        value: value,
+                                        child: new Text(
+                                          value,
+                                          style: TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (val) {
+                                      setState(() {
+                                        selectedOption = val;
+                                      });
+                                    },
+                                  ),
+                                )
+                              : SizedBox(height: 13)
+                        ] +
+                        List.generate(
+                          list.length,
+                          (index) {
+                            Map<String, String> categories = {
+                              "All Events": "",
+                              "CS Tech Events": "computer_science",
+                              "General Tech Events": "general_tech",
+                              "Non Tech Events": "non_tech"
+                            };
+                            if (categories[selectedOption] == "")
+                              return EventCard(
+                                list[index],
+                              );
+                            if (categories[selectedOption] ==
+                                list[index].category)
+                              return EventCard(
+                                list[index],
+                              );
+                            else
+                              return SizedBox();
+                          },
+                        ) +
+                        <Widget>[
+                          SizedBox(height: 60),
+                        ],
                   );
                 } else {
                   return LoadingAnimation();

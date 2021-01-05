@@ -33,7 +33,7 @@ class FavouritesAPI {
   static fetchFavourites() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
-    if (jwt == null) {
+    if (jwt == null || jwt == "null") {
       FavouritesStatus.instance.favouritesStatus = 3;
       return 'notLoggedIn';
     }
@@ -51,6 +51,7 @@ class FavouritesAPI {
     FavouritesStatus.instance.favouritesStatus = 1;
 
     try {
+      if (response.statusCode != 200) return [];
       List data = json.decode(response.body);
       // Add event ID's
       FavouritesStatus.instance.favouritesIDs = {};
@@ -71,7 +72,7 @@ class FavouritesAPI {
   static isFavourited(id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
-    if (jwt == null)
+    if (jwt == null || jwt == "null")
       return false;
     else if (FavouritesStatus.instance.favouritesIDs.contains(id))
       return true;
@@ -83,7 +84,8 @@ class FavouritesAPI {
   static Future deleteFavourite({int id}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
-    if (jwt == null) return "Log in to remove favourite events";
+    if (jwt == null || jwt == "null")
+      return "Log in to remove favourite events";
     if (FavouritesStatus.instance.favouritesStatus == 0)
       return 'Network not available';
     if (!await isFavourited(id)) return "Already Unfavourited";
@@ -110,7 +112,7 @@ class FavouritesAPI {
     int id = eventDetails.id;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('jwt');
-    if (jwt == null)
+    if (jwt == null || jwt == "null")
       return "Log in to add favourite events";
     else if (FavouritesStatus.instance.favouritesStatus == 0)
       return "Network not Aailable";

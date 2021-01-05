@@ -29,7 +29,7 @@ class _LandingPageState extends State<LandingPage> {
           bodyWidget: page(
               "Our Motto",
               "Inspire  |  Innovate  |  Engineer\n\nInnovation drives the modern day world. Excel has been inspiring youth to innovate and bring out the best engineers in them !",
-              "assets/introScreen/page2.jpg",
+              "assets/introScreen/page2.png",
               context),
           title: "",
         ),
@@ -39,7 +39,7 @@ class _LandingPageState extends State<LandingPage> {
           bodyWidget: page(
               "Come Join Us",
               "Certain events wake us, nurture us and revitalize us. But how often do these events come? Either you wait for those moments or you create them. Sometimes life offers you a chance to take yourself to the next level. All you have to do is to seize them.",
-              "assets/introScreen/page3.jpg",
+              "assets/introScreen/page3.png",
               context),
           title: "",
         ),
