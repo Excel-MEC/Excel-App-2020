@@ -61,7 +61,7 @@ class _EventsListState extends State<EventsList> {
                       "Failed to load. Please retry",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 14,
                         color: Colors.grey,
                       ),
                     ),
@@ -75,7 +75,7 @@ class _EventsListState extends State<EventsList> {
                       child: Text(
                         "No Events",
                         style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 14,
                           color: Colors.grey,
                         ),
                       ),

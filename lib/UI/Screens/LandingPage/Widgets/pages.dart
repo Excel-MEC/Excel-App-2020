@@ -43,9 +43,9 @@ Widget page(title, desc, img, context) {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         SizedBox(height: 20),
-        Image.asset(
-          img,
-          width: MediaQuery.of(context).size.width,
+        SizedBox(
+          height: 195,
+          child: Image.asset(img),
         ),
         SizedBox(height: 20),
         Center(
@@ -77,7 +77,7 @@ Widget lastPage(context) {
       children: <Widget>[
         SizedBox(height: 10),
         Image.asset(
-          'assets/introScreen/page4.jpg',
+          'assets/introScreen/page4.png',
           height: 180,
         ),
         SizedBox(height: 30),

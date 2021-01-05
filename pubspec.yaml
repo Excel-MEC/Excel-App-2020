@@ -52,9 +52,9 @@ flutter:
   - assets/divider.png
   - assets/excel logo.png
   - assets/categories/
-  - assets/introScreen/page2.jpg
-  - assets/introScreen/page3.jpg
-  - assets/introScreen/page4.jpg
+  - assets/introScreen/page2.png
+  - assets/introScreen/page3.png
+  - assets/introScreen/page4.png
   # - assets/campusAmbassador/refer.png
   # - assets/campusAmbassador/higher.png
 
