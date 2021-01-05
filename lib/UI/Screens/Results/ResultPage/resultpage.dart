@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:excelapp/Accounts/getAuthorisedData.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/UI/Components/Appbar/darkAppbar.dart';
@@ -9,6 +8,7 @@ import 'package:excelapp/UI/Screens/EventPage/Widgets/backgroundImage.dart';
 import 'package:excelapp/UI/Screens/Results/ResultPage/Widgets/resultBody.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class ResultPage extends StatefulWidget {
   final Event event;
@@ -29,12 +29,10 @@ class _ResultPageState extends State<ResultPage> {
   fetchResultDetails() async {
     print("- Result of " + widget.event.id.toString() + " network fetch");
     try {
-      var response = await getAuthorisedData(
+      var response = await http.get(
           APIConfig.baseUrl + "/Result/event/" + widget.event.id.toString());
-      print(response.body);
       if (response.statusCode != 200) return "error";
       var responseData = json.decode(response.body);
-      print(responseData);
       return responseData;
     } catch (e) {
       print("Error $e");

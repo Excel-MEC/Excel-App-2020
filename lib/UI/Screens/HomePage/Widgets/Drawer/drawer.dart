@@ -79,7 +79,7 @@ class CustomDrawer extends StatelessWidget {
 
                 DrawerOption(
                   text: "Results",
-                  icon: Icons.wb_iridescent,
+                  icon: Icons.emoji_flags,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -92,7 +92,7 @@ class CustomDrawer extends StatelessWidget {
 
                 DrawerOption(
                   text: "Excel Website",
-                  icon: Icons.dvr,
+                  icon: Icons.web,
                   onPressed: () {
                     launch("https://excelmec.org/");
                   },

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/Results/resultCard.dart';
+import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/UI/Components/Appbar/appbar.dart';
@@ -47,17 +48,7 @@ class _ResultsPageState extends State<ResultsPage> {
               builder: (context, snapshot) {
                 // return Text(snapshot.data.toString());
                 // If no internet & not stored
-                if (snapshot.data == "error")
-                  return Center(
-                    child: Text(
-                      "Failed to load. Please retry",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 17,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  );
+                if (snapshot.data == "error") return errorRetry();
                 List<Event> list = snapshot.data;
                 // If data is present
                 if (snapshot.hasData) {
@@ -65,9 +56,9 @@ class _ResultsPageState extends State<ResultsPage> {
                   if (list.isEmpty)
                     return Center(
                       child: Text(
-                        "No Events",
+                        "No results have been published.",
                         style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 14,
                           color: Colors.grey,
                         ),
                       ),
@@ -98,6 +89,42 @@ class _ResultsPageState extends State<ResultsPage> {
               },
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget errorRetry() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Failed to load. Please retry",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey,
+            ),
+          ),
+          SizedBox(height: 30),
+          RaisedButton(
+            color: primaryColor,
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultsPage(),
+                ),
+              );
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              "Retry",
+              style: TextStyle(color: Colors.white),
+            ),
+          )
         ],
       ),
     );

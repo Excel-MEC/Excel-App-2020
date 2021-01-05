@@ -1,6 +1,6 @@
 name: excelapp
 description: The Official App of the tech fest of Govt. Model Engineering College.
-version: 0.1.3+5
+version: 0.1.4+6
 
 environment:
   sdk: ">=2.2.0 <3.0.0"

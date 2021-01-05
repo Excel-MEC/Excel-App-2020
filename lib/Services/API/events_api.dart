@@ -45,7 +45,6 @@ class EventsAPI {
       var response = await getAuthorisedData(APIConfig.baseUrl + '/events/$id');
 
       Map<String, dynamic> responseData = json.decode(response.body);
-      print(responseData);
       responseData["eventHead1"] = json.encode(responseData["eventHead1"]);
       responseData["eventHead2"] = json.encode(responseData["eventHead2"]);
       responseData["rounds"] = json.encode(responseData["rounds"]);

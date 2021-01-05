@@ -30,6 +30,7 @@ class ProcessedResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<dynamic> res = resultData["results"];
+    res.sort((a, b) => a["position"].compareTo(b["position"]));
 
 // If team event
     if (resultData["isTeam"] == true)
@@ -50,22 +51,7 @@ class ProcessedResult extends StatelessWidget {
               ),
               title: Text("Team " + res[index]["teamName"]),
               // Team members
-              subtitle: Column(
-                children: List.generate(
-                  res.length,
-                  (memberIndex) => Padding(
-                    padding: const EdgeInsets.only(left: 20, bottom: 5),
-                    child: ListTile(
-                      dense: true,
-                      leading: CircleAvatar(
-                        backgroundColor: primaryColor,
-                        radius: 5,
-                      ),
-                      title: Text(res[index]["teamMembers"][memberIndex]),
-                    ),
-                  ),
-                ),
-              ),
+              subtitle: Text("Members: " + res[index]["teamMembers"]),
             ),
           ),
         ),

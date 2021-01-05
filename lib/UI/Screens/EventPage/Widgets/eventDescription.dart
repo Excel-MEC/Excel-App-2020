@@ -22,7 +22,7 @@ Widget getEventDetails(EventDetails eventDetails) {
               Icons.attach_money,
               eventDetails.prizeMoney == null
                   ? "N.A"
-                  : eventDetails.prizeMoney.toString() + ' Rs'),
+                  : "Rs " + eventDetails.prizeMoney.toString()),
           SizedBox(height: 7.0),
           // Team or not
           detailRow(
