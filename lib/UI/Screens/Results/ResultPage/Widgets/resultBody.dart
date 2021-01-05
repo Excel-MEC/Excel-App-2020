@@ -16,6 +16,7 @@ class ResultBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
+            padding: EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/BG 2.jpg'),
