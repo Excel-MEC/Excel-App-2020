@@ -1,3 +1,4 @@
+import 'package:excelapp/UI/Screens/HomePage/Widgets/aboutExcel.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import './bottom_navigation.dart';
@@ -111,7 +112,14 @@ Widget _buildFab(BuildContext context, bottonNavHidden) {
       showOverlay: false,
       child: FloatingActionButton(
         backgroundColor: primaryColor,
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AboutExcelPopUp();
+            },
+          );
+        },
         child: Image.asset(
           'assets/excel logo.png',
           height: 37,
