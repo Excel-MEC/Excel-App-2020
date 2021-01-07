@@ -176,6 +176,7 @@ class DrawerOption extends StatelessWidget {
 }
 
 launchURL(url) async {
+  url = url.trim();
   if (await canLaunch(url) && url != '') {
     await launch(url);
   } else {
