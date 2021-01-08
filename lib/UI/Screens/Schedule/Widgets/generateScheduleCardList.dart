@@ -64,6 +64,7 @@ class ScheduleEvent extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
               child: ListTile(
                 dense: true,
+                isThreeLine: true,
                 title: Text(eventSchedule.name ?? ""),
                 leading: CachedNetworkImage(
                   imageUrl: eventSchedule.icon,
