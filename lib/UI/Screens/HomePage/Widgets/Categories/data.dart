@@ -6,22 +6,23 @@ var categoriesMap = [
   },
   {
     "name": "Talks",
-    "info": "Get inspired from the words of those, ready to spread it",
+    "info": "Get inspired from the words of those, ready to spread it.",
     "imageUrl": "assets/categories/talks.jpg"
   },
   {
     "name": "General",
-    "info": "Dance to the songs, tap to the beats. Cause you gotta let it go.",
+    "info":
+        "Experience the latest innovations, become a part of novel ideas and learn the world around you.",
     "imageUrl": "assets/categories/general.jpg"
   },
   {
     "name": "Workshops",
-    "info": "End up expertising in a skill by attending our workshops",
+    "info": "End up expertising in a skill by attending our workshops.",
     "imageUrl": "assets/categories/workshops.jpg"
   },
   {
     "name": "Conferences",
-    "info": "Get inspired from the words of those, ready to spread it",
+    "info": "Learn, explore, network and make it worth your while.",
     "imageUrl": "assets/categories/conferences.jpg"
   },
 ];

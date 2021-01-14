@@ -87,8 +87,14 @@ class DevCreditsState extends State<DevCredits>
                           margin: EdgeInsets.only(top: 5, left: 5),
                           // color: Colors.red,
                           child: ListTile(
-                            title: Text(developers[index]["name"]),
-                            subtitle: Text(developers[index]["email"]),
+                            title: Text(
+                              developers[index]["name"],
+                              style: TextStyle(fontSize: 14.5),
+                            ),
+                            subtitle: Text(
+                              developers[index]["email"],
+                              style: TextStyle(fontSize: 13),
+                            ),
                             dense: true,
                             leading: CircleAvatar(
                               backgroundImage: AssetImage(

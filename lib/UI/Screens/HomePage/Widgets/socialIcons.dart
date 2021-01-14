@@ -3,59 +3,57 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class SocialIcons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-    padding: const EdgeInsets.only(top: 50.0),
-    child: Column(
-      children: <Widget>[
-        Text(
-          'Stay in Touch !',
-          style: TextStyle(
-            // fontFamily: pfontFamily,
-            fontSize: 18.0,
-            color: primaryColor,
-            fontWeight: FontWeight.bold,
+      padding: const EdgeInsets.only(top: 50.0),
+      child: Column(
+        children: <Widget>[
+          Text(
+            'Stay in Touch !',
+            style: TextStyle(
+              // fontFamily: pfontFamily,
+              fontSize: 18.0,
+              color: primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        SizedBox(
-          height: 15.0,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            InkWell(
-              onTap: () {
-                print('object');
-              },
-              child: _buildIconCard(FontAwesomeIcons.facebookF,
-                  'https://www.facebook.com/excelmec/'),
-            ),
-            SizedBox(
-              width: 10.0,
-            ),
-            _buildIconCard(
-                FontAwesomeIcons.twitter, 'https://twitter.com/excelmec'),
-            SizedBox(
-              width: 10.0,
-            ),
-            _buildIconCard(FontAwesomeIcons.instagram,
-                'https://www.instagram.com/excelmec'),
-            SizedBox(
-              width: 10.0,
-            ),
-            _buildIconCard(FontAwesomeIcons.linkedinIn,
-                'https://www.linkedin.com/company/excelmec'),
-          ],
-        )
-      ],
-    ),
-  );
+          SizedBox(
+            height: 15.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              InkWell(
+                onTap: () {
+                  print('object');
+                },
+                child: _buildIconCard(FontAwesomeIcons.facebookF,
+                    'https://www.facebook.com/excelmec/'),
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              _buildIconCard(
+                  FontAwesomeIcons.twitter, 'https://twitter.com/excelmec'),
+              SizedBox(
+                width: 10.0,
+              ),
+              _buildIconCard(FontAwesomeIcons.instagram,
+                  'https://www.instagram.com/excelmec'),
+              SizedBox(
+                width: 10.0,
+              ),
+              _buildIconCard(FontAwesomeIcons.linkedinIn,
+                  'https://www.linkedin.com/company/excelmec'),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
-
 
 Widget _buildIconCard(IconData icon, String url) {
   return InkWell(
@@ -79,9 +77,5 @@ Widget _buildIconCard(IconData icon, String url) {
 }
 
 launchURL(url) async {
-  if (await canLaunch(url) && url != '') {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
+  await launch(url);
 }
