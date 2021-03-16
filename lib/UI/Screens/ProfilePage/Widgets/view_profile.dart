@@ -69,7 +69,7 @@ Widget viewProfileBody(User userData, context) {
             SizedBox(height: 0),
             details('Name', userData.name, Icons.person),
             details('Email', userData.email, Icons.email),
-            details('Excel ID', userData.id.toString(), Icons.person),
+            details('Excel ID', userData.id.toString(), Icons.confirmation_num),
             details('Gender', userData.gender, Icons.face),
             details('Mobile', userData.mobileNumber, Icons.phone),
             details(

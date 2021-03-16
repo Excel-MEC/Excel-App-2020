@@ -102,7 +102,7 @@ class MoreDetails extends StatelessWidget {
               ),
 
               //EventDetails
-              getEventDetails(eventDetails),
+              getEventDetails(eventDetails: eventDetails, detailed: false),
 
               SizedBox(height: 7.0),
 

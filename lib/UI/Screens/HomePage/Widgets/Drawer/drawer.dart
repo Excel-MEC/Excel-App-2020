@@ -1,11 +1,12 @@
 // import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 // import 'package:excelapp/UI/Screens/CampusAmbassador/campusAmbassadorMain.dart';
 // import 'package:excelapp/UI/Components/DeleteRegistrations/deleteRegistrations.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/Drawer/DevCredits/devCredits.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:social_share/social_share.dart';
-import 'package:excelapp/UI/Screens/Results/results.dart';
+// import 'package:excelapp/UI/Screens/Results/results.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -77,18 +78,19 @@ class CustomDrawer extends StatelessWidget {
                 //   },
                 // ),
 
-                DrawerOption(
-                  text: "Results",
-                  icon: Icons.emoji_flags,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ResultsPage(),
-                      ),
-                    );
-                  },
-                ),
+                // DrawerOption(
+                //   text: "Results",
+                //   icon: Icons.emoji_flags,
+                //   onPressed: () {
+                //     Navigator.pop(context);
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => ResultsPage(),
+                //       ),
+                //     );
+                //   },
+                // ),
 
                 DrawerOption(
                   text: "Excel Website",
@@ -116,6 +118,19 @@ class CustomDrawer extends StatelessWidget {
                   icon: Icons.add_link,
                   onPressed: () {
                     launch("https://linktr.ee/excelmec");
+                  },
+                ),
+                DrawerOption(
+                  text: "Developer Credits",
+                  icon: Icons.code,
+                  onPressed: () {
+                    Navigator.pop(context);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return DevCredits();
+                      },
+                    );
                   },
                 ),
                 DrawerOption(
@@ -176,9 +191,6 @@ class DrawerOption extends StatelessWidget {
 }
 
 launchURL(url) async {
-  if (await canLaunch(url) && url != '') {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
+  url = url.trim();
+  await launch(url);
 }

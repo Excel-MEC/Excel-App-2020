@@ -118,7 +118,7 @@ class EventPageBody extends StatelessWidget {
               ),
 
               //Event Details
-              getEventDetails(eventDetails),
+              getEventDetails(eventDetails: eventDetails, detailed: true),
               Expanded(
                 flex: 1,
                 child: Center(),

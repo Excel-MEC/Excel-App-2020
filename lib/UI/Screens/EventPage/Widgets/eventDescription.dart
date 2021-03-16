@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/UI/constants.dart';
 
-Widget getEventDetails(EventDetails eventDetails) {
+Widget getEventDetails({EventDetails eventDetails, bool detailed}) {
   return Hero(
     tag: 'EventDescription',
     child: Padding(
@@ -17,24 +17,38 @@ Widget getEventDetails(EventDetails eventDetails) {
               DateTimeConversion.dateTimeToString(
                   eventDetails.datetime.toString())),
           SizedBox(height: 7.0),
+          // Entry fee
+          detailed
+              ? detailRow(
+                  Icons.monetization_on,
+                  (eventDetails.entryFee == null || eventDetails.entryFee == 0)
+                      ? "No entry fee"
+                      : "Entree fee: Rs " + eventDetails.entryFee.toString())
+              : SizedBox(),
+
+          SizedBox(height: detailed ? 7.0 : 0),
           // Prize money
-          detailRow(
-              Icons.attach_money,
-              eventDetails.prizeMoney == null
-                  ? "N.A"
-                  : "Rs " + eventDetails.prizeMoney.toString()),
-          SizedBox(height: 7.0),
+          detailed
+              ? detailRow(
+                  Icons.attach_money,
+                  "Prize pool: " +
+                      (eventDetails.prizeMoney == null
+                          ? "N.A"
+                          : "Rs " + eventDetails.prizeMoney.toString()))
+              : SizedBox(),
+          SizedBox(height: detailed ? 7.0 : 0),
           // Team or not
           detailRow(
               Icons.people_outline,
               eventDetails.isTeam == 1
                   ? "Team size: " +
                       (eventDetails.teamSize ?? "Not Specified").toString()
-                  : 'Induvidual Event'),
+                  : 'Individual Event'),
           SizedBox(height: 7.0),
           // Venue
           detailRow(Icons.location_on, eventDetails.venue.toString()),
-          SizedBox(height: 7.0),
+
+          SizedBox(height: detailed ? 7 : 12),
         ],
       ),
     ),

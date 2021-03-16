@@ -1,6 +1,6 @@
 name: excelapp
 description: The Official App of the tech fest of Govt. Model Engineering College.
-version: 0.1.4+6
+version: 1.0.0+15
 
 environment:
   sdk: ">=2.2.0 <3.0.0"
@@ -25,7 +25,7 @@ dependencies:
   shimmer: ^1.1.1
   flutter_spinkit: ^4.1.2
   searchable_dropdown: ^1.1.3
-  url_launcher: ^5.4.2
+  url_launcher: ^5.7.10
   carousel_slider: ^1.4.1
   introduction_screen: ^1.0.8
   font_awesome_flutter: ^8.4.0
@@ -55,6 +55,8 @@ flutter:
   - assets/introScreen/page2.png
   - assets/introScreen/page3.png
   - assets/introScreen/page4.png
+  - assets/icons/
+  - assets/devs/
   # - assets/campusAmbassador/refer.png
   # - assets/campusAmbassador/higher.png
 

@@ -28,9 +28,13 @@ Widget introPage() {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Text(
-          "Excel is the annual techno-managerial fest of Govt. Model Engineering College. It is the nations second and south India's first ever of its kind !",
+          "Excel is the annual techno-managerial fest of Govt. Model Engineering College. It is the Nation's second and South India's first-ever fest of it's kind!",
           style: TextStyle(
-              fontSize: 15, color: lightTextColor, fontFamily: pfontFamily),
+            fontSize: 15,
+            color: lightTextColor,
+            fontFamily: pfontFamily,
+          ),
+          textAlign: TextAlign.center,
         ),
       ),
     ],
